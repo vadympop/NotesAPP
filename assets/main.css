@@ -1,0 +1,10 @@
+:root {
+  --gray: #252525;
+  --dark-gray: #1e1e1e;
+  --light-gray: #323232;
+  --light-gray2: #707070;
+  --todos-list: #a6a6a6;
+
+  --small-border-radius: 2px;
+  --border-radius: 5px
+}

@@ -1,10 +1,13 @@
 <template>
-<div></div>
+<div>
+todo
+</div>
 </template>
 
 <script>
 export default {
-  name: "TodoPage"
+  name: "TodoPage",
+  layout: 'todo'
 }
 </script>
 
