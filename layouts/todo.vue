@@ -5,7 +5,7 @@
         <div class="todos-list">
           <div class="main-todo-item">
             <img src="https://via.placeholder.com/128x128" alt="avatar" class="main-todo-item-image" width="48">
-            <span class="main-todo-item-text">{{ userName }}</span>
+            <span class="main-todo-item-text">USer Name</span>
           </div>
           <v-divider></v-divider>
 
@@ -22,10 +22,11 @@
             <span class="main-todo-item-text">New page</span>
           </div>
         </div>
-        <div class="todos-content">
-          <v-container>
+        <div class="todo-page">
+          <todo-page-header/>
+          <div class="todo-page-container">
             <Nuxt />
-          </v-container>
+          </div>
         </div>
       </div>
     </v-main>
@@ -56,7 +57,7 @@ export default {
   color: var(--todos-list);
 }
 
-.todos-content {
+.todo-page {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -82,11 +83,16 @@ export default {
 }
 
 .main-todo-item-text {
+  margin-left: 10px;
   font-size: 1.05em;
   font-weight: 550;
 }
 
 .main-todo-item-image {
   border-radius: var(--border-radius);
+}
+
+.todo-page-container {
+  padding: 8em;
 }
 </style>
