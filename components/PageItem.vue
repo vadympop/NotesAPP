@@ -1,14 +1,14 @@
 <template>
-  <div class="todo-item">
+  <div class="page-item">
     <span class="d-flex" @click="arrowClicked = !arrowClicked">
       <v-icon
-        :class="{'todo-item-triangle': true, 'todo-item-triangle-clicked': arrowClicked}"
+        :class="{'page-item-triangle': true, 'page-item-triangle-clicked': arrowClicked}"
         color="var(--todos-list)"
         size="12px"
       >mdi-triangle</v-icon>
     </span>
-    <v-icon class="todo-item-icon" color="var(--todos-list)" size="24px">mdi-file-document-outline</v-icon>
-    <span class="todo-item-text">{{ name }}</span>
+    <v-icon class="page-item-icon" color="var(--todos-list)" size="24px">mdi-file-document-outline</v-icon>
+    <span class="page-item-text">{{ name }}</span>
   </div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
 </script>
 
 <style scoped>
-.todo-item {
+.page-item {
   display: flex;
   align-items: center;
   padding: 5px 15px;
@@ -37,20 +37,20 @@ export default {
   cursor: pointer;
 }
 
-.todo-item:hover {
+.page-item:hover {
   background-color: var(--light-gray);
 }
 
-.todo-item-icon {
+.page-item-icon {
   margin: 0 5px;
 }
 
-.todo-item-text {
+.page-item-text {
   font-size: 0.95em;
   font-weight: 550;
 }
 
-.todo-item-triangle {
+.page-item-triangle {
   transform: rotate(90deg);
   transition: 0.2s;
   height: 24px;
@@ -61,11 +61,11 @@ export default {
   border-radius: var(--small-border-radius);
 }
 
-.todo-item-triangle:hover {
+.page-item-triangle:hover {
   background-color: var(--light-gray2);
 }
 
-.todo-item-triangle-clicked {
+.page-item-triangle-clicked {
   transform: rotate(180deg) !important;
 }
 </style>

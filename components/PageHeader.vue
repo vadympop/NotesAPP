@@ -1,10 +1,10 @@
 <template>
-  <div class="todo-header">
+  <div class="page-header">
     <div class="pages-navigation">
       <v-icon class="pages-navigation-icon hoverable-icon" color="var(--todos-list)">mdi-arrow-left</v-icon>
       <v-icon class="pages-navigation-icon hoverable-icon" color="var(--todos-list)">mdi-arrow-right</v-icon>
     </div>
-    <span class="todo-header-name">Todo Page Name</span>
+    <span class="page-header-name">Todo Page Name</span>
     <v-spacer></v-spacer>
     <div class="additional-buttons">
       <v-icon class="additional-button hoverable-icon" color="var(--todos-list)">
@@ -29,12 +29,12 @@ export default {
 </script>
 
 <style scoped>
-.todo-header {
+.page-header {
   display: flex;
   padding: 20px 40px;
 }
 
-.todo-header-name {
+.page-header-name {
   font-size: 1.15em;
 }
 

@@ -2,31 +2,29 @@
   <v-app dark>
     <v-main>
       <div class="todo-layout">
-        <div class="todos-list">
-          <div class="main-todo-item">
+        <div class="pages-list">
+          <div class="additional-page-item">
             <img src="https://via.placeholder.com/128x128" alt="avatar" class="main-todo-item-image" width="48">
-            <span class="main-todo-item-text">USer Name</span>
+            <span class="additional-page-item-text">USer Name</span>
           </div>
           <v-divider></v-divider>
 
           <div class="mt-10">
-            <todo-item name='Name'/>
+            <page-item name='Name'/>
           </div>
 
           <v-spacer></v-spacer>
 
           <trash-dialog/>
           <v-divider class="mt-10"></v-divider>
-          <div class="main-todo-item">
-            <v-icon class="main-todo-item-icon" color="var(--todos-list)" size="24px">mdi-plus</v-icon>
-            <span class="main-todo-item-text">New page</span>
+          <div class="additional-page-item">
+            <v-icon class="additional-page-item-icon" color="var(--todos-list)" size="24px">mdi-plus</v-icon>
+            <span class="additional-page-item-text">New page</span>
           </div>
         </div>
         <div class="todo-page">
-          <todo-page-header/>
-          <div class="todo-page-container">
-            <Nuxt />
-          </div>
+          <page-header/>
+          <Nuxt />
         </div>
       </div>
     </v-main>
@@ -47,7 +45,7 @@ export default {
   flex: 1 1 0;
 }
 
-.todos-list {
+.pages-list {
   display: flex;
   flex-grow: 0;
   flex-shrink: 0;
@@ -65,7 +63,7 @@ export default {
   background-color: var(--dark-gray);
 }
 
-.main-todo-item {
+.additional-page-item {
   display: flex;
   align-items: center;
   padding: 15px;
@@ -74,15 +72,15 @@ export default {
   cursor: pointer;
 }
 
-.main-todo-item:hover {
+.additional-page-item:hover {
   background-color: var(--light-gray);
 }
 
-.main-todo-item-icon {
+.additional-page-item-icon {
   margin: 0 5px;
 }
 
-.main-todo-item-text {
+.additional-page-item-text {
   margin-left: 10px;
   font-size: 1.05em;
   font-weight: 550;
@@ -90,9 +88,5 @@ export default {
 
 .main-todo-item-image {
   border-radius: var(--border-radius);
-}
-
-.todo-page-container {
-  padding: 8em;
 }
 </style>
