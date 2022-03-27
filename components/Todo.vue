@@ -1,12 +1,17 @@
 <template>
-<div class="todo" @mouseenter="hoverableButtons = true" @mouseleave="hoverableButtons = false">
-  <div :class="{'hoverable-buttons': true, 'd-none': !hoverableButtons}">
-    <v-icon class="hoverable-button new-todo-button hoverable-icon" color="var(--todos-list)">mdi-plus</v-icon>
-    <v-icon class="hoverable-button interaction-button hoverable-icon" color="var(--todos-list)">mdi-dots-grid</v-icon>
-    <div class="hoverable-button"></div>
+  <div
+    :class="{'todo': true, 'todo-selected': isSelected}"
+    @mouseenter="hoverableButtons = true"
+    @mouseleave="hoverableButtons = false"
+    @keyup.delete="removeTodo"
+  >
+    <div :class="{'hoverable-buttons': true, 'd-none': !hoverableButtons}">
+      <v-icon class="hoverable-button new-todo-button hoverable-icon" color="var(--todos-list)">mdi-plus</v-icon>
+      <v-icon class="hoverable-button interaction-button hoverable-icon" color="var(--todos-list)">mdi-dots-grid</v-icon>
+      <div class="hoverable-button"></div>
+    </div>
+    <editable v-model="updatedContent" class="todo-content"/>
   </div>
-  <span class="todo-content">{{ content }}</span>
-</div>
 </template>
 
 <script>
@@ -15,7 +20,7 @@ export default {
   props: {
     content: {
       type: String,
-      required: true
+      default: ''
     },
     position: {
       type: Number,
@@ -30,9 +35,20 @@ export default {
       required: true
     }
   },
-  data: () => ({
-    hoverableButtons: false
-  })
+  data () {
+    return {
+      hoverableButtons: false,
+      isSelected: false,
+      updatedContent: this.content
+    }
+  },
+  methods: {
+    removeTodo () {
+      if (!this.updatedContent) {
+        console.log('I can remove this todo')
+      }
+    }
+  }
 }
 </script>
 
@@ -42,15 +58,30 @@ export default {
   position: relative;
 }
 
+.todo ::selection {
+  background-color: var(--dark-blue2);
+  position: relative;
+}
+
+.todo-selected {
+  background-color: var(--dark-blue);
+}
+
 .todo-content {
   font-size: 1.05em;
   font-weight: 450;
+  color: #ffffff;
+  width: 100%;
+  word-break: break-word;
+}
+
+.todo-content:focus {
+  outline: none;
 }
 
 .hoverable-button {
   position: absolute;
-  bottom: 0;
-  top: 0;
+  top: 3px;
 }
 
 .new-todo-button {
