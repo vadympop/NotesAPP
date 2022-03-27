@@ -1,9 +1,14 @@
 <template>
 <div class="page-content">
   <div class="page-todos">
-    <span class="page-title">Todo Page Name</span>
+    <editable v-model="pageTitle" class="page-title"/>
     <div v-for="todo of pageTodos" :key="todo.id">
-      <todo :content="todo.content" :position="todo.position" :styles="todo.styles" :author="todo.author"/>
+      <todo
+        :content="todo.content"
+        :position="todo.position"
+        :styles="todo.styles"
+        :author="todo.author"
+      />
     </div>
   </div>
   <div class="adding-todo-area" @click="addTodo"></div>
@@ -15,7 +20,8 @@ export default {
   name: "TodoPage",
   layout: 'todo',
   data: () => ({
-    newTodos: []
+    newTodos: [],
+    pageTitle: 'Todo Page Title'
   }),
   computed: {
     pageTodos () {
@@ -25,9 +31,9 @@ export default {
       })
     },
     savedTodos: () => [
-      { id: 0, position: 0, content: '1 Todo' },
-      { id: 1, position: 1, content: '2 Todo' },
-      { id: 2, position: 2, content: '3 Todo' },
+      { id: 0, position: 0, content: '1 Todo', styles: {}, author: '' },
+      { id: 1, position: 1, content: '2 Todo', styles: {}, author: '' },
+      { id: 2, position: 2, content: '3 Todo', styles: {}, author: '' },
     ] // Fetched from api
   },
   methods: {
@@ -35,7 +41,7 @@ export default {
       this.newTodos.push({
         id: this.pageTodos[this.pageTodos.length-1].id+1,
         position: this.pageTodos.length+1,
-        content: 'gg',
+        content: null,
         styles: {},
         author: ''
       })
@@ -52,9 +58,12 @@ export default {
 
 .page-title {
   font-size: 4em;
-  position: relative;
   font-weight: 550;
-  z-index: 10;
+  color: #ffffff;
+}
+
+.page-title:focus-visible{
+  outline: none;
 }
 
 .adding-todo-area {
