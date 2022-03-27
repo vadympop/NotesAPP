@@ -42,7 +42,7 @@ export default {
 }
 
 .page-item-icon {
-  margin: 0 5px;
+  margin-right: 5px;
 }
 
 .page-item-text {
@@ -59,6 +59,7 @@ export default {
   align-items: center;
   justify-content: center;
   border-radius: var(--small-border-radius);
+  margin: 0 5px;
 }
 
 .page-item-triangle:hover {

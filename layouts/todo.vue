@@ -52,7 +52,7 @@ export default {
   width: 260px;
   flex-direction: column;
   background-color: var(--gray);
-  color: var(--todos-list);
+  color: var(--light-gray3);
 }
 
 .todo-page {
@@ -81,12 +81,13 @@ export default {
 }
 
 .additional-page-item-text {
-  margin-left: 10px;
+  margin-left: 5px;
   font-size: 1.05em;
   font-weight: 550;
 }
 
 .main-todo-item-image {
   border-radius: var(--border-radius);
+  margin: 0 5px 0 10px;
 }
 </style>
