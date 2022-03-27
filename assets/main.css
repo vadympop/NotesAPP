@@ -4,7 +4,9 @@
   --dark-gray2: #151515;
   --light-gray: #323232;
   --light-gray2: #707070;
-  --todos-list: #a6a6a6;
+  --light-gray3: #a6a6a6;
+  --dark-blue: #004147;
+  --dark-blue2: #005c65;
 
   --small-border-radius: 2px;
   --border-radius: 5px
@@ -14,6 +16,10 @@ body {
   overflow: hidden !important;
 }
 
+[contenteditable]:empty:after {
+  content: 'Enter your text';
+  color: var(--light-gray3);
+}
 
 .hoverable-icon {
   transition: 0.2s;
