@@ -33,7 +33,13 @@
 
 <script>
 export default {
-  name: 'TodoLayout'
+  name: 'TodoLayout',
+  mounted() {
+    window.addEventListener('beforeunload', (e) => {
+      e.preventDefault()
+      console.log('unload')
+    })
+  }
 }
 </script>
 

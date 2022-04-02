@@ -6,11 +6,15 @@
     @keyup.delete="removeTodo"
   >
     <div :class="{'hoverable-buttons': true, 'd-none': !hoverableButtons}">
-      <v-icon class="hoverable-button new-todo-button hoverable-icon" color="var(--todos-list)">mdi-plus</v-icon>
+      <v-icon
+        class="hoverable-button new-todo-button hoverable-icon"
+        color="var(--todos-list)"
+        @click="addTodo"
+      >mdi-plus</v-icon>
       <v-icon class="hoverable-button interaction-button hoverable-icon" color="var(--todos-list)">mdi-dots-grid</v-icon>
       <div class="hoverable-button"></div>
     </div>
-    <editable v-model="updatedContent" class="todo-content"/>
+    <editable v-model="updatedContent" v-debounce="save" class="todo-content"/>
   </div>
 </template>
 
@@ -18,6 +22,10 @@
 export default {
   name: "TodoItem",
   props: {
+    todoId: {
+      type: Number,
+      required: true
+    },
     content: {
       type: String,
       default: ''
@@ -33,6 +41,11 @@ export default {
     author: {
       type: String,
       required: true
+    },
+    new: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   data () {
@@ -42,10 +55,37 @@ export default {
       updatedContent: this.content
     }
   },
+  computed: {
+    pageId () {
+      return this.$route.params.pageID
+    }
+  },
   methods: {
     removeTodo () {
       if (!this.updatedContent) {
-        console.log('I can remove this todo')
+        if (!this.new) {
+          this.$store.commit('removeTodo', { todoId: this.todoId, pageId: this.pageId })
+        } else {
+          this.$store.commit('removeNewTodo', this.todoId)
+        }
+      }
+    },
+    addTodo () {
+      this.$store.commit('addTodo', this.pageId)
+    },
+    save () {
+      const updatedData = {
+        content: this.updatedContent,
+        pageId: this.pageId,
+        todoId: this.todoId,
+        styles: this.styles,
+        author: this.author,
+        position: this.position
+      }
+      if (!this.new) {
+        this.$store.commit('editTodo', updatedData)
+      } else {
+        this.$store.commit('editNewTodo', updatedData)
       }
     }
   }
