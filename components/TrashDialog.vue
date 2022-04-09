@@ -41,10 +41,4 @@ export default {
   font-size: 0.95em;
   font-weight: 550;
 }
-
-.dialog {
-  background-color: var(--dark-gray2);
-  border-radius: var(--border-radius);
-  min-height: 400px;
-}
 </style>

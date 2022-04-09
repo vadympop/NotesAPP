@@ -12,6 +12,10 @@
   --border-radius: 5px
 }
 
+.v-icon.v-icon::after {
+  background: none;
+}
+
 body {
   overflow: hidden !important;
 }
@@ -30,4 +34,25 @@ body {
 .hoverable-icon:hover {
   background-color: var(--light-gray);
   color: #fff !important;
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--dark-gray);
+  padding: 1em;
+  border-radius: var(--border-radius);
+  min-height: 400px;
+}
+
+.dialog-header {
+  display: flex;
+  font-size: 1.25em;
+  font-weight: 500;
+}
+
+.dialog-body {
+}
+
+.dialog-footer {
 }

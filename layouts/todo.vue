@@ -3,10 +3,10 @@
     <v-main>
       <div class="todo-layout">
         <div class="pages-list">
-          <div class="additional-page-item">
+          <nuxt-link to="/" class="additional-page-item">
             <img src="https://via.placeholder.com/128x128" alt="avatar" class="main-todo-item-image" width="48">
             <span class="additional-page-item-text">USer Name</span>
-          </div>
+          </nuxt-link>
           <v-divider></v-divider>
 
           <div class="mt-10">
@@ -90,6 +90,8 @@ export default {
   margin-left: 5px;
   font-size: 1.05em;
   font-weight: 550;
+  color: var(--light-gray3);
+  text-decoration: none;
 }
 
 .main-todo-item-image {

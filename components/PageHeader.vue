@@ -10,11 +10,8 @@
       <v-icon class="additional-button hoverable-icon" color="var(--todos-list)">
         mdi-star-outline
       </v-icon> <!-- Add to favourites -->
-      <v-icon class="additional-button hoverable-icon" color="var(--todos-list)">
-        mdi-comment-processing-outline</v-icon> <!-- View all comments on this page -->
-      <v-icon class="additional-button hoverable-icon" color="var(--todos-list)">
-        mdi-clock-outline
-      </v-icon> <!-- View page updates -->
+      <page-comments-dialog class="additional-button"/>
+      <page-updates-dialog class="additional-button"/>
       <v-icon class="additional-button hoverable-icon" color="var(--todos-list)">
         mdi-dots-horizontal
       </v-icon> <!-- Settigns -->
