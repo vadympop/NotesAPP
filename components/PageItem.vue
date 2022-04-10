@@ -1,18 +1,34 @@
 <template>
-  <div class="page-item">
-    <span class="d-flex" @click="arrowClicked = !arrowClicked">
-      <v-icon
-        :class="{'page-item-triangle': true, 'page-item-triangle-clicked': arrowClicked}"
-        color="var(--todos-list)"
-        size="12px"
-      >mdi-triangle</v-icon>
-    </span>
-    <v-icon class="page-item-icon" color="var(--todos-list)" size="24px">mdi-file-document-outline</v-icon>
-    <span class="page-item-text">{{ name }}</span>
+  <div>
+    <nuxt-link :to="`/${id}`" class="page-item" :style="`padding-left: ${paddingLeft}px`">
+      <span class="d-flex" @click="arrowClicked = !arrowClicked">
+        <v-icon
+          :class="{'page-item-triangle': true, 'page-item-triangle-clicked': arrowClicked}"
+          color="var(--todos-list)"
+          size="12px"
+        >mdi-triangle</v-icon>
+      </span>
+      <v-icon class="page-item-icon" color="var(--todos-list)" size="24px">mdi-file-document-outline</v-icon>
+      <span class="page-item-text">{{ name }}</span>
+    </nuxt-link>
+    <div v-if="arrowClicked">
+      <page-item
+        v-for="page of nested"
+        :id="page.id"
+        :key="page.id"
+        :name="page.name"
+        :position="page.position"
+        :nested-pages="page.nestedPages"
+        :parent="page.parent"
+        :root="page.root"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: "TodoItem",
   props: {
@@ -20,10 +36,43 @@ export default {
       type: String,
       required: true
     },
+    nestedPages: {
+      type: Array,
+      required: true
+    },
+    position: {
+      type: Number,
+      required: true
+    },
+    id: {
+      type: String,
+      required: true
+    },
+    parent: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    root: {
+      type: Boolean,
+      required: true
+    }
   },
   data: () => ({
-    arrowClicked: false
-  })
+    arrowClicked: false,
+    paddingLeft: 15
+  }),
+  computed: {
+    nested () {
+      return this.notRootPages.filter(page => this.nestedPages.includes(page.id))
+    },
+    ...mapGetters(['notRootPages'])
+  },
+  created() {
+    if (!this.root && this.$parent?.paddingLeft) {
+      this.paddingLeft = this.$parent?.paddingLeft + 15
+    }
+  }
 }
 </script>
 
@@ -35,6 +84,8 @@ export default {
   width: 100%;
   transition: 0.2s;
   cursor: pointer;
+  color: var(--light-gray3);
+  text-decoration: none;
 }
 
 .page-item:hover {

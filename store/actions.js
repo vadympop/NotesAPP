@@ -84,5 +84,50 @@ export default {
     ]
     commit('addTodos', { pageId, todos: todos.filter(t => t.pageId === pageId) })
     commit('setCurrentTodos', pageId)
+  },
+  getUserPages ({ commit }) {
+    const pages = [
+      {
+        id: '1',
+        root: true,
+        parent: null,
+        nestedPages: ['4', '3'],
+        position: 0,
+        name: 'Page 1'
+      },
+      {
+        id: '2',
+        root: true,
+        parent: null,
+        nestedPages: [],
+        position: 1,
+        name: 'Page 2'
+      },
+      {
+        id: '3',
+        root: false,
+        parent: '1',
+        nestedPages: [],
+        position: 0,
+        name: 'Page 13'
+      },
+      {
+        id: '4',
+        root: false,
+        parent: '1',
+        nestedPages: ['5'],
+        position: 1,
+        name: 'Page 14'
+      },
+      {
+        id: '5',
+        root: false,
+        parent: '4',
+        nestedPages: [],
+        position: 0,
+        name: 'Page 145'
+      }
+    ]
+    commit('addPages', pages)
   }
 }

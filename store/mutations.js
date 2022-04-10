@@ -55,5 +55,21 @@ export default {
   removeNewTodo (state, todoId) {
     const foundTodo = state.newTodos.find(todo => todo.id === todoId)
     state.newTodos.splice(state.newTodos.indexOf(foundTodo), 1)
+  },
+  addPages (state, pages) {
+    state.pages = pages
+  },
+  addPage (state, page) {
+    state.pages.push(page)
+  },
+  removePage (state, pageId) {
+    const foundPage = state.pages.find(page => page.id === pageId)
+    state.pages.splice(state.pages.indexOf(foundPage), 1)
+  },
+  editPage (state, { pageId, root, nestedPages, parent, position, name }) {
+    const foundPage = state.pages.find(page => page.id === pageId)
+    state.pages[state.pages.indexOf(foundPage)] = {
+      id: pageId, root, nestedPages, parent, position, name
+    }
   }
 }

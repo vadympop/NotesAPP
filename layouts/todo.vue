@@ -10,7 +10,16 @@
           <v-divider></v-divider>
 
           <div class="mt-10">
-            <page-item name='Name'/>
+            <page-item
+              v-for="page of rootPages"
+              :id="page.id"
+              :key="page.id"
+              :name="page.name"
+              :position="page.position"
+              :nested-pages="page.nestedPages"
+              :parent="page.parent"
+              :root="page.root"
+            />
           </div>
 
           <v-spacer></v-spacer>
@@ -32,9 +41,13 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: 'TodoLayout',
+  computed: mapGetters(['rootPages']),
   mounted() {
+    this.$store.dispatch('getUserPages')
     window.addEventListener('beforeunload', (e) => {
       e.preventDefault()
       console.log('unload')
@@ -65,7 +78,6 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
-  overflow: hidden;
   background-color: var(--dark-gray);
 }
 

@@ -3,5 +3,6 @@ export default () => ({
   todos: {},
   changedTodos: [],
   removedTodos: [],
-  currentTodos: []
+  currentTodos: [],
+  pages: []
 })
