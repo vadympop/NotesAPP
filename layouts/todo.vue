@@ -69,6 +69,7 @@ export default {
   flex-grow: 0;
   flex-shrink: 0;
   width: 260px;
+  height: 100vh;
   flex-direction: column;
   background-color: var(--gray);
   color: var(--light-gray3);
@@ -78,6 +79,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100vh;
   background-color: var(--dark-gray);
 }
 

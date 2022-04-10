@@ -53,6 +53,20 @@ export default {
 .page-content {
   padding: 8em;
   height: 100%;
+  overflow: hidden auto !important;
+}
+
+.page-content::-webkit-scrollbar {
+  width: 10px;
+  background-color: var(--dark-gray2);
+}
+
+.page-content::-webkit-scrollbar-thumb {
+  background-color: var(--light-gray);
+  transition: 0.2s all;
+}
+.page-content::-webkit-scrollbar-thumb:hover {
+  background-color: var(--light-gray2);
 }
 
 .page-title {

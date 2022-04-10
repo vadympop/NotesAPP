@@ -16,7 +16,7 @@
   background: none;
 }
 
-body {
+* {
   overflow: hidden !important;
 }
 
