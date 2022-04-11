@@ -7,9 +7,28 @@
   --light-gray3: #a6a6a6;
   --dark-blue: #004147;
   --dark-blue2: #005c65;
+  --red: #b60000;
 
   --small-border-radius: 2px;
   --border-radius: 5px
+}
+
+.h-100 {
+  height: 100% !important;
+}
+
+.input {
+  padding: 5px 10px;
+  width: 100%;
+  font-weight: 500;
+  transition: 0.2s;
+  color: #fff;
+  background-color: var(--dark-gray2);
+  border-radius: var(--border-radius);
+}
+
+.input:focus-visible {
+  outline: none;
 }
 
 .v-icon.v-icon::after {
@@ -53,7 +72,35 @@ html {
 }
 
 .dialog-body {
+  display: flex;
+  padding: 1em 0;
 }
 
 .dialog-footer {
+  display: flex;
+}
+
+.additional-page-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  width: 100%;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+.additional-page-item:hover {
+  background-color: var(--light-gray);
+}
+
+.additional-page-item-icon {
+  margin: 0 5px;
+}
+
+.additional-page-item-text {
+  margin-left: 5px;
+  font-size: 1.05em;
+  font-weight: 550;
+  color: var(--light-gray3);
+  text-decoration: none;
 }

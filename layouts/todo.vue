@@ -26,10 +26,7 @@
 
           <trash-dialog/>
           <v-divider class="mt-10"></v-divider>
-          <div class="additional-page-item">
-            <v-icon class="additional-page-item-icon" color="var(--todos-list)" size="24px">mdi-plus</v-icon>
-            <span class="additional-page-item-text">New page</span>
-          </div>
+          <add-new-page-dialog/>
         </div>
         <div class="todo-page">
           <page-header/>
@@ -81,31 +78,6 @@ export default {
   width: 100%;
   height: 100vh;
   background-color: var(--dark-gray);
-}
-
-.additional-page-item {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  width: 100%;
-  transition: 0.2s;
-  cursor: pointer;
-}
-
-.additional-page-item:hover {
-  background-color: var(--light-gray);
-}
-
-.additional-page-item-icon {
-  margin: 0 5px;
-}
-
-.additional-page-item-text {
-  margin-left: 5px;
-  font-size: 1.05em;
-  font-weight: 550;
-  color: var(--light-gray3);
-  text-decoration: none;
 }
 
 .main-todo-item-image {
