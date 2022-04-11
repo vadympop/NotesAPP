@@ -6,7 +6,7 @@ export default {
     state.newTodos.push({
       id: generateNewTodoId(state, pageTodos),
       pageId,
-      position: pageTodos.length+1,
+      position: pageTodos.length,
       content: null,
       styles: {},
       author: '',
