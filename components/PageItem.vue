@@ -12,16 +12,21 @@
       <span class="page-item-text">{{ name }}</span>
     </nuxt-link>
     <div v-if="arrowClicked">
-      <page-item
-        v-for="page of nested"
-        :id="page.id"
-        :key="page.id"
-        :name="page.name"
-        :position="page.position"
-        :nested-pages="page.nestedPages"
-        :parent="page.parent"
-        :root="page.root"
-      />
+      <div v-if="nested.length > 0">
+        <page-item
+          v-for="page of nested"
+          :id="page.id"
+          :key="page.id"
+          :name="page.name"
+          :position="page.position"
+          :nested-pages="page.nestedPages"
+          :parent="page.parent"
+          :root="page.root"
+        />
+      </div>
+      <div v-else>
+        <span class="no-nested-pages-text" :style="`padding-left: ${paddingLeft+30}px`">No pages inside</span>
+      </div>
     </div>
   </div>
 </template>
@@ -119,5 +124,11 @@ export default {
 
 .page-item-triangle-clicked {
   transform: rotate(180deg) !important;
+}
+
+.no-nested-pages-text {
+  padding: 5px 15px;
+  width: 100%;
+  display: flex;
 }
 </style>
