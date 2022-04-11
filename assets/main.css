@@ -16,8 +16,9 @@
   background: none;
 }
 
-* {
+html {
   overflow: hidden !important;
+  height: 100vh;
 }
 
 [contenteditable]:empty:after {

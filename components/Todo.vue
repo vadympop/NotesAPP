@@ -5,7 +5,7 @@
     @mouseleave="hoverableButtons = false"
     @keyup.delete="removeTodo"
   >
-    <div :class="{'hoverable-buttons': true, 'd-none': !hoverableButtons}">
+    <div v-if="hoverableButtons" :class="{'hoverable-buttons': true}">
       <v-icon
         class="hoverable-button new-todo-button hoverable-icon"
         color="var(--todos-list)"
@@ -96,6 +96,7 @@ export default {
 .todo {
   padding: 5px;
   position: relative;
+  overflow: visible !important;
 }
 
 .todo ::selection {
