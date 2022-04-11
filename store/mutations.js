@@ -13,12 +13,8 @@ export default {
       new: true
     })
   },
-  addTodos (state, { pageId, todos }) {
-    if (!state.todos[pageId]) {
-      state.todos[pageId] = todos
-    } else {
-      state.todos[pageId].push(...todos)
-    }
+  setTodos (state, { pageId, todos }) {
+    state.todos[pageId] = todos
   },
   setCurrentTodos (state, pageId) {
     state.currentTodos = state.todos[pageId]

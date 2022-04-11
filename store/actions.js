@@ -82,7 +82,7 @@ export default {
         author: ''
       }
     ]
-    commit('addTodos', { pageId, todos: todos.filter(t => t.pageId === pageId) })
+    commit('setTodos', { pageId, todos: todos.filter(t => t.pageId === pageId) })
     commit('setCurrentTodos', pageId)
   },
   getUserPages ({ commit }) {
