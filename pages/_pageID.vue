@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: "TodoPage",
@@ -36,7 +36,7 @@ export default {
     pageId () {
       return this.$route.params.pageID
     },
-    ...mapGetters(['currentTodos', 'newTodos'])
+    ...mapState(['currentTodos', 'newTodos'])
   },
   mounted () {
     this.$store.dispatch('setCurrentPage', this.pageId)
