@@ -1,6 +1,10 @@
 <template>
   <div>
-    <nuxt-link :to="`/${id}`" class="page-item" :style="`padding-left: ${paddingLeft}px`">
+    <nuxt-link
+      :to="`/${id}`"
+      :class="{'page-item': true, 'page-item-active': isActive}"
+      :style="`padding-left: ${paddingLeft}px`"
+    >
       <span class="d-flex" @click="arrowClicked = !arrowClicked">
         <v-icon
           :class="{'page-item-triangle': true, 'page-item-triangle-clicked': arrowClicked}"
@@ -32,7 +36,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapState} from "vuex";
 
 export default {
   name: "TodoItem",
@@ -71,7 +75,11 @@ export default {
     nested () {
       return this.notRootPages.filter(page => this.nestedPages.includes(page.id))
     },
-    ...mapGetters(['notRootPages'])
+    isActive () {
+      return this.id === this.currentPage.id
+    },
+    ...mapGetters(['notRootPages']),
+    ...mapState(['currentPage'])
   },
   created() {
     if (!this.root && this.$parent?.paddingLeft) {
@@ -93,7 +101,7 @@ export default {
   text-decoration: none;
 }
 
-.page-item:hover {
+.page-item:hover, .page-item-active {
   background-color: var(--light-gray);
 }
 
