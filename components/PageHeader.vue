@@ -4,7 +4,7 @@
       <v-icon class="pages-navigation-icon hoverable-icon" color="var(--todos-list)">mdi-arrow-left</v-icon>
       <v-icon class="pages-navigation-icon hoverable-icon" color="var(--todos-list)">mdi-arrow-right</v-icon>
     </div>
-    <span class="page-header-name">Todo Page Name</span>
+    <span class="page-header-name">{{ currentPage.name }}</span>
     <v-spacer></v-spacer>
     <div class="additional-buttons">
       <v-icon class="additional-button hoverable-icon" color="var(--todos-list)">
@@ -20,8 +20,11 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 export default {
-  name: "TodoPageHeader"
+  name: "TodoPageHeader",
+  computed: mapState(['currentPage'])
 }
 </script>
 

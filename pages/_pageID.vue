@@ -1,7 +1,7 @@
 <template>
 <div class="page-content">
   <div class="page-todos">
-    <editable v-model="pageTitle" class="page-title"/>
+    <editable ref="pageNameInput" v-model="updatedPageName" class="page-title" v-debounce="savePageEditing"/>
     <div v-for="todo of sortedTodos" :key="todo.id">
       <todo
         :content="todo.content"
@@ -24,7 +24,7 @@ export default {
   name: "TodoPage",
   layout: 'todo',
   data: () => ({
-    pageTitle: 'Todo Page Title'
+    updatedPageName: ''
   }),
   computed: {
     sortedTodos () {
@@ -36,14 +36,29 @@ export default {
     pageId () {
       return this.$route.params.pageID
     },
-    ...mapState(['currentTodos', 'newTodos'])
+    ...mapState(['currentTodos', 'newTodos', 'currentPage'])
   },
   mounted () {
+    this.$store.dispatch('getUserPages')
     this.$store.dispatch('setCurrentPage', this.pageId)
+    this.updatedPageName = this.currentPage.name
+    this.$refs.pageNameInput.updateText(this.updatedPageName)
   },
   methods: {
     addTodo () {
       this.$store.commit('addTodo', this.pageId)
+    },
+    savePageEditing () {
+      const updatedData = {
+        pageId: this.pageId,
+        name: this.updatedPageName,
+        root: this.currentPage.root,
+        nestedPages: this.currentPage.nestedPages,
+        parent: this.currentPage.parent,
+        position: this.currentPage.position
+      }
+
+      this.$store.commit('editPage', updatedData)
     }
   }
 }

@@ -15,12 +15,13 @@
       <div class="dialog-header">
         <span>New page</span>
       </div>
-      <div class="dialog-body" style="margin-bottom: auto">
-        <input class="input" type="text" placeholder="Enter page name">
+      <div class="dialog-body flex-column" style="margin-bottom: auto">
+        <input v-model="pageName" class="input" type="text" placeholder="Enter page name">
+        <strong v-if="error" style="color: var(--red)">{{error}}</strong>
       </div>
       <div class="dialog-footer">
         <v-spacer></v-spacer>
-        <v-btn plain>Apply</v-btn>
+        <v-btn plain @click="createPage">Apply</v-btn>
         <v-btn plain color="red" @click="dialog = false">Cancel</v-btn>
       </div>
     </div>
@@ -31,8 +32,21 @@
 export default {
   name: "AddNewPageDialog",
   data: () => ({
-    dialog: false
-  })
+    dialog: false,
+    pageName: '',
+    error: ''
+  }),
+  methods: {
+    createPage () {
+      if (!this.pageName) {
+        this.error = 'You don\'t provide new page name'
+        return
+      }
+
+      this.$store.dispatch('createPage', this.pageName)
+      this.dialog = false
+    }
+  }
 }
 </script>
 

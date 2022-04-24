@@ -44,7 +44,6 @@ export default {
   name: 'TodoLayout',
   computed: mapGetters(['rootPages']),
   mounted() {
-    this.$store.dispatch('getUserPages')
     window.addEventListener('beforeunload', (e) => {
       e.preventDefault()
       console.log('unload')

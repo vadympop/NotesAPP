@@ -13,6 +13,9 @@ export default {
       new: true
     })
   },
+  setCurrentPage(state, pageId) {
+    state.currentPage = state.pages.find(page => page.id === pageId)
+  },
   setTodos (state, { pageId, todos }) {
     state.todos[pageId] = todos
   },
@@ -55,17 +58,32 @@ export default {
   addPages (state, pages) {
     state.pages = pages
   },
-  addPage (state, page) {
-    state.pages.push(page)
+  addPage (state, { pageId, name, position }) {
+    state.pages.push({
+      id: pageId,
+      root: true,
+      parent: null,
+      nestedPages: [],
+      position,
+      name
+    })
   },
   removePage (state, pageId) {
     const foundPage = state.pages.find(page => page.id === pageId)
     state.pages.splice(state.pages.indexOf(foundPage), 1)
+
+    if (state.changedPages.includes(pageId)) {
+      state.changedPages.splice(state.changedPages.indexOf(pageId), 1)
+    }
   },
   editPage (state, { pageId, root, nestedPages, parent, position, name }) {
     const foundPage = state.pages.find(page => page.id === pageId)
     state.pages[state.pages.indexOf(foundPage)] = {
       id: pageId, root, nestedPages, parent, position, name
+    }
+
+    if (!state.changedPages.includes(pageId)) {
+      state.changedPages.push(pageId)
     }
   }
 }

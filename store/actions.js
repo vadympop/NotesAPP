@@ -84,6 +84,13 @@ export default {
     ]
     commit('setTodos', { pageId, todos: todos.filter(t => t.pageId === pageId) })
     commit('setCurrentTodos', pageId)
+    commit('setCurrentPage', pageId)
+  },
+  createPage ({ commit, state }, name) {
+    // Api request here
+    const pageId = 10 // Get page id from api response
+    const position = state.pages.length // Get position from api response
+    commit('addPage', { pageId, name, position })
   },
   getUserPages ({ commit }) {
     const pages = [

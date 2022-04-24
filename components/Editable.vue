@@ -32,6 +32,9 @@ export default {
       }
       this.$emit('input', targetText === '\n' ? '' : targetText)
     },
+    updateText (v) {
+      this.$refs.editable.innerText = v
+    }
   },
 };
 </script>
