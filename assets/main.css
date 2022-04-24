@@ -62,7 +62,7 @@ html {
   background-color: var(--dark-gray);
   padding: 1em;
   border-radius: var(--border-radius);
-  min-height: 400px;
+  min-height: 200px;
 }
 
 .dialog-header {

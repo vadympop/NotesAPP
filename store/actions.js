@@ -86,6 +86,10 @@ export default {
     commit('setCurrentTodos', pageId)
     commit('setCurrentPage', pageId)
   },
+  removePage ({ commit }, pageId) {
+    // Api request here
+    commit('removePage', pageId)
+  },
   createPage ({ commit, state }, name) {
     // Api request here
     const pageId = 10 // Get page id from api response

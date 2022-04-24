@@ -11,7 +11,7 @@
       </div>
     </template>
 
-    <div class="dialog" style="min-height: 200px">
+    <div class="dialog">
       <div class="dialog-header">
         <span>New page</span>
       </div>

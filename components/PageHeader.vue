@@ -10,6 +10,7 @@
       <v-icon class="additional-button hoverable-icon" color="var(--todos-list)">
         mdi-star-outline
       </v-icon> <!-- Add to favourites -->
+      <page-delete-dialog class="additional-button"/>
       <page-comments-dialog class="additional-button"/>
       <page-updates-dialog class="additional-button"/>
       <v-icon class="additional-button hoverable-icon" color="var(--todos-list)">
