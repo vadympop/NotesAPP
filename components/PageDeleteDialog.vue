@@ -15,8 +15,12 @@
       <div class="dialog-header">
         <strong>Are you sure you want to delete this page?</strong>
       </div>
-      <div class="dialog-body" style="margin-bottom: auto">
-        <span>When you click a button "Delete" this page will move to trash</span>
+      <div class="dialog-body flex-column" style="margin-bottom: auto">
+        <div>
+          <span>You want to delete </span>
+          <strong>{{specifiedPageName}}</strong>
+        </div>
+        <span>When you click a button "Delete" this page and all her nested pages will move to trash</span>
       </div>
       <div class="dialog-footer">
         <v-spacer></v-spacer>
@@ -32,13 +36,25 @@ import {mapState} from "vuex";
 
 export default {
   name: "PageDeleteDialog",
+  props: {
+    pageId: {
+      type: Number,
+      required: true
+    }
+  },
   data: () => ({
     dialog: false
   }),
-  computed: mapState(['pages']),
+  computed: {
+    specifiedPageName () {
+      const foundPage = this.pages.find(page => page.id === this.pageId)
+      return foundPage ? foundPage.name : 'Unknown'
+    },
+    ...mapState(['pages'])
+  },
   methods: {
     removePage () {
-      this.$store.dispatch('removePage', this.$route.params.pageID)
+      this.$store.dispatch('removePage', this.pageId)
       this.dialog = false
       this.$router.push({ path: `/${this.pages[0].id}` })
     }

@@ -10,7 +10,7 @@
       <v-icon class="additional-button hoverable-icon" color="var(--todos-list)">
         mdi-star-outline
       </v-icon> <!-- Add to favourites -->
-      <page-delete-dialog class="additional-button"/>
+      <page-delete-dialog class="additional-button" :page-id="pageId"/>
       <page-comments-dialog class="additional-button"/>
       <page-updates-dialog class="additional-button"/>
       <v-icon class="additional-button hoverable-icon" color="var(--todos-list)">
@@ -25,7 +25,12 @@ import {mapState} from "vuex";
 
 export default {
   name: "TodoPageHeader",
-  computed: mapState(['currentPage'])
+  computed: {
+    pageId () {
+      return this.$route.params.pageID
+    },
+    ...mapState(['currentPage'])
+  }
 }
 </script>
 
