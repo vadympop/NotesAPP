@@ -38,7 +38,7 @@ export default {
   name: "PageDeleteDialog",
   props: {
     pageId: {
-      type: Number,
+      type: String,
       required: true
     }
   },
