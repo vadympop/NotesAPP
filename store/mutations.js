@@ -1,4 +1,4 @@
-import generateNewTodoId from "~/heplers/generateNewTodoId";
+import {findAllNestedPages, generateNewTodoId} from "~/utils";
 
 export default {
   addTodo (state, pageId) {
@@ -70,10 +70,22 @@ export default {
   },
   removePage (state, pageId) {
     const foundPage = state.pages.find(page => page.id === pageId)
-    state.pages.splice(state.pages.indexOf(foundPage), 1)
+    if (foundPage.nestedPages.length === 0) {
+      state.pages.splice(state.pages.indexOf(foundPage), 1)
 
-    if (state.changedPages.includes(pageId)) {
-      state.changedPages.splice(state.changedPages.indexOf(pageId), 1)
+      if (state.changedPages.includes(pageId)) {
+        state.changedPages.splice(state.changedPages.indexOf(pageId), 1)
+      }
+    } else {
+      const deletePagesNestedPagesIds = findAllNestedPages(state.pages, foundPage)
+      deletePagesNestedPagesIds.push(pageId)
+      deletePagesNestedPagesIds.forEach(nestedPageId => {
+        state.pages.splice(state.pages.indexOf(state.pages.find(page => page.id === nestedPageId)), 1)
+
+        if (state.changedPages.includes(nestedPageId)) {
+          state.changedPages.splice(state.changedPages.indexOf(nestedPageId), 1)
+        }
+      })
     }
   },
   editPage (state, { pageId, root, nestedPages, parent, position, name }) {
