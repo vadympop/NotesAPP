@@ -1,6 +1,6 @@
 export default {
   setCurrentPage ({ commit }, pageId) {
-    const todos = [
+    const notes = [
       {
         id: 0,
         pageId: '1',
@@ -82,8 +82,8 @@ export default {
         author: ''
       }
     ]
-    commit('setTodos', { pageId, todos: todos.filter(t => t.pageId === pageId) })
-    commit('setCurrentTodos', pageId)
+    commit('setNotes', { pageId, notes: notes.filter(t => t.pageId === pageId) })
+    commit('setCurrentNotes', pageId)
     commit('setCurrentPage', pageId)
   },
   removePage ({ commit }, pageId) {

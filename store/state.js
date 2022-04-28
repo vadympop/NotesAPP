@@ -1,10 +1,10 @@
 export default () => ({
-  newTodos: [],
-  todos: {},
-  changedTodos: [],
+  newNotes: [],
+  notes: {},
+  changedNotes: [],
   changedPages: [],
-  removedTodos: [],
-  currentTodos: [],
+  removedNotes: [],
+  currentNotes: [],
   pages: [],
   currentPage: {}
 })

@@ -8,11 +8,11 @@
       <span class="d-flex" @click="arrowClicked = !arrowClicked">
         <v-icon
           :class="{'page-item-triangle': true, 'page-item-triangle-clicked': arrowClicked}"
-          color="var(--todos-list)"
+          color="var(--light-gray3)"
           size="12px"
         >mdi-triangle</v-icon>
       </span>
-      <v-icon class="page-item-icon" color="var(--todos-list)" size="24px">mdi-file-document-outline</v-icon>
+      <v-icon class="page-item-icon" color="var(--light-gray3)" size="24px">mdi-file-document-outline</v-icon>
       <span class="page-item-text">{{ name }}</span>
     </nuxt-link>
     <div v-if="arrowClicked">
@@ -39,7 +39,7 @@
 import {mapGetters, mapState} from "vuex";
 
 export default {
-  name: "TodoItem",
+  name: "PageItem",
   props: {
     name: {
       type: String,

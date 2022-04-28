@@ -6,7 +6,7 @@
         v-bind="attrs"
         v-on="on"
       >
-        <v-icon class="additional-page-item-icon" color="var(--todos-list)" size="24px">mdi-plus</v-icon>
+        <v-icon class="additional-page-item-icon" color="var(--light-gray3)" size="24px">mdi-plus</v-icon>
         <span class="additional-page-item-text">New page</span>
       </div>
     </template>

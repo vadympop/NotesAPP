@@ -1,10 +1,10 @@
 <template>
   <v-app dark>
     <v-main>
-      <div class="todo-layout">
+      <div class="notes-layout">
         <div class="pages-list">
           <nuxt-link to="/" class="additional-page-item">
-            <img src="https://via.placeholder.com/128x128" alt="avatar" class="main-todo-item-image" width="48">
+            <img src="https://via.placeholder.com/128x128" alt="avatar" class="main-page-item-image" width="48">
             <span class="additional-page-item-text">USer Name</span>
           </nuxt-link>
           <v-divider></v-divider>
@@ -28,7 +28,7 @@
           <v-divider class="mt-10"></v-divider>
           <add-new-page-dialog/>
         </div>
-        <div class="todo-page">
+        <div class="notes-page">
           <page-header/>
           <Nuxt />
         </div>
@@ -41,7 +41,7 @@
 import {mapGetters} from "vuex";
 
 export default {
-  name: 'TodoLayout',
+  name: 'NotesLayout',
   computed: mapGetters(['rootPages']),
   mounted() {
     window.addEventListener('beforeunload', (e) => {
@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style scoped>
-.todo-layout {
+.notes-layout {
   width: 100vw;
   height: 100%;
   display: flex;
@@ -71,7 +71,7 @@ export default {
   color: var(--light-gray3);
 }
 
-.todo-page {
+.notes-page {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -79,7 +79,7 @@ export default {
   background-color: var(--dark-gray);
 }
 
-.main-todo-item-image {
+.main-page-item-image {
   border-radius: var(--border-radius);
   margin: 0 5px 0 10px;
 }

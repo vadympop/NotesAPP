@@ -3,7 +3,7 @@
     <template #activator="{ on, attrs }">
       <v-icon
         class="hoverable-icon"
-        color="var(--todos-list)"
+        color="var(--light-gray3)"
         v-bind="attrs"
         v-on="on"
       >

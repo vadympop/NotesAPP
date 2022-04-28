@@ -1,28 +1,28 @@
 <template>
   <div
-    :class="{'todo': true, 'todo-selected': isSelected}"
+    :class="{'note': true, 'note-selected': isSelected}"
     @mouseenter="hoverableButtons = true"
     @mouseleave="hoverableButtons = false"
-    @keyup.delete="removeTodo"
+    @keyup.delete="removeNote"
   >
     <div v-if="hoverableButtons" :class="{'hoverable-buttons': true}">
       <v-icon
-        class="hoverable-button new-todo-button hoverable-icon"
-        color="var(--todos-list)"
-        @click="addTodo"
+        class="hoverable-button new-note-button hoverable-icon"
+        color="var(--light-gray3)"
+        @click="addNote"
       >mdi-plus</v-icon>
-      <v-icon class="hoverable-button interaction-button hoverable-icon" color="var(--todos-list)">mdi-dots-grid</v-icon>
+      <v-icon class="hoverable-button interaction-button hoverable-icon" color="var(--light-gray3)">mdi-dots-grid</v-icon>
       <div class="hoverable-button"></div>
     </div>
-    <editable v-model="updatedContent" v-debounce="save" class="todo-content"/>
+    <editable v-model="updatedContent" v-debounce="save" class="note-content"/>
   </div>
 </template>
 
 <script>
 export default {
-  name: "TodoItem",
+  name: "NoteItem",
   props: {
-    todoId: {
+    noteId: {
       type: Number,
       required: true
     },
@@ -61,31 +61,31 @@ export default {
     }
   },
   methods: {
-    removeTodo () {
+    removeNote () {
       if (!this.updatedContent) {
         if (!this.new) {
-          this.$store.commit('removeTodo', { todoId: this.todoId, pageId: this.pageId })
+          this.$store.commit('removeNote', { noteId: this.noteId, pageId: this.pageId })
         } else {
-          this.$store.commit('removeNewTodo', this.todoId)
+          this.$store.commit('removeNewNote', this.noteId)
         }
       }
     },
-    addTodo () {
-      this.$store.commit('addTodo', this.pageId)
+    addNote () {
+      this.$store.commit('addNote', this.pageId)
     },
     save () {
       const updatedData = {
         content: this.updatedContent,
         pageId: this.pageId,
-        todoId: this.todoId,
+        noteId: this.noteId,
         styles: this.styles,
         author: this.author,
         position: this.position
       }
       if (!this.new) {
-        this.$store.commit('editTodo', updatedData)
+        this.$store.commit('editNote', updatedData)
       } else {
-        this.$store.commit('editNewTodo', updatedData)
+        this.$store.commit('editNewNote', updatedData)
       }
     }
   }
@@ -93,22 +93,22 @@ export default {
 </script>
 
 <style scoped>
-.todo {
+.note {
   padding: 5px;
   position: relative;
   overflow: visible !important;
 }
 
-.todo ::selection {
+.note ::selection {
   background-color: var(--dark-blue2);
   position: relative;
 }
 
-.todo-selected {
+.note-selected {
   background-color: var(--dark-blue);
 }
 
-.todo-content {
+.note-content {
   font-size: 1.05em;
   font-weight: 450;
   color: #ffffff;
@@ -116,7 +116,7 @@ export default {
   word-break: break-word;
 }
 
-.todo-content:focus {
+.note-content:focus {
   outline: none;
 }
 
@@ -125,7 +125,7 @@ export default {
   top: 3px;
 }
 
-.new-todo-button {
+.new-note-button {
   left: -60px;
 }
 

@@ -1,12 +1,12 @@
-import {findAllNestedPages, generateNewTodoId} from "~/utils";
+import {findAllNestedPages, generateNewNoteId} from "~/utils";
 
 export default {
-  addTodo (state, pageId) {
-    const pageTodos = state.todos[pageId]
-    state.newTodos.push({
-      id: generateNewTodoId(state, pageTodos),
+  addNote (state, pageId) {
+    const pageNotes = state.notes[pageId]
+    state.newNotes.push({
+      id: generateNewNoteId(state, pageNotes),
       pageId,
-      position: pageTodos.length,
+      position: pageNotes.length,
       content: null,
       styles: {},
       author: '',
@@ -16,44 +16,44 @@ export default {
   setCurrentPage(state, pageId) {
     state.currentPage = state.pages.find(page => page.id === pageId)
   },
-  setTodos (state, { pageId, todos }) {
-    state.todos[pageId] = todos
+  setNotes (state, { pageId, notes }) {
+    state.notes[pageId] = notes
   },
-  setCurrentTodos (state, pageId) {
-    state.currentTodos = state.todos[pageId]
+  setCurrentNotes (state, pageId) {
+    state.currentNotes = state.notes[pageId]
   },
-  editTodo (state, { pageId, todoId, styles, author, content, position }) {
-    if (state.removedTodos.includes(todoId)) {
+  editNote (state, { pageId, noteId, styles, author, content, position }) {
+    if (state.removedNotes.includes(noteId)) {
       return
     }
 
-    const foundTodo = state.todos[pageId].find(todo => todo.id === todoId)
-    state.todos[pageId][state.todos[pageId].indexOf(foundTodo)] = {
-      id: todoId, pageId, styles, author, content, position
+    const foundNote = state.notes[pageId].find(note => note.id === noteId)
+    state.notes[pageId][state.notes[pageId].indexOf(foundNote)] = {
+      id: noteId, pageId, styles, author, content, position
     }
 
-    if (!state.changedTodos.includes(todoId)) {
-      state.changedTodos.push(todoId)
+    if (!state.changedNotes.includes(noteId)) {
+      state.changedNotes.push(noteId)
     }
   },
-  editNewTodo (state, { pageId, todoId, styles, author, content, position }) {
-    const foundTodo = state.newTodos.find(todo => todo.id === todoId)
-    state.newTodos[state.newTodos.indexOf(foundTodo)] = {
-      id: todoId, pageId, styles, author, content, position, new: true
+  editNewNote (state, { pageId, noteId, styles, author, content, position }) {
+    const foundNote = state.newNotes.find(note => note.id === noteId)
+    state.newNotes[state.newNotes.indexOf(foundNote)] = {
+      id: noteId, pageId, styles, author, content, position, new: true
     }
   },
-  removeTodo (state, { pageId, todoId }) {
-    const foundTodo = state.todos[pageId].find(todo => todo.id === todoId)
-    state.todos[pageId].splice(state.todos[pageId].indexOf(foundTodo), 1)
-    state.removedTodos.push(todoId)
+  removeNote (state, { pageId, noteId }) {
+    const foundNote = state.notes[pageId].find(note => note.id === noteId)
+    state.notes[pageId].splice(state.notes[pageId].indexOf(foundNote), 1)
+    state.removedNotes.push(noteId)
 
-    if (state.changedTodos.includes(todoId)) {
-      state.changedTodos.splice(state.changedTodos.indexOf(todoId), 1)
+    if (state.changedNotes.includes(noteId)) {
+      state.changedNotes.splice(state.changedNotes.indexOf(noteId), 1)
     }
   },
-  removeNewTodo (state, todoId) {
-    const foundTodo = state.newTodos.find(todo => todo.id === todoId)
-    state.newTodos.splice(state.newTodos.indexOf(foundTodo), 1)
+  removeNewNote (state, noteId) {
+    const foundNote = state.newNotes.find(note => note.id === noteId)
+    state.newNotes.splice(state.newNotes.indexOf(foundNote), 1)
   },
   addPages (state, pages) {
     state.pages = pages

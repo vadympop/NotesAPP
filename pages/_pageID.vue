@@ -1,19 +1,19 @@
 <template>
 <div class="page-content">
-  <div class="page-todos">
+  <div class="page-notes">
     <editable ref="pageNameInput" v-model="updatedPageName" class="page-title" v-debounce="savePageEditing"/>
-    <div v-for="todo of sortedTodos" :key="todo.id">
-      <todo
-        :content="todo.content"
-        :position="todo.position"
-        :styles="todo.styles"
-        :author="todo.author"
-        :new="todo.new"
-        :todo-id="todo.id"
+    <div v-for="note of sortedNotes" :key="note.id">
+      <note
+        :content="note.content"
+        :position="note.position"
+        :styles="note.styles"
+        :author="note.author"
+        :new="note.new"
+        :note-id="note.id"
       />
     </div>
   </div>
-  <div class="adding-todo-area" @click="addTodo"></div>
+  <div class="adding-notes-area" @click="addNote"></div>
 </div>
 </template>
 
@@ -21,22 +21,21 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: "TodoPage",
-  layout: 'todo',
+  name: "NotesPage",
+  layout: 'notes',
   data: () => ({
     updatedPageName: ''
   }),
   computed: {
-    sortedTodos () {
-      return [...this.currentTodos, ...this.newTodos].sort((todo1, todo2) => {
-        return todo1.position < todo2.position ? -1
-          : todo2.position < todo1.position ? 1 : 0
-      })
+    sortedNotes () {
+      return [...this.currentNotes, ...this.newNotes].sort(
+        (note1, note2) => note1.position-note2.position
+      )
     },
     pageId () {
       return this.$route.params.pageID
     },
-    ...mapState(['currentTodos', 'newTodos', 'currentPage'])
+    ...mapState(['currentNotes', 'newNotes', 'currentPage'])
   },
   mounted () {
     this.$store.dispatch('getUserPages')
@@ -45,8 +44,8 @@ export default {
     this.$refs.pageNameInput.updateText(this.updatedPageName)
   },
   methods: {
-    addTodo () {
-      this.$store.commit('addTodo', this.pageId)
+    addNote () {
+      this.$store.commit('addNote', this.pageId)
     },
     savePageEditing () {
       const updatedData = {
@@ -94,7 +93,7 @@ export default {
   outline: none;
 }
 
-.adding-todo-area {
+.adding-notes-area {
   height: 100%;
   cursor: text;
 }
