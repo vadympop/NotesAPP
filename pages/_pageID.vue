@@ -2,14 +2,14 @@
 <div class="page-content">
   <div class="page-notes">
     <editable ref="pageNameInput" v-model="updatedPageName" class="page-title" v-debounce="savePageEditing"/>
-    <div v-for="note of sortedNotes" :key="note.id">
+    <div v-for="note of sortedNotes" :key="note._id">
       <note
         :content="note.content"
         :position="note.position"
         :styles="note.styles"
         :author="note.author"
         :new="note.new"
-        :note-id="note.id"
+        :note-id="note._id"
       />
     </div>
   </div>
@@ -28,6 +28,10 @@ export default {
   }),
   computed: {
     sortedNotes () {
+      if (!this.currentNotes || !this.newNotes) {
+        return []
+      }
+
       return [...this.currentNotes, ...this.newNotes].sort(
         (note1, note2) => note1.position-note2.position
       )
@@ -37,11 +41,17 @@ export default {
     },
     ...mapState(['currentNotes', 'newNotes', 'currentPage'])
   },
+  watch: {
+    currentPage (){
+      if (!this.updatedPageName) {
+        this.updatedPageName = this.currentPage.name
+        this.$refs.pageNameInput.updateText(this.updatedPageName)
+      }
+    }
+  },
   mounted () {
     this.$store.dispatch('getUserPages')
     this.$store.dispatch('setCurrentPage', this.pageId)
-    this.updatedPageName = this.currentPage.name
-    this.$refs.pageNameInput.updateText(this.updatedPageName)
   },
   methods: {
     addNote () {

@@ -23,7 +23,7 @@ export default {
   name: "NoteItem",
   props: {
     noteId: {
-      type: Number,
+      type: String,
       required: true
     },
     content: {

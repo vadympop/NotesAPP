@@ -12,8 +12,8 @@
           <div class="mt-10">
             <page-item
               v-for="page of rootPages"
-              :id="page.id"
-              :key="page.id"
+              :key="page._id"
+              :page-id="page._id"
               :name="page.name"
               :position="page.position"
               :nested-pages="page.nestedPages"

@@ -47,7 +47,7 @@ export default {
   }),
   computed: {
     specifiedPageName () {
-      const foundPage = this.pages.find(page => page.id === this.pageId)
+      const foundPage = this.pages.find(page => page._id === this.pageId)
       return foundPage ? foundPage.name : 'Unknown'
     },
     ...mapState(['pages'])
@@ -56,7 +56,7 @@ export default {
     removePage () {
       this.$store.dispatch('removePage', this.pageId)
       this.dialog = false
-      this.$router.push({ path: `/${this.pages[0].id}` })
+      this.$router.push({ path: `/${this.pages[0]._id}` })
     }
   }
 }

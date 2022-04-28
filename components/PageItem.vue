@@ -1,7 +1,7 @@
 <template>
   <div>
     <nuxt-link
-      :to="`/${id}`"
+      :to="`/${pageId}`"
       :class="{'page-item': true, 'page-item-active': isActive}"
       :style="`padding-left: ${paddingLeft}px`"
     >
@@ -19,8 +19,8 @@
       <div v-if="nested.length > 0">
         <page-item
           v-for="page of nested"
-          :id="page.id"
-          :key="page.id"
+          :key="page._id"
+          :page-id="page._id"
           :name="page.name"
           :position="page.position"
           :nested-pages="page.nestedPages"
@@ -53,7 +53,7 @@ export default {
       type: Number,
       required: true
     },
-    id: {
+    pageId: {
       type: String,
       required: true
     },
@@ -73,10 +73,10 @@ export default {
   }),
   computed: {
     nested () {
-      return this.notRootPages.filter(page => this.nestedPages.includes(page.id))
+      return this.notRootPages.filter(page => this.nestedPages.includes(page._id))
     },
     isActive () {
-      return this.id === this.currentPage.id
+      return this.pageId === this.currentPage._id
     },
     ...mapGetters(['notRootPages']),
     ...mapState(['currentPage'])
