@@ -8,6 +8,7 @@
   --dark-blue: #004147;
   --dark-blue2: #005c65;
   --red: #b60000;
+  --yellow: #ebff00;
 
   --small-border-radius: 2px;
   --border-radius: 5px
@@ -33,11 +34,6 @@
 
 .v-icon.v-icon::after {
   background: none;
-}
-
-html {
-  overflow: hidden !important;
-  height: 100vh;
 }
 
 [contenteditable]:empty:after {

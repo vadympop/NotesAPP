@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app dark style="overflow: hidden; height: 100vh">
     <v-main>
       <div class="notes-layout">
         <div class="pages-list">
@@ -44,6 +44,7 @@ export default {
   name: 'NotesLayout',
   computed: mapGetters(['rootPages']),
   mounted() {
+    document.documentElement.style.overflow = 'hidden'
     window.addEventListener('beforeunload', (e) => {
       e.preventDefault()
       console.log('unload')
