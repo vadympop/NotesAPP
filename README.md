@@ -23,4 +23,7 @@ npm run dev
 npm run build
 ```
 
+## NotesAPP settings
+In `consts.js` you can change api url
+
 **After this steps you should to install and run [API](https://github.com/VadyChel/NotesAppAPI)**
