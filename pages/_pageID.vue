@@ -9,6 +9,7 @@
         :styles="note.styles"
         :author="note.author"
         :new="note.new"
+        :page="note.page"
         :note-id="note._id"
       />
     </div>

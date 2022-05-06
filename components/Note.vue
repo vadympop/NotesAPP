@@ -26,6 +26,10 @@ export default {
       type: String,
       required: true
     },
+    page: {
+      type: [Object, String],
+      required: true
+    },
     content: {
       type: String,
       default: ''
@@ -76,7 +80,7 @@ export default {
     save () {
       const updatedData = {
         content: this.updatedContent,
-        pageId: this.pageId,
+        page: this.page,
         noteId: this.noteId,
         styles: this.styles,
         author: this.author,

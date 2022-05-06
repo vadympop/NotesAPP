@@ -38,17 +38,94 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapState} from "vuex";
 
 export default {
   name: 'NotesLayout',
-  computed: mapGetters(['rootPages']),
+  data: () => ({
+    timer: null,
+    savedNotes: []
+  }),
+  computed: {
+    pageNotes () {
+      return this.notes[this.pageId]
+    },
+    pageId () {
+      return this.$route.params.pageID
+    },
+    ...mapState(['newNotes', 'removedNotes', 'changedNotes', 'notes']),
+    ...mapGetters(['rootPages'])
+  },
+  watch: {
+    newNotes (v) {
+      console.log(v, 'newNotes')
+      this.debounce(this.saveNewNotes)
+    },
+    changedNotes (v) {
+      console.log(v, 'changedNotes')
+      this.debounce(this.applyChangesInNotes)
+    },
+    removedNotes (v) {
+      console.log(v, 'removedNotes')
+      this.debounce(this.applyRemovedNotes)
+    }
+  },
   mounted() {
     document.documentElement.style.overflow = 'hidden'
     window.addEventListener('beforeunload', (e) => {
       e.preventDefault()
       console.log('unload')
+      this.saveAll()
     })
+  },
+  methods: {
+    debounce (callback) {
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
+
+      this.timer = setTimeout(() => {
+        callback()
+      }, 5000)
+    },
+    saveAll () {
+      this.saveNewNotes()
+      this.applyRemovedNotes()
+      this.applyChangesInNotes()
+    },
+    saveNewNotes () {
+      const readyToSaveNotes = JSON.parse(JSON.stringify(
+        this.newNotes
+      )).filter(note => note.content && !this.savedNotes.includes(note._id))
+      readyToSaveNotes.map((note) => {
+        delete note._id
+        return note
+      })
+
+      const savedNotesIds = this.newNotes
+      this.savedNotes.push(...savedNotesIds.map(note => note._id))
+      this.$axios.post('/api/new', { notesToAdd: readyToSaveNotes})
+    },
+    applyRemovedNotes () {
+      if (this.removedNotes.length <= 0) {
+        return
+      }
+
+      this.$axios.post('/api/remove', { notesToRemove: this.removedNotes })
+      this.$store.commit('clearRemovedNotes')
+    },
+    applyChangesInNotes () {
+      if (this.changedNotes.length <= 0) {
+        return
+      }
+
+      const changedNotes = this.pageNotes.filter(note => this.changedNotes.includes(note._id))
+      this.$axios.post(
+        '/api/update',
+        { changedNotes: changedNotes.map(note => ({...note, page: note.page._id})) }
+      )
+      this.$store.commit('clearChangedNotes')
+    }
   }
 }
 </script>

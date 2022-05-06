@@ -1,15 +1,16 @@
-import {findAllNestedPages, generateNewNoteId} from "~/utils";
+import { v4 as uuid4 } from 'uuid'
+import {findAllNestedPages} from "~/utils";
 
 export default {
   addNote (state, pageId) {
     const pageNotes = state.notes[pageId]
     state.newNotes.push({
-      _id: generateNewNoteId(state, pageNotes),
-      pageId,
+      _id: uuid4().toString(),
+      page: pageId,
       position: pageNotes.length,
       content: null,
       styles: {},
-      author: '',
+      author: 'a',
       new: true
     })
   },
@@ -19,27 +20,33 @@ export default {
   setNotes (state, { pageId, notes }) {
     state.notes[pageId] = notes
   },
+  clearRemovedNotes (state) {
+    state.removedNotes = []
+  },
+  clearChangedNotes (state) {
+    state.changedNotes = []
+  },
   setCurrentNotes (state, pageId) {
     state.currentNotes = state.notes[pageId]
   },
-  editNote (state, { pageId, noteId, styles, author, content, position }) {
+  editNote (state, { page, noteId, styles, author, content, position }) {
     if (state.removedNotes.includes(noteId)) {
       return
     }
 
-    const foundNote = state.notes[pageId].find(note => note._id === noteId)
-    state.notes[pageId][state.notes[pageId].indexOf(foundNote)] = {
-      _id: noteId, pageId, styles, author, content, position
+    const foundNote = state.notes[page._id].find(note => note._id === noteId)
+    state.notes[page._id][state.notes[page._id].indexOf(foundNote)] = {
+      _id: noteId, page, styles, author, content, position
     }
 
     if (!state.changedNotes.includes(noteId)) {
       state.changedNotes.push(noteId)
     }
   },
-  editNewNote (state, { pageId, noteId, styles, author, content, position }) {
+  editNewNote (state, { page, noteId, styles, author, content, position }) {
     const foundNote = state.newNotes.find(note => note._id === noteId)
     state.newNotes[state.newNotes.indexOf(foundNote)] = {
-      _id: noteId, pageId, styles, author, content, position, new: true
+      _id: noteId, page, styles, author, content, position, new: true
     }
   },
   removeNote (state, { pageId, noteId }) {
