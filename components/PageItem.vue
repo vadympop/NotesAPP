@@ -2,17 +2,23 @@
   <div>
     <nuxt-link
       :to="`/${pageId}`"
-      :class="{'page-item': true, 'page-item-active': isActive}"
+      :class="{ 'page-item': true, 'page-item-active': isActive }"
       :style="`padding-left: ${paddingLeft}px`"
     >
       <span class="d-flex" @click="arrowClicked = !arrowClicked">
         <v-icon
-          :class="{'page-item-triangle': true, 'page-item-triangle-clicked': arrowClicked}"
+          :class="{
+            'page-item-triangle': true,
+            'page-item-triangle-clicked': arrowClicked,
+          }"
           color="var(--light-gray3)"
           size="12px"
-        >mdi-triangle</v-icon>
+          >mdi-triangle</v-icon
+        >
       </span>
-      <v-icon class="page-item-icon" color="var(--light-gray3)" size="24px">mdi-file-document-outline</v-icon>
+      <v-icon class="page-item-icon" color="var(--light-gray3)" size="24px"
+        >mdi-file-document-outline</v-icon
+      >
       <span class="page-item-text">{{ name }}</span>
     </nuxt-link>
     <div v-if="arrowClicked">
@@ -29,63 +35,69 @@
         />
       </div>
       <div v-else>
-        <span class="no-nested-pages-text" :style="`padding-left: ${paddingLeft+30}px`">No pages inside</span>
+        <span
+          class="no-nested-pages-text"
+          :style="`padding-left: ${paddingLeft + 30}px`"
+          >No pages inside</span
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {mapGetters, mapState} from "vuex";
+import { mapGetters, mapState } from 'vuex'
 
 export default {
-  name: "PageItem",
+  name: 'PageItem',
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     nestedPages: {
       type: Array,
-      required: true
+      required: true,
     },
     position: {
       type: Number,
-      required: true
+      required: true,
     },
     pageId: {
       type: String,
-      required: true
+      required: true,
     },
     parent: {
       type: String,
       required: false,
-      default: ''
+      default: '',
     },
     root: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   data: () => ({
     arrowClicked: false,
-    paddingLeft: 15
+    paddingLeft: 15,
   }),
   computed: {
-    nested () {
-      return this.notRootPages.filter(page => this.nestedPages.includes(page._id))
+    nested() {
+      return this.notRootPages.filter((page) =>
+        this.nestedPages.includes(page._id)
+      )
     },
-    isActive () {
+    isActive() {
       return this.pageId === this.currentPage._id
     },
     ...mapGetters(['notRootPages']),
-    ...mapState(['currentPage'])
+    ...mapState(['currentPage']),
   },
   created() {
     if (!this.root && this.$parent?.paddingLeft) {
       this.paddingLeft = this.$parent?.paddingLeft + 15
     }
-  }
+  },
 }
 </script>
 
@@ -101,7 +113,8 @@ export default {
   text-decoration: none;
 }
 
-.page-item:hover, .page-item-active {
+.page-item:hover,
+.page-item-active {
   background-color: var(--light-gray);
 }
 

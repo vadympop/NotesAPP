@@ -6,5 +6,5 @@ export default () => ({
   removedNotes: [],
   currentNotes: [],
   pages: [],
-  currentPage: {}
+  currentPage: {},
 })

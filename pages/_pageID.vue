@@ -1,76 +1,81 @@
 <template>
-<div class="page-content">
-  <div class="page-notes">
-    <editable ref="pageNameInput" v-model="updatedPageName" class="page-title" v-debounce="savePageEditing"/>
-    <div v-for="note of sortedNotes" :key="note._id">
-      <note
-        :content="note.content"
-        :position="note.position"
-        :styles="note.styles"
-        :author="note.author"
-        :new="note.new"
-        :page="note.page"
-        :note-id="note._id"
+  <div class="page-content">
+    <div class="page-notes">
+      <editable
+        ref="pageNameInput"
+        v-model="updatedPageName"
+        v-debounce="savePageEditing"
+        class="page-title"
       />
+      <div v-for="note of sortedNotes" :key="note._id">
+        <note
+          :content="note.content"
+          :position="note.position"
+          :styles="note.styles"
+          :author="note.author"
+          :new="note.new"
+          :page="note.page"
+          :note-id="note._id"
+        />
+      </div>
     </div>
+    <div class="adding-notes-area" @click="addNote"></div>
   </div>
-  <div class="adding-notes-area" @click="addNote"></div>
-</div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 
 export default {
-  name: "NotesPage",
+  name: 'NotesPage',
   layout: 'notes',
   data: () => ({
-    updatedPageName: ''
+    updatedPageName: '',
   }),
   computed: {
-    sortedNotes () {
+    sortedNotes() {
       if (!this.currentNotes || !this.newNotes) {
         return []
       }
 
       return [...this.currentNotes, ...this.newNotes].sort(
-        (note1, note2) => note1.position-note2.position
+        (note1, note2) => note1.position - note2.position
       )
     },
-    pageId () {
+    pageId() {
       return this.$route.params.pageID
     },
-    ...mapState(['currentNotes', 'newNotes', 'currentPage'])
+    ...mapState(['currentNotes', 'newNotes', 'currentPage']),
   },
   watch: {
-    currentPage (){
+    currentPage() {
       if (!this.updatedPageName) {
         this.updatedPageName = this.currentPage.name
         this.$refs.pageNameInput.updateText(this.updatedPageName)
       }
-    }
+    },
   },
-  mounted () {
+  mounted() {
     this.$store.dispatch('getUserPages')
     this.$store.dispatch('setCurrentPage', this.pageId)
   },
   methods: {
-    addNote () {
+    addNote() {
       this.$store.commit('addNote', this.pageId)
     },
-    savePageEditing () {
+    savePageEditing() {
       const updatedData = {
         pageId: this.pageId,
         name: this.updatedPageName,
         root: this.currentPage.root,
         nestedPages: this.currentPage.nestedPages,
         parent: this.currentPage.parent,
-        position: this.currentPage.position
+        position: this.currentPage.position,
       }
 
       this.$store.commit('editPage', updatedData)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -100,7 +105,7 @@ export default {
   color: #ffffff;
 }
 
-.page-title:focus-visible{
+.page-title:focus-visible {
   outline: none;
 }
 
@@ -108,5 +113,4 @@ export default {
   height: 100%;
   cursor: text;
 }
-
 </style>

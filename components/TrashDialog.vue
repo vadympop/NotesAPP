@@ -1,21 +1,21 @@
 <template>
-<v-dialog transition="dialog-bottom-transition" hide-overlay max-width="800">
-  <template #activator="{ on, attrs }">
-    <div class="activator" v-bind="attrs" v-on="on">
-      <v-icon class="activator-icon" color="var(--light-gray3)" size="24px">mdi-trash-can-outline</v-icon>
-      <span class="activator-text">Trash</span>
-    </div>
-  </template>
+  <v-dialog transition="dialog-bottom-transition" hide-overlay max-width="800">
+    <template #activator="{ on, attrs }">
+      <div class="activator" v-bind="attrs" v-on="on">
+        <v-icon class="activator-icon" color="var(--light-gray3)" size="24px"
+          >mdi-trash-can-outline</v-icon
+        >
+        <span class="activator-text">Trash</span>
+      </div>
+    </template>
 
-  <div class="dialog">
-
-  </div>
-</v-dialog>
+    <div class="dialog"></div>
+  </v-dialog>
 </template>
 
 <script>
 export default {
-  name: "TrashDialog"
+  name: 'TrashDialog',
 }
 </script>
 

@@ -1,31 +1,30 @@
 export default {
-  async setCurrentPage ({ state, commit }, pageId) {
+  async setCurrentPage({ state, commit }, pageId) {
     if (state.currentPage._id === pageId) {
       return
     }
 
     if ((state.notes[pageId]?.length || 0) <= 0) {
-      const notesResponse = await this.$axios.get(
-        'api/notes?populate=page',
-        { params: { filter: `page=${pageId}` } }
-      )
+      const notesResponse = await this.$axios.get('api/notes?populate=page', {
+        params: { filter: `page=${pageId}` },
+      })
       commit('setNotes', { pageId, notes: notesResponse.data.items })
     }
 
     commit('setCurrentNotes', pageId)
     commit('setCurrentPage', pageId)
   },
-  async removePage ({ commit }, pageId) {
+  async removePage({ commit }, pageId) {
     await this.$axios.delete(`api/pages/${pageId}`)
     commit('removePage', pageId)
   },
-  async createPage ({ commit, state }, name) {
+  async createPage({ commit, state }, name) {
     const newPageResponse = await this.$axios.post('api/pages', { name })
     const pageId = newPageResponse.data._id
     const position = newPageResponse.data.position
     commit('addPage', { pageId, name, position })
   },
-  async getUserPages ({ state, commit }) {
+  async getUserPages({ state, commit }) {
     // const pages = [
     //   {
     //     id: '1',
@@ -74,5 +73,5 @@ export default {
 
     const pagesResponse = await this.$axios.get('api/pages')
     commit('addPages', pagesResponse.data.items)
-  }
+  },
 }

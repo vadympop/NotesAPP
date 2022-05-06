@@ -1,36 +1,52 @@
 <template>
   <div class="page-header">
     <div class="pages-navigation">
-      <v-icon class="pages-navigation-icon hoverable-icon" color="var(--light-gray3)">mdi-arrow-left</v-icon>
-      <v-icon class="pages-navigation-icon hoverable-icon" color="var(--light-gray3)">mdi-arrow-right</v-icon>
+      <v-icon
+        class="pages-navigation-icon hoverable-icon"
+        color="var(--light-gray3)"
+        >mdi-arrow-left</v-icon
+      >
+      <v-icon
+        class="pages-navigation-icon hoverable-icon"
+        color="var(--light-gray3)"
+        >mdi-arrow-right</v-icon
+      >
     </div>
     <span class="page-header-name">{{ currentPage.name }}</span>
     <v-spacer></v-spacer>
     <div class="additional-buttons">
-      <v-icon class="additional-button hoverable-icon" color="var(--light-gray3)">
+      <v-icon
+        class="additional-button hoverable-icon"
+        color="var(--light-gray3)"
+      >
         mdi-star-outline
-      </v-icon> <!-- Add to favourites -->
-      <page-delete-dialog class="additional-button" :page-id="pageId"/>
-      <page-comments-dialog class="additional-button"/>
-      <page-updates-dialog class="additional-button"/>
-      <v-icon class="additional-button hoverable-icon" color="var(--light-gray3)">
+      </v-icon>
+      <!-- Add to favourites -->
+      <page-delete-dialog class="additional-button" :page-id="pageId" />
+      <page-comments-dialog class="additional-button" />
+      <page-updates-dialog class="additional-button" />
+      <v-icon
+        class="additional-button hoverable-icon"
+        color="var(--light-gray3)"
+      >
         mdi-dots-horizontal
-      </v-icon> <!-- Settigns -->
+      </v-icon>
+      <!-- Settigns -->
     </div>
   </div>
 </template>
 
 <script>
-import {mapState} from "vuex";
+import { mapState } from 'vuex'
 
 export default {
-  name: "PageHeader",
+  name: 'PageHeader',
   computed: {
-    pageId () {
+    pageId() {
       return this.$route.params.pageID
     },
-    ...mapState(['currentPage'])
-  }
+    ...mapState(['currentPage']),
+  },
 }
 </script>
 

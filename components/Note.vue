@@ -1,98 +1,106 @@
 <template>
   <div
-    :class="{'note': true, 'note-selected': isSelected}"
+    :class="{ note: true, 'note-selected': isSelected }"
     @mouseenter="hoverableButtons = true"
     @mouseleave="hoverableButtons = false"
     @keyup.delete="removeNote"
   >
-    <div v-if="hoverableButtons" :class="{'hoverable-buttons': true}">
+    <div v-if="hoverableButtons" :class="{ 'hoverable-buttons': true }">
       <v-icon
         class="hoverable-button new-note-button hoverable-icon"
         color="var(--light-gray3)"
         @click="addNote"
-      >mdi-plus</v-icon>
-      <v-icon class="hoverable-button interaction-button hoverable-icon" color="var(--light-gray3)">mdi-dots-grid</v-icon>
+        >mdi-plus</v-icon
+      >
+      <v-icon
+        class="hoverable-button interaction-button hoverable-icon"
+        color="var(--light-gray3)"
+        >mdi-dots-grid</v-icon
+      >
       <div class="hoverable-button"></div>
     </div>
-    <editable v-model="updatedContent" v-debounce="save" class="note-content"/>
+    <editable v-model="updatedContent" v-debounce="save" class="note-content" />
   </div>
 </template>
 
 <script>
 export default {
-  name: "NoteItem",
+  name: 'NoteItem',
   props: {
     noteId: {
       type: String,
-      required: true
+      required: true,
     },
     page: {
       type: [Object, String],
-      required: true
+      required: true,
     },
     content: {
       type: String,
-      default: ''
+      default: '',
     },
     position: {
       type: Number,
-      required: true
+      required: true,
     },
     styles: {
       type: Object,
-      required: true
+      required: true,
     },
     author: {
       type: String,
-      required: true
+      required: true,
     },
     new: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
+  data() {
     return {
       hoverableButtons: false,
       isSelected: false,
-      updatedContent: this.content
+      updatedContent: this.content,
     }
   },
   computed: {
-    pageId () {
+    pageId() {
       return this.$route.params.pageID
-    }
+    },
   },
   methods: {
-    removeNote () {
+    removeNote() {
       if (!this.updatedContent) {
         if (!this.new) {
-          this.$store.commit('removeNote', { noteId: this.noteId, pageId: this.pageId })
+          this.$store.commit('removeNote', {
+            noteId: this.noteId,
+            pageId: this.pageId,
+          })
         } else {
           this.$store.commit('removeNewNote', this.noteId)
         }
       }
     },
-    addNote () {
+    addNote() {
       this.$store.commit('addNote', this.pageId)
     },
-    save () {
+    save() {
       const updatedData = {
         content: this.updatedContent,
         page: this.page,
         noteId: this.noteId,
         styles: this.styles,
         author: this.author,
-        position: this.position
+        position: this.position,
       }
       if (!this.new) {
         this.$store.commit('editNote', updatedData)
       } else {
         this.$store.commit('editNewNote', updatedData)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

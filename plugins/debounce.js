@@ -5,5 +5,5 @@ Vue.use(vueDebounce)
 
 Vue.use(vueDebounce, {
   listenTo: ['input', 'keyup'],
-  defaultTime: '2000ms'
+  defaultTime: '2000ms',
 })

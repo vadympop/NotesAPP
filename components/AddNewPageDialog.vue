@@ -1,12 +1,18 @@
 <template>
-  <v-dialog v-model="dialog" transition="dialog-bottom-transition" hide-overlay max-width="500">
+  <v-dialog
+    v-model="dialog"
+    transition="dialog-bottom-transition"
+    hide-overlay
+    max-width="500"
+  >
     <template #activator="{ on, attrs }">
-      <div
-        class="additional-page-item"
-        v-bind="attrs"
-        v-on="on"
-      >
-        <v-icon class="additional-page-item-icon" color="var(--light-gray3)" size="24px">mdi-plus</v-icon>
+      <div class="additional-page-item" v-bind="attrs" v-on="on">
+        <v-icon
+          class="additional-page-item-icon"
+          color="var(--light-gray3)"
+          size="24px"
+          >mdi-plus</v-icon
+        >
         <span class="additional-page-item-text">New page</span>
       </div>
     </template>
@@ -16,8 +22,13 @@
         <span>New page</span>
       </div>
       <div class="dialog-body flex-column" style="margin-bottom: auto">
-        <input v-model="pageName" class="input" type="text" placeholder="Enter page name">
-        <strong v-if="error" style="color: var(--red)">{{error}}</strong>
+        <input
+          v-model="pageName"
+          class="input"
+          type="text"
+          placeholder="Enter page name"
+        />
+        <strong v-if="error" style="color: var(--red)">{{ error }}</strong>
       </div>
       <div class="dialog-footer">
         <v-spacer></v-spacer>
@@ -30,26 +41,24 @@
 
 <script>
 export default {
-  name: "AddNewPageDialog",
+  name: 'AddNewPageDialog',
   data: () => ({
     dialog: false,
     pageName: '',
-    error: ''
+    error: '',
   }),
   methods: {
-    createPage () {
+    createPage() {
       if (!this.pageName) {
-        this.error = 'You don\'t provide new page name'
+        this.error = "You don't provide new page name"
         return
       }
 
       this.$store.dispatch('createPage', this.pageName)
       this.dialog = false
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

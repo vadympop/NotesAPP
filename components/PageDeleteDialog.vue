@@ -1,5 +1,10 @@
 <template>
-  <v-dialog transition="dialog-bottom-transition" v-model="dialog" hide-overlay max-width="500">
+  <v-dialog
+    v-model="dialog"
+    transition="dialog-bottom-transition"
+    hide-overlay
+    max-width="500"
+  >
     <template #activator="{ on, attrs }">
       <v-icon
         class="hoverable-icon"
@@ -18,9 +23,12 @@
       <div class="dialog-body flex-column" style="margin-bottom: auto">
         <div>
           <span>You want to delete </span>
-          <strong>{{specifiedPageName}}</strong>
+          <strong>{{ specifiedPageName }}</strong>
         </div>
-        <span>When you click a button "Delete" this page and all her nested pages will move to trash</span>
+        <span
+          >When you click a button "Delete" this page and all her nested pages
+          will move to trash</span
+        >
       </div>
       <div class="dialog-footer">
         <v-spacer></v-spacer>
@@ -32,36 +40,34 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import { mapState } from 'vuex'
 
 export default {
-  name: "PageDeleteDialog",
+  name: 'PageDeleteDialog',
   props: {
     pageId: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data: () => ({
-    dialog: false
+    dialog: false,
   }),
   computed: {
-    specifiedPageName () {
-      const foundPage = this.pages.find(page => page._id === this.pageId)
+    specifiedPageName() {
+      const foundPage = this.pages.find((page) => page._id === this.pageId)
       return foundPage ? foundPage.name : 'Unknown'
     },
-    ...mapState(['pages'])
+    ...mapState(['pages']),
   },
   methods: {
-    removePage () {
+    removePage() {
       this.$store.dispatch('removePage', this.pageId)
       this.dialog = false
       this.$router.push({ path: `/${this.pages[0]._id}` })
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

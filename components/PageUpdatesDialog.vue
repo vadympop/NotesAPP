@@ -11,18 +11,14 @@
       </v-icon>
     </template>
 
-    <div class="dialog">
-
-    </div>
+    <div class="dialog"></div>
   </v-dialog>
 </template>
 
 <script>
 export default {
-  name: "PageUpdatesDialog"
+  name: 'PageUpdatesDialog',
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

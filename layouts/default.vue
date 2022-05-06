@@ -3,7 +3,7 @@
     <v-main>
       <div class="header">
         <v-toolbar-title class="logo">
-          <v-avatar><img src="" alt="" width="32px"></v-avatar>
+          <v-avatar><img src="" alt="" width="32px" /></v-avatar>
           <span class="logo-text">NotesAPP</span>
         </v-toolbar-title>
         <v-spacer></v-spacer>
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: 'DefaultLayout'
+  name: 'DefaultLayout',
 }
 </script>
 

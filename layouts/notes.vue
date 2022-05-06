@@ -4,7 +4,12 @@
       <div class="notes-layout">
         <div class="pages-list">
           <nuxt-link to="/" class="additional-page-item">
-            <img src="https://via.placeholder.com/128x128" alt="avatar" class="main-page-item-image" width="48">
+            <img
+              src="https://via.placeholder.com/128x128"
+              alt="avatar"
+              class="main-page-item-image"
+              width="48"
+            />
             <span class="additional-page-item-text">USer Name</span>
           </nuxt-link>
           <v-divider></v-divider>
@@ -24,12 +29,12 @@
 
           <v-spacer></v-spacer>
 
-          <trash-dialog/>
+          <trash-dialog />
           <v-divider class="mt-10"></v-divider>
-          <add-new-page-dialog/>
+          <add-new-page-dialog />
         </div>
         <div class="notes-page">
-          <page-header/>
+          <page-header />
           <Nuxt />
         </div>
       </div>
@@ -38,37 +43,37 @@
 </template>
 
 <script>
-import {mapGetters, mapState} from "vuex";
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'NotesLayout',
   data: () => ({
     timer: null,
-    savedNotes: []
+    savedNotes: [],
   }),
   computed: {
-    pageNotes () {
+    pageNotes() {
       return this.notes[this.pageId]
     },
-    pageId () {
+    pageId() {
       return this.$route.params.pageID
     },
     ...mapState(['newNotes', 'removedNotes', 'changedNotes', 'notes']),
-    ...mapGetters(['rootPages'])
+    ...mapGetters(['rootPages']),
   },
   watch: {
-    newNotes (v) {
+    newNotes(v) {
       console.log(v, 'newNotes')
       this.debounce(this.saveNewNotes)
     },
-    changedNotes (v) {
+    changedNotes(v) {
       console.log(v, 'changedNotes')
       this.debounce(this.applyChangesInNotes)
     },
-    removedNotes (v) {
+    removedNotes(v) {
       console.log(v, 'removedNotes')
       this.debounce(this.applyRemovedNotes)
-    }
+    },
   },
   mounted() {
     document.documentElement.style.overflow = 'hidden'
@@ -79,7 +84,7 @@ export default {
     })
   },
   methods: {
-    debounce (callback) {
+    debounce(callback) {
       if (this.timer) {
         clearTimeout(this.timer)
       }
@@ -88,25 +93,25 @@ export default {
         callback()
       }, 5000)
     },
-    saveAll () {
+    saveAll() {
       this.saveNewNotes()
       this.applyRemovedNotes()
       this.applyChangesInNotes()
     },
-    saveNewNotes () {
-      const readyToSaveNotes = JSON.parse(JSON.stringify(
-        this.newNotes
-      )).filter(note => note.content && !this.savedNotes.includes(note._id))
+    saveNewNotes() {
+      const readyToSaveNotes = JSON.parse(JSON.stringify(this.newNotes)).filter(
+        (note) => note.content && !this.savedNotes.includes(note._id)
+      )
       readyToSaveNotes.map((note) => {
         delete note._id
         return note
       })
 
       const savedNotesIds = this.newNotes
-      this.savedNotes.push(...savedNotesIds.map(note => note._id))
-      this.$axios.post('/api/new', { notesToAdd: readyToSaveNotes})
+      this.savedNotes.push(...savedNotesIds.map((note) => note._id))
+      this.$axios.post('/api/new', { notesToAdd: readyToSaveNotes })
     },
-    applyRemovedNotes () {
+    applyRemovedNotes() {
       if (this.removedNotes.length <= 0) {
         return
       }
@@ -114,19 +119,23 @@ export default {
       this.$axios.post('/api/remove', { notesToRemove: this.removedNotes })
       this.$store.commit('clearRemovedNotes')
     },
-    applyChangesInNotes () {
+    applyChangesInNotes() {
       if (this.changedNotes.length <= 0) {
         return
       }
 
-      const changedNotes = this.pageNotes.filter(note => this.changedNotes.includes(note._id))
-      this.$axios.post(
-        '/api/update',
-        { changedNotes: changedNotes.map(note => ({...note, page: note.page._id})) }
+      const changedNotes = this.pageNotes.filter((note) =>
+        this.changedNotes.includes(note._id)
       )
+      this.$axios.post('/api/update', {
+        changedNotes: changedNotes.map((note) => ({
+          ...note,
+          page: note.page._id,
+        })),
+      })
       this.$store.commit('clearChangedNotes')
-    }
-  }
+    },
+  },
 }
 </script>
 
