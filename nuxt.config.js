@@ -1,5 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
-import { API_URL } from '@/consts'
+import { API_URL } from './consts'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
