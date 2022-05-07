@@ -19,7 +19,7 @@
       >
       <div class="hoverable-button"></div>
     </div>
-    <editable v-model="updatedContent" v-debounce="save" class="note-content" />
+    <editable ref="noteContent" v-model="updatedContent" v-debounce="save" class="note-content" />
   </div>
 </template>
 
@@ -70,8 +70,12 @@ export default {
     },
   },
   methods: {
+    focus() {
+      this.$refs.noteContent.focus()
+    },
     removeNote() {
       if (!this.updatedContent) {
+        this.$emit('remove-note', { noteId: this.noteId })
         if (!this.new) {
           this.$store.commit('removeNote', {
             noteId: this.noteId,

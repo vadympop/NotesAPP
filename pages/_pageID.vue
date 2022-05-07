@@ -9,6 +9,7 @@
       />
       <div v-for="note of sortedNotes" :key="note._id">
         <note
+          :ref="note._id"
           :content="note.content"
           :position="note.position"
           :styles="note.styles"
@@ -16,6 +17,7 @@
           :new="note.new"
           :page="note.page"
           :note-id="note._id"
+          @remove-note="onRemoveNote"
         />
       </div>
     </div>
@@ -75,6 +77,13 @@ export default {
 
       this.$store.commit('editPage', updatedData)
     },
+    onRemoveNote({ noteId }) {
+      const removedNote = this.sortedNotes.find(note => note._id === noteId)
+      const noteBeforeRemovedNote = this.sortedNotes[this.sortedNotes.indexOf(removedNote)-1]
+      if (noteBeforeRemovedNote?._id) {
+        this.$refs[noteBeforeRemovedNote._id][0].focus()
+      }
+    }
   },
 }
 </script>

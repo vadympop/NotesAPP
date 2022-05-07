@@ -25,6 +25,14 @@ export default {
     this.$refs.editable.innerText = this.value
   },
   methods: {
+    focus () {
+      this.$refs.editable.focus()
+      const selection = window.getSelection()
+      if (selection.rangeCount > 0) {
+        const textNode = selection.focusNode
+        selection.collapse(textNode, textNode.length)
+      }
+    },
     onInput(e) {
       const targetText = e.target.innerText
       if (targetText === '\n') {
