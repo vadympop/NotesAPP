@@ -78,12 +78,13 @@ export default {
       this.$store.commit('editPage', updatedData)
     },
     onRemoveNote({ noteId }) {
-      const removedNote = this.sortedNotes.find(note => note._id === noteId)
-      const noteBeforeRemovedNote = this.sortedNotes[this.sortedNotes.indexOf(removedNote)-1]
+      const removedNote = this.sortedNotes.find((note) => note._id === noteId)
+      const noteBeforeRemovedNote =
+        this.sortedNotes[this.sortedNotes.indexOf(removedNote) - 1]
       if (noteBeforeRemovedNote?._id) {
         this.$refs[noteBeforeRemovedNote._id][0].focus()
       }
-    }
+    },
   },
 }
 </script>

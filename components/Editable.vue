@@ -25,7 +25,7 @@ export default {
     this.$refs.editable.innerText = this.value
   },
   methods: {
-    focus () {
+    focus() {
       this.$refs.editable.focus()
       const selection = window.getSelection()
       if (selection.rangeCount > 0) {

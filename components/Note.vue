@@ -19,7 +19,12 @@
       >
       <div class="hoverable-button"></div>
     </div>
-    <editable ref="noteContent" v-model="updatedContent" v-debounce="save" class="note-content" />
+    <editable
+      ref="noteContent"
+      v-model="updatedContent"
+      v-debounce="save"
+      class="note-content"
+    />
   </div>
 </template>
 
