@@ -7,16 +7,16 @@
         class="page-title"
         @input="debouncedSavePageEditing"
       />
-      <div v-for="note of sortedNotes" :key="note._id">
+      <div v-for="note of sortedNotes" :key="note.noteId">
         <note
-          :ref="note._id"
+          :ref="note.noteId"
           :content="note.content"
           :position="note.position"
           :styles="note.styles"
           :author="note.author"
           :new="note.new"
           :page="note.page"
-          :note-id="note._id"
+          :note-id="note.noteId"
           @remove-note="onRemoveNote"
         />
       </div>
@@ -69,6 +69,9 @@ export default {
   methods: {
     addNote() {
       this.$store.commit('addNote', this.pageId)
+      setTimeout(() => {
+        this.$refs[this.newNotes[this.newNotes.length-1]?.noteId][0]?.focus()
+      }, 100)
     },
     savePageEditing() {
       const updatedData = {
@@ -83,11 +86,11 @@ export default {
       this.$store.commit('editPage', updatedData)
     },
     onRemoveNote({ noteId }) {
-      const removedNote = this.sortedNotes.find((note) => note._id === noteId)
+      const removedNote = this.sortedNotes.find((note) => note.noteId === noteId)
       const noteBeforeRemovedNote =
         this.sortedNotes[this.sortedNotes.indexOf(removedNote) - 1]
-      if (noteBeforeRemovedNote?._id) {
-        this.$refs[noteBeforeRemovedNote._id][0].focus()
+      if (noteBeforeRemovedNote?.noteId) {
+        this.$refs[noteBeforeRemovedNote.noteId][0].focus()
       }
     },
   },
