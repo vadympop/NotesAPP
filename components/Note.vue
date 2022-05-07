@@ -69,7 +69,7 @@ export default {
       hoverableButtons: false,
       isSelected: false,
       updatedContent: this.content,
-      debouncedSave: debounce(this.save, 500)
+      debouncedSave: debounce(this.save, 500),
     }
   },
   computed: {
