@@ -44,13 +44,18 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex'
+import { debounce } from '@/utils'
 
 export default {
   name: 'NotesLayout',
-  data: () => ({
-    timer: null,
-    savedNotes: [],
-  }),
+  data () {
+    return {
+      savedNotes: [],
+      debouncedSaveNewNotes: debounce(this.saveNewNotes),
+      debouncedRemoveNotes: debounce(this.applyRemovedNotes),
+      debouncedApplyNotesChanges: debounce(this.applyChangesInNotes),
+    }
+  },
   computed: {
     pageNotes() {
       return this.notes[this.pageId]
@@ -64,15 +69,15 @@ export default {
   watch: {
     newNotes(v) {
       console.log(v, 'newNotes')
-      this.debounce(this.saveNewNotes)
+      this.debouncedSaveNewNotes()
     },
     changedNotes(v) {
       console.log(v, 'changedNotes')
-      this.debounce(this.applyChangesInNotes)
+      this.debouncedApplyNotesChanges()
     },
     removedNotes(v) {
       console.log(v, 'removedNotes')
-      this.debounce(this.applyRemovedNotes)
+      this.debouncedRemoveNotes()
     },
   },
   mounted() {
@@ -84,21 +89,13 @@ export default {
     })
   },
   methods: {
-    debounce(callback) {
-      if (this.timer) {
-        clearTimeout(this.timer)
-      }
-
-      this.timer = setTimeout(() => {
-        callback()
-      }, 5000)
-    },
     saveAll() {
       this.saveNewNotes()
       this.applyRemovedNotes()
       this.applyChangesInNotes()
     },
     saveNewNotes() {
+      console.log('Call save new notes')
       const readyToSaveNotes = JSON.parse(JSON.stringify(this.newNotes)).filter(
         (note) => note.content && !this.savedNotes.includes(note._id)
       )
@@ -106,20 +103,27 @@ export default {
         delete note._id
         return note
       })
+      if (readyToSaveNotes.length <= 0) {
+        return
+      }
+      console.log('Save new notes', readyToSaveNotes)
 
       const savedNotesIds = this.newNotes
       this.savedNotes.push(...savedNotesIds.map((note) => note._id))
       this.$axios.post('/api/new', { notesToAdd: readyToSaveNotes })
     },
     applyRemovedNotes() {
+      console.log('Call remove notes')
       if (this.removedNotes.length <= 0) {
         return
       }
 
+      console.log('Remove notes', this.removedNotes)
       this.$axios.post('/api/remove', { notesToRemove: this.removedNotes })
       this.$store.commit('clearRemovedNotes')
     },
     applyChangesInNotes() {
+      console.log('Call change notes')
       if (this.changedNotes.length <= 0) {
         return
       }
@@ -127,6 +131,7 @@ export default {
       const changedNotes = this.pageNotes.filter((note) =>
         this.changedNotes.includes(note._id)
       )
+      console.log('Change notes', changedNotes)
       this.$axios.post('/api/update', {
         changedNotes: changedNotes.map((note) => ({
           ...note,

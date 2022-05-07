@@ -19,11 +19,13 @@
       >
       <div class="hoverable-button"></div>
     </div>
-    <editable ref="noteContent" v-model="updatedContent" v-debounce="save" class="note-content" />
+    <editable ref="noteContent" v-model="updatedContent" class="note-content" @input="debouncedSave" />
   </div>
 </template>
 
 <script>
+import { debounce } from '@/utils'
+
 export default {
   name: 'NoteItem',
   props: {
@@ -62,6 +64,7 @@ export default {
       hoverableButtons: false,
       isSelected: false,
       updatedContent: this.content,
+      debouncedSave: debounce(this.save, 500)
     }
   },
   computed: {
@@ -90,6 +93,7 @@ export default {
       this.$store.commit('addNote', this.pageId)
     },
     save() {
+      console.log('Save note editing')
       const updatedData = {
         content: this.updatedContent,
         page: this.page,

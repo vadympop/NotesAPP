@@ -1,3 +1,5 @@
+import {DEBOUNCE_TIME_MS} from "@/consts";
+
 export function findAllNestedPages(pages, page) {
   const foundIds = []
   for (let i = 0; i < page.nestedPages.length; i++) {
@@ -10,4 +12,17 @@ export function findAllNestedPages(pages, page) {
     foundIds.push(nestedPageId)
   }
   return foundIds
+}
+
+export function debounce(callback, time=DEBOUNCE_TIME_MS) {
+  let timer
+  return () => {
+    if (timer) {
+      clearTimeout(timer)
+    }
+
+    timer = setTimeout(() => {
+      callback()
+    }, time)
+  }
 }

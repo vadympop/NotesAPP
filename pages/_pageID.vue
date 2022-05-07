@@ -4,8 +4,8 @@
       <editable
         ref="pageNameInput"
         v-model="updatedPageName"
-        v-debounce="savePageEditing"
         class="page-title"
+        @input="debouncedSavePageEditing"
       />
       <div v-for="note of sortedNotes" :key="note._id">
         <note
@@ -27,20 +27,24 @@
 
 <script>
 import { mapState } from 'vuex'
+import { debounce } from '@/utils'
 
 export default {
   name: 'NotesPage',
   layout: 'notes',
-  data: () => ({
-    updatedPageName: '',
-  }),
+  data() {
+    return {
+      debouncedSavePageEditing: debounce(this.savePageEditing),
+      updatedPageName: '',
+    }
+  },
   computed: {
     sortedNotes() {
       if (!this.currentNotes || !this.newNotes) {
         return []
       }
 
-      return [...this.currentNotes, ...this.newNotes].sort(
+      return [...this.currentNotes, ...this.newNotes.filter(note => note.page === this.pageId)].sort(
         (note1, note2) => note1.position - note2.position
       )
     },
