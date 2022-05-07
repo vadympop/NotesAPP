@@ -5,11 +5,11 @@ export default {
   addNote(state, pageId) {
     const pageNotes = state.notes[pageId]
     state.newNotes.push({
-      _id: uuid4().toString(),
+      noteId: uuid4().toString(),
       page: pageId,
       position: pageNotes.length,
       content: null,
-      styles: {},
+      styles: {someV: 'someV'},
       author: 'a',
       new: true,
     })
@@ -34,9 +34,9 @@ export default {
       return
     }
 
-    const foundNote = state.notes[page._id].find((note) => note._id === noteId)
+    const foundNote = state.notes[page._id].find((note) => note.noteId === noteId)
     state.notes[page._id][state.notes[page._id].indexOf(foundNote)] = {
-      _id: noteId,
+      noteId,
       page,
       styles,
       author,
@@ -49,9 +49,9 @@ export default {
     }
   },
   editNewNote(state, { page, noteId, styles, author, content, position }) {
-    const foundNote = state.newNotes.find((note) => note._id === noteId)
+    const foundNote = state.newNotes.find((note) => note.noteId === noteId)
     state.newNotes[state.newNotes.indexOf(foundNote)] = {
-      _id: noteId,
+      noteId,
       page,
       styles,
       author,
@@ -59,9 +59,13 @@ export default {
       position,
       new: true,
     }
+
+    if (!state.changedNotes.includes(noteId)) {
+      state.changedNotes.push(noteId)
+    }
   },
   removeNote(state, { pageId, noteId }) {
-    const foundNote = state.notes[pageId].find((note) => note._id === noteId)
+    const foundNote = state.notes[pageId].find((note) => note.noteId === noteId)
     state.notes[pageId].splice(state.notes[pageId].indexOf(foundNote), 1)
     state.removedNotes.push(noteId)
 
@@ -70,8 +74,13 @@ export default {
     }
   },
   removeNewNote(state, noteId) {
-    const foundNote = state.newNotes.find((note) => note._id === noteId)
+    const foundNote = state.newNotes.find((note) => note.noteId === noteId)
     state.newNotes.splice(state.newNotes.indexOf(foundNote), 1)
+    state.removedNotes.push(noteId)
+
+    if (state.changedNotes.includes(noteId)) {
+      state.changedNotes.splice(state.changedNotes.indexOf(noteId), 1)
+    }
   },
   addPages(state, pages) {
     state.pages = pages
