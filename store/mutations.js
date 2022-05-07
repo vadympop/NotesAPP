@@ -51,6 +51,10 @@ export default {
     }
   },
   editNewNote(state, { page, noteId, styles, author, content, position }) {
+    if (state.removedNotes.includes(noteId)) {
+      return
+    }
+
     const foundNote = state.newNotes.find((note) => note.noteId === noteId)
     state.newNotes[state.newNotes.indexOf(foundNote)] = {
       noteId,
