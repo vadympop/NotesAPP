@@ -46,4 +46,6 @@ jobs:
           eslint: true
           prettier: true
           auto_fix: true
+          prettier_auto_fix: true
+          eslint_auto_fix: true
           commit_message: "style: fix code style issues"
