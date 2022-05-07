@@ -34,7 +34,7 @@ export default {
   layout: 'notes',
   data() {
     return {
-      debouncedSavePageEditing: debounce(this.savePageEditing),
+      debouncedSavePageEditing: debounce(this.savePageEditing, 500),
       updatedPageName: '',
     }
   },

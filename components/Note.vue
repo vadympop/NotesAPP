@@ -22,13 +22,15 @@
     <editable
       ref="noteContent"
       v-model="updatedContent"
-      v-debounce="save"
+      @input="debouncedSave"
       class="note-content"
     />
   </div>
 </template>
 
 <script>
+import { debounce } from '@/utils'
+
 export default {
   name: 'NoteItem',
   props: {
@@ -67,6 +69,7 @@ export default {
       hoverableButtons: false,
       isSelected: false,
       updatedContent: this.content,
+      debouncedSave: debounce(this.save, 500)
     }
   },
   computed: {
