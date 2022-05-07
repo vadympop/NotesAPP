@@ -70,7 +70,7 @@ export default {
     addNote() {
       this.$store.commit('addNote', this.pageId)
       setTimeout(() => {
-        this.$refs[this.newNotes[this.newNotes.length-1]?.noteId][0]?.focus()
+        this.$refs[this.newNotes[this.newNotes.length - 1]?.noteId][0]?.focus()
       }, 100)
     },
     savePageEditing() {
@@ -86,7 +86,9 @@ export default {
       this.$store.commit('editPage', updatedData)
     },
     onRemoveNote({ noteId }) {
-      const removedNote = this.sortedNotes.find((note) => note.noteId === noteId)
+      const removedNote = this.sortedNotes.find(
+        (note) => note.noteId === noteId
+      )
       const noteBeforeRemovedNote =
         this.sortedNotes[this.sortedNotes.indexOf(removedNote) - 1]
       if (noteBeforeRemovedNote?.noteId) {
