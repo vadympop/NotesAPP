@@ -44,9 +44,10 @@ export default {
         return []
       }
 
-      return [...this.currentNotes, ...this.newNotes.filter(note => note.page === this.pageId)].sort(
-        (note1, note2) => note1.position - note2.position
-      )
+      return [
+        ...this.currentNotes,
+        ...this.newNotes.filter((note) => note.page === this.pageId),
+      ].sort((note1, note2) => note1.position - note2.position)
     },
     pageId() {
       return this.$route.params.pageID

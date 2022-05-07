@@ -1,4 +1,4 @@
-import {DEBOUNCE_TIME_MS} from "@/consts";
+import { DEBOUNCE_TIME_MS } from '@/consts'
 
 export function findAllNestedPages(pages, page) {
   const foundIds = []
@@ -14,7 +14,7 @@ export function findAllNestedPages(pages, page) {
   return foundIds
 }
 
-export function debounce(callback, time=DEBOUNCE_TIME_MS) {
+export function debounce(callback, time = DEBOUNCE_TIME_MS) {
   let timer
   return () => {
     if (timer) {

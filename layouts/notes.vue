@@ -48,7 +48,7 @@ import { debounce } from '@/utils'
 
 export default {
   name: 'NotesLayout',
-  data () {
+  data() {
     return {
       savedNotes: [],
       debouncedSaveNewNotes: debounce(this.saveNewNotes),
