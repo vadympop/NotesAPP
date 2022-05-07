@@ -9,7 +9,7 @@ export default {
       page: pageId,
       position: pageNotes.length,
       content: null,
-      styles: {someV: 'someV'},
+      styles: { someV: 'someV' },
       author: 'a',
       new: true,
     })
@@ -34,7 +34,9 @@ export default {
       return
     }
 
-    const foundNote = state.notes[page._id].find((note) => note.noteId === noteId)
+    const foundNote = state.notes[page._id].find(
+      (note) => note.noteId === noteId
+    )
     state.notes[page._id][state.notes[page._id].indexOf(foundNote)] = {
       noteId,
       page,

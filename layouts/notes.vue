@@ -60,8 +60,8 @@ export default {
     pageNotes() {
       return this.notes[this.pageId]
     },
-    pageNewNotes () {
-      return this.newNotes.filter(note => note.page === this.pageId)
+    pageNewNotes() {
+      return this.newNotes.filter((note) => note.page === this.pageId)
     },
     pageId() {
       return this.$route.params.pageID
