@@ -1,5 +1,5 @@
 <template>
-  <div class="page-content">
+  <div class="page-content" v-if="currentPage.name">
     <div class="page-notes">
       <editable
         ref="pageNameInput"
@@ -7,18 +7,23 @@
         class="page-title"
         @input="debouncedSavePageEditing"
       />
-      <div v-for="note of sortedNotes" :key="note.noteId">
-        <note
-          :ref="note.noteId"
-          :content="note.content"
-          :position="note.position"
-          :styles="note.styles"
-          :author="note.author"
-          :new="note.new"
-          :page="note.page"
-          :note-id="note.noteId"
-          @remove-note="onRemoveNote"
-        />
+      <div v-if="sortedNotes.length > 0">
+        <div v-for="note of sortedNotes" :key="note.noteId">
+          <note
+            :ref="note.noteId"
+            :content="note.content"
+            :position="note.position"
+            :styles="note.styles"
+            :author="note.author"
+            :new="note.new"
+            :page="note.page"
+            :note-id="note.noteId"
+            @remove-note="onRemoveNote"
+          />
+        </div>
+      </div>
+      <div v-else>
+        <span class="no-notes-text">Click here to create new note</span>
       </div>
     </div>
     <div class="adding-notes-area" @click="addNote"></div>
@@ -132,5 +137,13 @@ export default {
 .adding-notes-area {
   height: 100%;
   cursor: text;
+}
+
+.no-notes-text {
+  margin-top: 2em;
+  color: var(--light-gray2);
+  font-size: 1.5em;
+  font-weight: 300;
+  pointer-events: none;
 }
 </style>
