@@ -30,14 +30,15 @@ export default {
   setCurrentNotes(state, pageId) {
     state.currentNotes = state.notes[pageId]
   },
-  editNote(state, { page, noteId, styles, author, content, position, newNote, preventApiReq }) {
+  editNote(
+    state,
+    { page, noteId, styles, author, content, position, newNote, preventApiReq }
+  ) {
     if (state.removedNotes.includes(noteId)) {
       return
     }
 
-    const foundNote = state.notes[page].find(
-      (note) => note.noteId === noteId
-    )
+    const foundNote = state.notes[page].find((note) => note.noteId === noteId)
     state.notes[page][state.notes[page].indexOf(foundNote)] = {
       noteId,
       page,
@@ -45,7 +46,7 @@ export default {
       author,
       content,
       position,
-      newNote
+      newNote,
     }
 
     if (!state.changedNotes.includes(noteId) && !preventApiReq) {
@@ -54,16 +55,17 @@ export default {
   },
   removeNote(state, { pageId, noteId }) {
     const foundNote = state.notes[pageId].find((note) => note.noteId === noteId)
-    state.notes[pageId].filter(
-      (note) => note.position > foundNote.position
-    ).forEach((note) => {
-      state.notes[pageId][state.notes[pageId].indexOf(note)] = {
-        ...note, position: note.position-1
-      }
-      if (!state.changedNotes.includes(note.noteId)) {
-        state.changedNotes.push(note.noteId)
-      }
-    })
+    state.notes[pageId]
+      .filter((note) => note.position > foundNote.position)
+      .forEach((note) => {
+        state.notes[pageId][state.notes[pageId].indexOf(note)] = {
+          ...note,
+          position: note.position - 1,
+        }
+        if (!state.changedNotes.includes(note.noteId)) {
+          state.changedNotes.push(note.noteId)
+        }
+      })
 
     state.notes[pageId].splice(state.notes[pageId].indexOf(foundNote), 1)
     state.removedNotes.push(noteId)
