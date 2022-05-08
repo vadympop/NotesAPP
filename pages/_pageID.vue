@@ -49,7 +49,9 @@ export default {
         return []
       }
 
-      return [...this.currentNotes].sort((note1, note2) => note1.position - note2.position)
+      return [...this.currentNotes].sort(
+        (note1, note2) => note1.position - note2.position
+      )
     },
     pageId() {
       return this.$route.params.pageID
@@ -72,7 +74,9 @@ export default {
     addNote() {
       this.$store.commit('addNote', this.pageId)
       setTimeout(() => {
-        this.$refs[this.currentNotes[this.currentNotes.length - 1]?.noteId][0]?.focus()
+        this.$refs[
+          this.currentNotes[this.currentNotes.length - 1]?.noteId
+        ][0]?.focus()
       }, 100)
     },
     savePageEditing() {
