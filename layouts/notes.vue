@@ -50,36 +50,26 @@ export default {
   name: 'NotesLayout',
   data() {
     return {
-      savedNotes: [],
       debouncedSaveNewNotes: debounce(this.saveNewNotes),
       debouncedRemoveNotes: debounce(this.applyRemovedNotes),
       debouncedApplyNotesChanges: debounce(this.applyChangesInNotes),
     }
   },
   computed: {
-    pageNotes() {
-      return this.notes[this.pageId]
-    },
-    pageNewNotes() {
-      return this.newNotes.filter((note) => note.page === this.pageId)
-    },
     pageId() {
       return this.$route.params.pageID
     },
-    ...mapState(['newNotes', 'removedNotes', 'changedNotes', 'notes']),
+    ...mapState(['removedNotes', 'changedNotes', 'currentNotes']),
     ...mapGetters(['rootPages']),
   },
   watch: {
-    newNotes(v) {
-      console.log(v, 'newNotes')
+    newNotes() {
       this.debouncedSaveNewNotes()
     },
-    changedNotes(v) {
-      console.log(v, 'changedNotes')
+    changedNotes() {
       this.debouncedApplyNotesChanges()
     },
-    removedNotes(v) {
-      console.log(v, 'removedNotes')
+    removedNotes() {
       this.debouncedRemoveNotes()
     },
   },
@@ -99,17 +89,16 @@ export default {
     },
     saveNewNotes() {
       console.log('Call save new notes')
-      const readyToSaveNotes = JSON.parse(JSON.stringify(this.newNotes)).filter(
-        (note) => note.content && !this.savedNotes.includes(note.noteId)
+      const readyToSaveNotes = this.currentNotes.filter(
+        (note) => note.newNote && note.content
       )
       if (readyToSaveNotes.length <= 0) {
         return
       }
       console.log('Save new notes', readyToSaveNotes)
 
-      const savedNotesIds = this.newNotes
-      this.savedNotes.push(...savedNotesIds.map((note) => note.noteId))
       this.$axios.post('/api/new', { notesToAdd: readyToSaveNotes })
+      this.$store.dispatch('clearNewNotes')
     },
     applyRemovedNotes() {
       console.log('Call remove notes')
@@ -127,19 +116,12 @@ export default {
         return
       }
 
-      let changedNotes = this.pageNotes.filter((note) =>
+      const changedNotes = this.currentNotes.filter((note) =>
         this.changedNotes.includes(note.noteId)
       )
-      const changedNewNotes = this.pageNewNotes.filter((note) =>
-        this.changedNotes.includes(note.noteId)
-      )
-      changedNotes = changedNotes.map((note) => ({
-        ...note,
-        page: note.page.noteId,
-      }))
       console.log('Change notes', changedNotes)
       this.$axios.post('/api/update', {
-        changedNotes: [...changedNotes, ...changedNewNotes],
+        changedNotes,
       })
       this.$store.commit('clearChangedNotes')
     },

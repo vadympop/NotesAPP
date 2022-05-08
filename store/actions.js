@@ -1,11 +1,22 @@
 export default {
+  clearNewNotes({ state, commit }) {
+    state.currentNotes.filter(
+      (note) => note.newNote
+    ).forEach((note) => {
+      commit('editNote', {
+        ...note,
+        newNote: false,
+        preventApiReq: true
+      })
+    })
+  },
   async setCurrentPage({ state, commit }, pageId) {
     if (state.currentPage._id === pageId) {
       return
     }
 
     if ((state.notes[pageId]?.length || 0) <= 0) {
-      const notesResponse = await this.$axios.get('api/notes?populate=page', {
+      const notesResponse = await this.$axios.get('api/notes', {
         params: { filter: `page=${pageId}` },
       })
       commit('setNotes', { pageId, notes: notesResponse.data.items })
