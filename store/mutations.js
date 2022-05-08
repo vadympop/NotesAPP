@@ -3,15 +3,16 @@ import { findAllNestedPages } from '~/utils'
 
 export default {
   addNote(state, pageId) {
-    const pageNotes = state.notes[pageId]
-    state.newNotes.push({
-      noteId: uuid4().toString(),
+    const noteId = uuid4()
+    state.newNotes.push(noteId)
+    state.notes[pageId].push({
+      noteId,
       page: pageId,
-      position: pageNotes.length,
+      position: state.notes[pageId].length,
       content: null,
       styles: { someV: 'someV' },
       author: 'a',
-      new: true,
+      newNote: true,
     })
   },
   setCurrentPage(state, pageId) {
@@ -29,59 +30,42 @@ export default {
   setCurrentNotes(state, pageId) {
     state.currentNotes = state.notes[pageId]
   },
-  editNote(state, { page, noteId, styles, author, content, position }) {
+  editNote(state, { page, noteId, styles, author, content, position, newNote, preventApiReq }) {
     if (state.removedNotes.includes(noteId)) {
       return
     }
 
-    const foundNote = state.notes[page._id].find(
+    const foundNote = state.notes[page].find(
       (note) => note.noteId === noteId
     )
-    state.notes[page._id][state.notes[page._id].indexOf(foundNote)] = {
+    state.notes[page][state.notes[page].indexOf(foundNote)] = {
       noteId,
       page,
       styles,
       author,
       content,
       position,
+      newNote
     }
 
-    if (!state.changedNotes.includes(noteId)) {
-      state.changedNotes.push(noteId)
-    }
-  },
-  editNewNote(state, { page, noteId, styles, author, content, position }) {
-    if (state.removedNotes.includes(noteId)) {
-      return
-    }
-
-    const foundNote = state.newNotes.find((note) => note.noteId === noteId)
-    state.newNotes[state.newNotes.indexOf(foundNote)] = {
-      noteId,
-      page,
-      styles,
-      author,
-      content,
-      position,
-      new: true,
-    }
-
-    if (!state.changedNotes.includes(noteId)) {
+    if (!state.changedNotes.includes(noteId) && !preventApiReq) {
       state.changedNotes.push(noteId)
     }
   },
   removeNote(state, { pageId, noteId }) {
     const foundNote = state.notes[pageId].find((note) => note.noteId === noteId)
-    state.notes[pageId].splice(state.notes[pageId].indexOf(foundNote), 1)
-    state.removedNotes.push(noteId)
+    state.notes[pageId].filter(
+      (note) => note.position > foundNote.position
+    ).forEach((note) => {
+      state.notes[pageId][state.notes[pageId].indexOf(note)] = {
+        ...note, position: note.position-1
+      }
+      if (!state.changedNotes.includes(note.noteId)) {
+        state.changedNotes.push(note.noteId)
+      }
+    })
 
-    if (state.changedNotes.includes(noteId)) {
-      state.changedNotes.splice(state.changedNotes.indexOf(noteId), 1)
-    }
-  },
-  removeNewNote(state, noteId) {
-    const foundNote = state.newNotes.find((note) => note.noteId === noteId)
-    state.newNotes.splice(state.newNotes.indexOf(foundNote), 1)
+    state.notes[pageId].splice(state.notes[pageId].indexOf(foundNote), 1)
     state.removedNotes.push(noteId)
 
     if (state.changedNotes.includes(noteId)) {
