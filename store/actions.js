@@ -1,14 +1,14 @@
 export default {
   clearNewNotes({ state, commit }) {
-    state.currentNotes.filter(
-      (note) => note.newNote
-    ).forEach((note) => {
-      commit('editNote', {
-        ...note,
-        newNote: false,
-        preventApiReq: true
+    state.currentNotes
+      .filter((note) => note.newNote)
+      .forEach((note) => {
+        commit('editNote', {
+          ...note,
+          newNote: false,
+          preventApiReq: true,
+        })
       })
-    })
   },
   async setCurrentPage({ state, commit }, pageId) {
     if (state.currentPage._id === pageId) {
