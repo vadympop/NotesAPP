@@ -22,13 +22,14 @@
     <editable
       ref="noteContent"
       v-model="updatedContent"
-      @input="debouncedSave"
       class="note-content"
+      @input="debouncedSave"
     />
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { debounce } from '@/utils'
 
 export default {
@@ -39,7 +40,7 @@ export default {
       required: true,
     },
     page: {
-      type: [Object, String],
+      type: String,
       required: true,
     },
     content: {
@@ -58,7 +59,7 @@ export default {
       type: String,
       required: true,
     },
-    new: {
+    newNote: {
       type: Boolean,
       required: false,
       default: false,
@@ -69,13 +70,14 @@ export default {
       hoverableButtons: false,
       isSelected: false,
       updatedContent: this.content,
-      debouncedSave: debounce(this.save, 500),
+      debouncedSave: debounce(this.save, 1000),
     }
   },
   computed: {
     pageId() {
       return this.$route.params.pageID
     },
+    ...mapState(['currentNotes'])
   },
   methods: {
     focus() {
@@ -84,18 +86,17 @@ export default {
     removeNote() {
       if (!this.updatedContent) {
         this.$emit('remove-note', { noteId: this.noteId })
-        if (!this.new) {
-          this.$store.commit('removeNote', {
-            noteId: this.noteId,
-            pageId: this.pageId,
-          })
-        } else {
-          this.$store.commit('removeNewNote', this.noteId)
-        }
+        this.$store.commit('removeNote', {
+          noteId: this.noteId,
+          pageId: this.pageId,
+        })
       }
     },
     addNote() {
       this.$store.commit('addNote', this.pageId)
+      setTimeout(() => {
+        this.$parent.$refs[this.currentNotes[this.currentNotes.length - 1]?.noteId][0]?.focus()
+      }, 100)
     },
     save() {
       const updatedData = {
@@ -105,12 +106,9 @@ export default {
         styles: this.styles,
         author: this.author,
         position: this.position,
+        newNote: this.newNote
       }
-      if (!this.new) {
-        this.$store.commit('editNote', updatedData)
-      } else {
-        this.$store.commit('editNewNote', updatedData)
-      }
+      this.$store.commit('editNote', updatedData)
     },
   },
 }

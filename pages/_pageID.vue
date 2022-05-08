@@ -1,5 +1,5 @@
 <template>
-  <div class="page-content" v-if="currentPage.name">
+  <div class="page-content">
     <div class="page-notes">
       <editable
         ref="pageNameInput"
@@ -15,7 +15,7 @@
             :position="note.position"
             :styles="note.styles"
             :author="note.author"
-            :new="note.new"
+            :new-note="note.newNote"
             :page="note.page"
             :note-id="note.noteId"
             @remove-note="onRemoveNote"
@@ -45,19 +45,16 @@ export default {
   },
   computed: {
     sortedNotes() {
-      if (!this.currentNotes || !this.newNotes) {
+      if (!this.currentNotes) {
         return []
       }
 
-      return [
-        ...this.currentNotes,
-        ...this.newNotes.filter((note) => note.page === this.pageId),
-      ].sort((note1, note2) => note1.position - note2.position)
+      return [...this.currentNotes].sort((note1, note2) => note1.position - note2.position)
     },
     pageId() {
       return this.$route.params.pageID
     },
-    ...mapState(['currentNotes', 'newNotes', 'currentPage']),
+    ...mapState(['currentNotes', 'currentPage']),
   },
   watch: {
     currentPage() {
@@ -75,7 +72,7 @@ export default {
     addNote() {
       this.$store.commit('addNote', this.pageId)
       setTimeout(() => {
-        this.$refs[this.newNotes[this.newNotes.length - 1]?.noteId][0]?.focus()
+        this.$refs[this.currentNotes[this.currentNotes.length - 1]?.noteId][0]?.focus()
       }, 100)
     },
     savePageEditing() {
