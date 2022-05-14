@@ -18,8 +18,8 @@ export default {
     if ((state.notes[pageId]?.length || 0) <= 0) {
       const notesResponse = await this.$axios.get(`notes/${pageId}`, {
         headers: {
-          authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`
-        }
+          authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`,
+        },
       })
       commit('setNotes', { pageId, notes: notesResponse.data })
     }
@@ -30,17 +30,21 @@ export default {
   async removePage({ commit }, pageId) {
     await this.$axios.delete(`pages/${pageId}`, {
       headers: {
-        authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`
-      }
+        authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`,
+      },
     })
     commit('removePage', pageId)
   },
   async createPage({ commit, state }, name) {
-    const newPageResponse = await this.$axios.post('pages', { name }, {
-      headers: {
-        authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`
+    const newPageResponse = await this.$axios.post(
+      'pages',
+      { name },
+      {
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`,
+        },
       }
-    })
+    )
     const pageId = newPageResponse.data._id
     const position = newPageResponse.data.position
     commit('addPage', { pageId, name, position })
@@ -50,25 +54,22 @@ export default {
       return
     }
 
-    const pagesResponse = await this.$axios.get(
-      'pages',
-      {
-        headers: {
-          authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`
-        }
-      }
-    )
+    const pagesResponse = await this.$axios.get('pages', {
+      headers: {
+        authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`,
+      },
+    })
     commit('addPages', pagesResponse.data)
   },
   async getCurrentUser({ commit }) {
     const { data: currentUser } = await this.$axios.get('users/@me', {
       headers: {
-        authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`
-      }
+        authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`,
+      },
     })
     commit('setCurrentUser', currentUser)
   },
-  async checkLoggedIn ({ commit, dispatch, state }) {
+  async checkLoggedIn({ commit, dispatch, state }) {
     if (!state.isLoggedIn) {
       let auth = state.auth
       if (!auth) {
@@ -89,29 +90,40 @@ export default {
       }
     }
   },
-  async authorize ({ commit, dispatch }, { email, password }) {
-    const { data: returnedToken } = await this.$axios.post('login', { email, password })
-    localStorage.setItem('auth', JSON.stringify(returnedToken))
-    commit('updateAuth', returnedToken)
-    commit('setLoggedIn', true)
-    await dispatch('getCurrentUser')
-  },
-  async register ({ commit, dispatch }, {username, email, password}) {
-    const { data: returnedToken } = await this.$axios.post('register', {
-      username, email, password
+  async authorize({ commit, dispatch }, { email, password }) {
+    const { data: returnedToken } = await this.$axios.post('login', {
+      email,
+      password,
     })
     localStorage.setItem('auth', JSON.stringify(returnedToken))
     commit('updateAuth', returnedToken)
     commit('setLoggedIn', true)
     await dispatch('getCurrentUser')
   },
-  async refreshToken ({ commit, dispatch }) {
+  async register({ commit, dispatch }, { username, email, password }) {
+    const { data: returnedToken } = await this.$axios.post('register', {
+      username,
+      email,
+      password,
+    })
+    localStorage.setItem('auth', JSON.stringify(returnedToken))
+    commit('updateAuth', returnedToken)
+    commit('setLoggedIn', true)
+    await dispatch('getCurrentUser')
+  },
+  async refreshToken({ commit, dispatch }) {
     try {
-      const { data: newToken } = await this.$axios.post('refresh', {}, {
-        headers: {
-          authorization: `Bearer ${JSON.parse(localStorage.getItem('auth')).refreshToken}`
+      const { data: newToken } = await this.$axios.post(
+        'refresh',
+        {},
+        {
+          headers: {
+            authorization: `Bearer ${
+              JSON.parse(localStorage.getItem('auth')).refreshToken
+            }`,
+          },
         }
-      })
+      )
       localStorage.setItem('auth', JSON.stringify(newToken))
       commit('updateAuth', newToken)
       commit('setLoggedIn', true)
@@ -120,7 +132,7 @@ export default {
       await dispatch('logout')
     }
   },
-  async logout ({ commit, dispatch, state }) {
+  async logout({ commit, dispatch, state }) {
     if (state.isLoggedIn) {
       await dispatch('revokeToken')
       commit('setLoggedIn', false)
@@ -129,11 +141,16 @@ export default {
       localStorage.removeItem('auth')
     }
   },
-  async revokeToken () {
+  async revokeToken() {
     const localAuth = JSON.parse(localStorage.getItem('auth'))
-    await this.$axios.post('revoke', {}, {
-      headers: {
-        authorization: `Bearer ${localAuth.accessToken} ${localAuth.userId}`
+    await this.$axios.post(
+      'revoke',
+      {},
+      {
+        headers: {
+          authorization: `Bearer ${localAuth.accessToken} ${localAuth.userId}`,
+        },
       }
-    })
-  }}
+    )
+  },
+}
