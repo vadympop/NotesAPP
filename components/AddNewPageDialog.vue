@@ -3,6 +3,7 @@
     v-model="dialog"
     transition="dialog-bottom-transition"
     hide-overlay
+    :disabled="!isLoggedIn"
     max-width="500"
   >
     <template #activator="{ on, attrs }">
@@ -40,13 +41,16 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'AddNewPageDialog',
   data: () => ({
     dialog: false,
     pageName: '',
-    error: '',
+    error: ''
   }),
+  computed: mapState(['isLoggedIn']),
   methods: {
     createPage() {
       if (!this.pageName) {

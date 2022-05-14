@@ -67,6 +67,9 @@ export default {
     },
   },
   mounted() {
+    if(!localStorage.getItem('auth')) {
+      this.$router.push({ path: '/' })
+    }
     this.$store.dispatch('getUserPages')
     this.$store.dispatch('setCurrentPage', this.pageId)
   },

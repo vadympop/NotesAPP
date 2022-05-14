@@ -10,7 +10,7 @@
               class="main-page-item-image"
               width="48"
             />
-            <span class="additional-page-item-text">USer Name</span>
+            <span class="additional-page-item-text">{{ currentUser.username }}</span>
           </nuxt-link>
           <v-divider></v-divider>
 
@@ -39,6 +39,7 @@
         </div>
       </div>
     </v-main>
+    <global-snackbar/>
   </v-app>
 </template>
 
@@ -59,7 +60,7 @@ export default {
     pageId() {
       return this.$route.params.pageID
     },
-    ...mapState(['removedNotes', 'changedNotes', 'currentNotes']),
+    ...mapState(['removedNotes', 'changedNotes', 'currentNotes', 'currentUser']),
     ...mapGetters(['rootPages']),
   },
   watch: {
@@ -74,6 +75,7 @@ export default {
     },
   },
   mounted() {
+    this.$store.dispatch('checkLoggedIn')
     document.documentElement.style.overflow = 'hidden'
     window.addEventListener('beforeunload', (e) => {
       e.preventDefault()
@@ -97,7 +99,11 @@ export default {
       }
       console.log('Save new notes', readyToSaveNotes)
 
-      this.$axios.post('/api/new', { notesToAdd: readyToSaveNotes })
+      this.$axios.post('notes/new', { notesToAdd: readyToSaveNotes }, {
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`
+        }
+      })
       this.$store.dispatch('clearNewNotes')
     },
     applyRemovedNotes() {
@@ -107,7 +113,11 @@ export default {
       }
 
       console.log('Remove notes', this.removedNotes)
-      this.$axios.post('/api/remove', { notesToRemove: this.removedNotes })
+      this.$axios.post('notes/remove', { notesToRemove: this.removedNotes }, {
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`
+        }
+      })
       this.$store.commit('clearRemovedNotes')
     },
     applyChangesInNotes() {
@@ -120,8 +130,12 @@ export default {
         this.changedNotes.includes(note.noteId)
       )
       console.log('Change notes', changedNotes)
-      this.$axios.post('/api/update', {
+      this.$axios.post('notes/update', {
         changedNotes,
+      }, {
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`
+        }
       })
       this.$store.commit('clearChangedNotes')
     },

@@ -75,14 +75,18 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'UserProfile',
-  data: () => ({
-    isLoggedIn: true,
-  }),
   computed: {
     favouritePages() {
       return this.pages.filter((page) => page.favourite)
     },
-    ...mapState(['pages']),
+    ...mapState(['pages', 'isLoggedIn']),
+  },
+  watch: {
+    isLoggedIn (v) {
+      if (v) {
+        this.$store.dispatch('getUserPages')
+      }
+    }
   },
   mounted() {
     document.documentElement.style.overflow = 'auto'

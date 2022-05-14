@@ -2,6 +2,20 @@ import { v4 as uuid4 } from 'uuid'
 import { findAllNestedPages } from '~/utils'
 
 export default {
+  setCurrentUser(state, user) {
+    state.currentUser = user
+  },
+  updateAuth(state, data) {
+    state.auth = data
+  },
+  setLoggedIn(state, data) {
+    state.isLoggedIn = data
+  },
+  updateSnackbar(state, payload) {
+    for (const [key, value] of Object.entries(payload)) {
+      state.snackbar[key] = value
+    }
+  },
   addNote(state, pageId) {
     const noteId = uuid4()
     state.newNotes.push(noteId)
