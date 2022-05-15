@@ -25,7 +25,7 @@ export default {
   components: [
     '~/components',
     '~/components/dialogs',
-    '~/components/notesLayout'
+    '~/components/notesLayout',
   ],
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
