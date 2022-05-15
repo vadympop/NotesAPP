@@ -90,8 +90,8 @@ export default {
     isActive() {
       return this.pageId === this.currentPage._id
     },
-    ...mapGetters(['notRootPages']),
-    ...mapState(['currentPage']),
+    ...mapGetters('pages', ['notRootPages']),
+    ...mapState('pages', ['currentPage']),
   },
   created() {
     if (!this.root && this.$parent?.paddingLeft) {

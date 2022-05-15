@@ -77,7 +77,7 @@ export default {
     pageId() {
       return this.$route.params.pageID
     },
-    ...mapState(['currentNotes']),
+    ...mapState('notes', ['currentNotes']),
   },
   methods: {
     focus() {
@@ -86,14 +86,14 @@ export default {
     removeNote() {
       if (!this.updatedContent) {
         this.$emit('remove-note', { noteId: this.noteId })
-        this.$store.commit('removeNote', {
+        this.$store.commit('notes/removeNote', {
           noteId: this.noteId,
           pageId: this.pageId,
         })
       }
     },
     addNote() {
-      this.$store.commit('addNote', this.pageId)
+      this.$store.commit('notes/addNote', this.pageId)
       setTimeout(() => {
         this.$parent.$refs[
           this.currentNotes[this.currentNotes.length - 1]?.noteId
@@ -110,7 +110,7 @@ export default {
         position: this.position,
         newNote: this.newNote,
       }
-      this.$store.commit('editNote', updatedData)
+      this.$store.commit('notes/editNote', updatedData)
     },
   },
 }

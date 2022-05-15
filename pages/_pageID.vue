@@ -56,7 +56,8 @@ export default {
     pageId() {
       return this.$route.params.pageID
     },
-    ...mapState(['currentNotes', 'currentPage']),
+    ...mapState('notes', ['currentNotes']),
+    ...mapState('pages', ['currentPage']),
   },
   watch: {
     currentPage() {
@@ -70,12 +71,12 @@ export default {
     if (!localStorage.getItem('auth')) {
       this.$router.push({ path: '/' })
     }
-    this.$store.dispatch('getUserPages')
-    this.$store.dispatch('setCurrentPage', this.pageId)
+    this.$store.dispatch('pages/setCurrentPage', this.pageId)
+    this.$store.dispatch('notes/getNotes', this.pageId)
   },
   methods: {
     addNote() {
-      this.$store.commit('addNote', this.pageId)
+      this.$store.commit('notes/addNote', this.pageId)
       setTimeout(() => {
         this.$refs[
           this.currentNotes[this.currentNotes.length - 1]?.noteId
@@ -92,7 +93,7 @@ export default {
         position: this.currentPage.position,
       }
 
-      this.$store.commit('editPage', updatedData)
+      this.$store.commit('pages/editPage', updatedData)
     },
     onRemoveNote({ noteId }) {
       const removedNote = this.sortedNotes.find(

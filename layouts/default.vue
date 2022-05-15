@@ -53,11 +53,11 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'DefaultLayout',
-  computed: mapState(['isLoggedIn', 'currentUser']),
+  computed: mapState('auth', ['isLoggedIn', 'currentUser']),
   mounted() {
-    this.$store.dispatch('checkLoggedIn')
+    this.checkLoggedIn()
   },
-  methods: mapActions(['logout']),
+  methods: mapActions('auth', ['logout', 'checkLoggedIn']),
 }
 </script>
 

@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
 import { debounce } from '@/utils'
 
 export default {
@@ -62,13 +62,14 @@ export default {
     pageId() {
       return this.$route.params.pageID
     },
-    ...mapState([
+    ...mapState('notes', [
       'removedNotes',
       'changedNotes',
       'currentNotes',
-      'currentUser',
+      'newNotes'
     ]),
-    ...mapGetters(['rootPages']),
+    ...mapState('auth', ['currentUser']),
+    ...mapGetters('pages', ['rootPages'])
   },
   watch: {
     newNotes() {
@@ -79,10 +80,10 @@ export default {
     },
     removedNotes() {
       this.debouncedRemoveNotes()
-    },
+    }
   },
   mounted() {
-    this.$store.dispatch('checkLoggedIn')
+    this.$store.dispatch('auth/checkLoggedIn')
     document.documentElement.style.overflow = 'hidden'
     window.addEventListener('beforeunload', (e) => {
       e.preventDefault()
@@ -91,6 +92,8 @@ export default {
     })
   },
   methods: {
+    ...mapMutations('notes', ['clearChangedNotes', 'clearRemovedNotes']),
+    ...mapActions('notes', ['clearNewNotes']),
     saveAll() {
       this.saveNewNotes()
       this.applyRemovedNotes()
@@ -117,7 +120,7 @@ export default {
           },
         }
       )
-      this.$store.dispatch('clearNewNotes')
+      this.clearNewNotes()
     },
     applyRemovedNotes() {
       console.log('Call remove notes')
@@ -137,7 +140,7 @@ export default {
           },
         }
       )
-      this.$store.commit('clearRemovedNotes')
+      this.clearRemovedNotes()
     },
     applyChangesInNotes() {
       console.log('Call change notes')
@@ -162,7 +165,7 @@ export default {
           },
         }
       )
-      this.$store.commit('clearChangedNotes')
+      this.clearChangedNotes()
     },
   },
 }

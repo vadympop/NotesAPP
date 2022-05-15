@@ -50,7 +50,7 @@ export default {
     pageName: '',
     error: '',
   }),
-  computed: mapState(['isLoggedIn']),
+  computed: mapState('auth', ['isLoggedIn']),
   methods: {
     createPage() {
       if (!this.pageName) {
@@ -58,7 +58,7 @@ export default {
         return
       }
 
-      this.$store.dispatch('createPage', this.pageName)
+      this.$store.dispatch('pages/createPage', this.pageName)
       this.dialog = false
     },
   },

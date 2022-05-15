@@ -1,15 +1,4 @@
 export default () => ({
-  newNotes: [],
-  notes: {},
-  changedNotes: [],
-  changedPages: [],
-  removedNotes: [],
-  currentNotes: [],
-  pages: [],
-  currentPage: {},
-  currentAuth: {},
-  currentUser: {},
-  isLoggedIn: false,
   snackbar: {
     state: false,
     message: null,

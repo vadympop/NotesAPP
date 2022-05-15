@@ -79,18 +79,19 @@ export default {
     favouritePages() {
       return this.pages.filter((page) => page.favourite)
     },
-    ...mapState(['pages', 'isLoggedIn']),
+    ...mapState('auth', ['isLoggedIn']),
+    ...mapState('pages', ['pages']),
   },
   watch: {
     isLoggedIn(v) {
       if (v) {
-        this.$store.dispatch('getUserPages')
+        this.$store.dispatch('pages/getUserPages')
       }
     },
   },
   mounted() {
     document.documentElement.style.overflow = 'auto'
-    this.$store.dispatch('getUserPages')
+    this.$store.dispatch('pages/getUserPages')
   },
 }
 </script>

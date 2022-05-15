@@ -65,7 +65,7 @@ export default {
         return
       }
 
-      this.$store.dispatch('authorize', {
+      this.$store.dispatch('auth/authorize', {
         email: this.email,
         password: this.password,
       })
@@ -92,7 +92,7 @@ export default {
         return
       }
 
-      this.$store.dispatch('register', {
+      this.$store.dispatch('auth/register', {
         username: this.username,
         email: this.email,
         password: this.password,
