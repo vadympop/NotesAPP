@@ -3,5 +3,5 @@ export default {
     for (const [key, value] of Object.entries(payload)) {
       state.snackbar[key] = value
     }
-  }
+  },
 }

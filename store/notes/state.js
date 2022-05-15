@@ -3,5 +3,5 @@ export default () => ({
   notes: {},
   changedNotes: [],
   removedNotes: [],
-  currentNotes: []
+  currentNotes: [],
 })

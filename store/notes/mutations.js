@@ -69,5 +69,5 @@ export default {
     if (state.changedNotes.includes(noteId)) {
       state.changedNotes.splice(state.changedNotes.indexOf(noteId), 1)
     }
-  }
+  },
 }

@@ -40,5 +40,5 @@ export default {
       },
     })
     commit('addPages', pagesResponse.data)
-  }
+  },
 }

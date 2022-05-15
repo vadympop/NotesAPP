@@ -66,10 +66,10 @@ export default {
       'removedNotes',
       'changedNotes',
       'currentNotes',
-      'newNotes'
+      'newNotes',
     ]),
     ...mapState('auth', ['currentUser']),
-    ...mapGetters('pages', ['rootPages'])
+    ...mapGetters('pages', ['rootPages']),
   },
   watch: {
     newNotes() {
@@ -80,7 +80,7 @@ export default {
     },
     removedNotes() {
       this.debouncedRemoveNotes()
-    }
+    },
   },
   mounted() {
     this.$store.dispatch('auth/checkLoggedIn')

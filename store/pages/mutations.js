@@ -59,5 +59,5 @@ export default {
     if (!state.changedPages.includes(pageId)) {
       state.changedPages.push(pageId)
     }
-  }
+  },
 }

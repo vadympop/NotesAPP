@@ -20,5 +20,5 @@ export default {
       commit('setNotes', { pageId, notes: notesResponse.data })
     }
     commit('setCurrentNotes', pageId)
-  }
+  },
 }
