@@ -48,7 +48,7 @@ export default {
   data: () => ({
     dialog: false,
     pageName: '',
-    error: ''
+    error: '',
   }),
   computed: mapState(['isLoggedIn']),
   methods: {

@@ -67,7 +67,7 @@ export default {
     },
   },
   mounted() {
-    if(!localStorage.getItem('auth')) {
+    if (!localStorage.getItem('auth')) {
       this.$router.push({ path: '/' })
     }
     this.$store.dispatch('getUserPages')

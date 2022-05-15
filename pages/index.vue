@@ -82,11 +82,11 @@ export default {
     ...mapState(['pages', 'isLoggedIn']),
   },
   watch: {
-    isLoggedIn (v) {
+    isLoggedIn(v) {
       if (v) {
         this.$store.dispatch('getUserPages')
       }
-    }
+    },
   },
   mounted() {
     document.documentElement.style.overflow = 'auto'

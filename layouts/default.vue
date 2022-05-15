@@ -8,30 +8,29 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="d-flex align-center">
-          <login-dialog v-if="!isLoggedIn"/>
+          <login-dialog v-if="!isLoggedIn" />
           <v-menu v-else offset-y tile>
-            <template #activator='{ on, attrs }'>
-              <v-avatar
-                v-bind='attrs'
-                v-on='on'
-              >
-                <img src='' alt=''>
+            <template #activator="{ on, attrs }">
+              <v-avatar v-bind="attrs" v-on="on">
+                <img src="" alt="" />
               </v-avatar>
             </template>
 
-            <v-card max-width='350' tile class="rounded-lg">
+            <v-card max-width="350" tile class="rounded-lg">
               <v-list>
                 <v-list-item>
-                  <v-list-item-avatar size='64px'>
-                    <img src='' alt=''>
+                  <v-list-item-avatar size="64px">
+                    <img src="" alt="" />
                   </v-list-item-avatar>
 
                   <v-list-item-content>
-                    <span class="profile-card-nickname">{{ currentUser.username || 'Неизвестно' }}</span>
+                    <span class="profile-card-nickname">{{
+                      currentUser.username || 'Неизвестно'
+                    }}</span>
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
-              <v-divider class='ma-0'></v-divider>
+              <v-divider class="ma-0"></v-divider>
               <v-card-actions>
                 <v-btn text nuxt to="/settings">Settings</v-btn>
                 <v-spacer></v-spacer>
@@ -45,7 +44,7 @@
         <Nuxt />
       </v-container>
     </v-main>
-    <global-snackbar/>
+    <global-snackbar />
   </v-app>
 </template>
 
@@ -58,7 +57,7 @@ export default {
   mounted() {
     this.$store.dispatch('checkLoggedIn')
   },
-  methods: mapActions(['logout'])
+  methods: mapActions(['logout']),
 }
 </script>
 
