@@ -1,5 +1,5 @@
 <template>
-  <div style="position:relative;">
+  <div style="position: relative">
     <input
       :value="value"
       :type="inputType"
@@ -8,9 +8,13 @@
       v-on="listeners"
     />
     <v-icon
-      :class="{'password-input-eye': true, 'password-input-eye-clicked': eyeClicked}"
+      :class="{
+        'password-input-eye': true,
+        'password-input-eye-clicked': eyeClicked,
+      }"
       @click="changeInputType"
-    >mdi-eye</v-icon>
+      >mdi-eye</v-icon
+    >
   </div>
 </template>
 
@@ -20,31 +24,31 @@ export default {
   props: {
     placeholder: {
       type: String,
-      required: true
+      required: true,
     },
     value: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data: () => ({
     eyeClicked: false,
-    inputType: 'password'
+    inputType: 'password',
   }),
   computed: {
     listeners() {
       return { ...this.$listeners, input: this.onInput }
-    }
+    },
   },
   methods: {
     onInput(e) {
       this.$emit('input', e.target.value)
     },
-    changeInputType () {
+    changeInputType() {
       this.eyeClicked = !this.eyeClicked
       this.inputType = this.eyeClicked ? 'text' : 'password'
-    }
-  }
+    },
+  },
 }
 </script>
 

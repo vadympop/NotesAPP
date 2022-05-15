@@ -26,7 +26,7 @@
           class="input"
           placeholder="Enter your email"
         />
-        <password-input v-model="password" placeholder="Enter your password"/>
+        <password-input v-model="password" placeholder="Enter your password" />
       </div>
       <div class="dialog-footer">
         <v-btn v-if="!registerMode" color="teal darken-2" @click="login"
