@@ -2,7 +2,7 @@ export default {
   async authorize({ commit, dispatch }, { email, password }) {
     const { data: newToken } = await this.$axios.post('login', {
       email,
-      password,
+      password
     })
     localStorage.setItem('auth', JSON.stringify(newToken.tokens))
     commit('updateAuth', newToken.tokens)
@@ -13,7 +13,7 @@ export default {
     const { data: newToken } = await this.$axios.post('register', {
       username,
       email,
-      password,
+      password
     })
     localStorage.setItem('auth', JSON.stringify(newToken.tokens))
     commit('updateAuth', newToken.tokens)
@@ -21,7 +21,7 @@ export default {
     commit('setCurrentUser', newToken.user)
   },
   async checkLoggedIn({ state, commit }) {
-    if(!localStorage.auth || state.isLoggedIn) {
+    if (!localStorage.auth || state.isLoggedIn) {
       return
     }
 

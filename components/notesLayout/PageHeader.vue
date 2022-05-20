@@ -45,8 +45,8 @@ export default {
     pageId() {
       return this.$route.params.pageID
     },
-    ...mapState('pages', ['currentPage']),
-  },
+    ...mapState('pages', ['currentPage'])
+  }
 }
 </script>
 

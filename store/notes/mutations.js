@@ -11,7 +11,7 @@ export default {
       content: null,
       styles: { someV: 'someV' },
       author: 'a',
-      newNote: true,
+      newNote: true
     })
   },
   setNotes(state, { pageId, notes }) {
@@ -42,7 +42,7 @@ export default {
       author,
       content,
       position,
-      newNote,
+      newNote
     }
 
     if (!state.changedNotes.includes(noteId) && !preventApiReq) {
@@ -56,7 +56,7 @@ export default {
       .forEach((note) => {
         state.notes[pageId][state.notes[pageId].indexOf(note)] = {
           ...note,
-          position: note.position - 1,
+          position: note.position - 1
         }
         if (!state.changedNotes.includes(note.noteId)) {
           state.changedNotes.push(note.noteId)
@@ -69,5 +69,5 @@ export default {
     if (state.changedNotes.includes(noteId)) {
       state.changedNotes.splice(state.changedNotes.indexOf(noteId), 1)
     }
-  },
+  }
 }

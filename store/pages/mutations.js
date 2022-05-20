@@ -14,7 +14,7 @@ export default {
       parent: null,
       nestedPages: [],
       position,
-      name,
+      name
     })
   },
   removePage(state, pageId) {
@@ -53,11 +53,11 @@ export default {
       nestedPages,
       parent,
       position,
-      name,
+      name
     }
 
     if (!state.changedPages.includes(pageId)) {
       state.changedPages.push(pageId)
     }
-  },
+  }
 }

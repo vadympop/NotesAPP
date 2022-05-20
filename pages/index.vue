@@ -80,18 +80,18 @@ export default {
       return this.pages.filter((page) => page.favourite)
     },
     ...mapState('auth', ['isLoggedIn']),
-    ...mapState('pages', ['pages']),
+    ...mapState('pages', ['pages'])
   },
   watch: {
     isLoggedIn(v) {
       if (v) {
         this.$store.dispatch('pages/getUserPages')
       }
-    },
+    }
   },
   mounted() {
     document.documentElement.style.overflow = 'auto'
-  },
+  }
 }
 </script>
 

@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'PageCommentsDialog',
+  name: 'PageCommentsDialog'
 }
 </script>
 

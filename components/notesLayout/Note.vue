@@ -37,47 +37,47 @@ export default {
   props: {
     noteId: {
       type: String,
-      required: true,
+      required: true
     },
     page: {
       type: String,
-      required: true,
+      required: true
     },
     content: {
       type: String,
-      default: '',
+      default: ''
     },
     position: {
       type: Number,
-      required: true,
+      required: true
     },
     styles: {
       type: Object,
-      required: true,
+      required: true
     },
     author: {
       type: String,
-      required: true,
+      required: true
     },
     newNote: {
       type: Boolean,
       required: false,
-      default: false,
-    },
+      default: false
+    }
   },
   data() {
     return {
       hoverableButtons: false,
       isSelected: false,
       updatedContent: this.content,
-      debouncedSave: debounce(this.save, 1000),
+      debouncedSave: debounce(this.save, 1000)
     }
   },
   computed: {
     pageId() {
       return this.$route.params.pageID
     },
-    ...mapState('notes', ['currentNotes']),
+    ...mapState('notes', ['currentNotes'])
   },
   methods: {
     focus() {
@@ -88,7 +88,7 @@ export default {
         this.$emit('remove-note', { noteId: this.noteId })
         this.$store.commit('notes/removeNote', {
           noteId: this.noteId,
-          pageId: this.pageId,
+          pageId: this.pageId
         })
       }
     },
@@ -108,11 +108,11 @@ export default {
         styles: this.styles,
         author: this.author,
         position: this.position,
-        newNote: this.newNote,
+        newNote: this.newNote
       }
       this.$store.commit('notes/editNote', updatedData)
-    },
-  },
+    }
+  }
 }
 </script>
 

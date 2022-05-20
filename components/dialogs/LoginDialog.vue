@@ -51,7 +51,7 @@ export default {
     username: '',
     email: '',
     password: '',
-    registerMode: false,
+    registerMode: false
   }),
   methods: {
     login() {
@@ -60,14 +60,14 @@ export default {
           state: true,
           message: `You don't provide ${!this.email ? 'email' : 'password'}`,
           type: 'error',
-          apiError: false,
+          apiError: false
         })
         return
       }
 
       this.$store.dispatch('auth/authorize', {
         email: this.email,
-        password: this.password,
+        password: this.password
       })
       this.dialog = false
     },
@@ -77,7 +77,7 @@ export default {
           state: true,
           message: "You don't provide username",
           type: 'error',
-          apiError: false,
+          apiError: false
         })
         return
       }
@@ -87,7 +87,7 @@ export default {
           state: true,
           message: `You don't provide ${!this.email ? 'email' : 'password'}`,
           type: 'error',
-          apiError: false,
+          apiError: false
         })
         return
       }
@@ -95,11 +95,11 @@ export default {
       this.$store.dispatch('auth/register', {
         username: this.username,
         email: this.email,
-        password: this.password,
+        password: this.password
       })
       this.dialog = false
-    },
-  },
+    }
+  }
 }
 </script>
 

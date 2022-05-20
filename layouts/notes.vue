@@ -55,7 +55,7 @@ export default {
     return {
       debouncedSaveNewNotes: debounce(this.saveNewNotes),
       debouncedRemoveNotes: debounce(this.applyRemovedNotes),
-      debouncedApplyNotesChanges: debounce(this.applyChangesInNotes),
+      debouncedApplyNotesChanges: debounce(this.applyChangesInNotes)
     }
   },
   computed: {
@@ -66,10 +66,10 @@ export default {
       'removedNotes',
       'changedNotes',
       'currentNotes',
-      'newNotes',
+      'newNotes'
     ]),
     ...mapState('auth', ['currentUser']),
-    ...mapGetters('pages', ['rootPages']),
+    ...mapGetters('pages', ['rootPages'])
   },
   watch: {
     newNotes() {
@@ -80,7 +80,7 @@ export default {
     },
     removedNotes() {
       this.debouncedRemoveNotes()
-    },
+    }
   },
   mounted() {
     this.$store.dispatch('auth/checkLoggedIn')
@@ -114,10 +114,8 @@ export default {
         { notesToAdd: readyToSaveNotes },
         {
           headers: {
-            authorization: `Bearer ${
-              JSON.parse(localStorage.auth).accessToken
-            }`,
-          },
+            authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`
+          }
         }
       )
       this.clearNewNotes()
@@ -134,10 +132,8 @@ export default {
         { notesToRemove: this.removedNotes },
         {
           headers: {
-            authorization: `Bearer ${
-              JSON.parse(localStorage.auth).accessToken
-            }`,
-          },
+            authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`
+          }
         }
       )
       this.clearRemovedNotes()
@@ -155,19 +151,17 @@ export default {
       this.$axios.post(
         'notes/update',
         {
-          changedNotes,
+          changedNotes
         },
         {
           headers: {
-            authorization: `Bearer ${
-              JSON.parse(localStorage.auth).accessToken
-            }`,
-          },
+            authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`
+          }
         }
       )
       this.clearChangedNotes()
-    },
-  },
+    }
+  }
 }
 </script>
 

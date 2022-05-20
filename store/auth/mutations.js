@@ -7,5 +7,5 @@ export default {
   },
   setLoggedIn(state, data) {
     state.isLoggedIn = data
-  },
+  }
 }

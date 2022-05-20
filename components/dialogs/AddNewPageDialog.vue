@@ -48,7 +48,7 @@ export default {
   data: () => ({
     dialog: false,
     pageName: '',
-    error: '',
+    error: ''
   }),
   computed: mapState('auth', ['isLoggedIn']),
   methods: {
@@ -60,8 +60,8 @@ export default {
 
       this.$store.dispatch('pages/createPage', this.pageName)
       this.dialog = false
-    },
-  },
+    }
+  }
 }
 </script>
 

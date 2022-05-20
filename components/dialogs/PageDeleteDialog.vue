@@ -47,26 +47,26 @@ export default {
   props: {
     pageId: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data: () => ({
-    dialog: false,
+    dialog: false
   }),
   computed: {
     specifiedPageName() {
       const foundPage = this.pages.find((page) => page._id === this.pageId)
       return foundPage ? foundPage.name : 'Unknown'
     },
-    ...mapState('pages', ['pages']),
+    ...mapState('pages', ['pages'])
   },
   methods: {
     removePage() {
       this.$store.dispatch('pages/removePage', this.pageId)
       this.dialog = false
       this.$router.push({ path: `/${this.pages[0]._id}` })
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -10,7 +10,7 @@
     <v-icon
       :class="{
         'password-input-eye': true,
-        'password-input-eye-clicked': eyeClicked,
+        'password-input-eye-clicked': eyeClicked
       }"
       @click="changeInputType"
       >mdi-eye</v-icon
@@ -24,21 +24,21 @@ export default {
   props: {
     placeholder: {
       type: String,
-      required: true,
+      required: true
     },
     value: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
   data: () => ({
     eyeClicked: false,
-    inputType: 'password',
+    inputType: 'password'
   }),
   computed: {
     listeners() {
       return { ...this.$listeners, input: this.onInput }
-    },
+    }
   },
   methods: {
     onInput(e) {
@@ -47,8 +47,8 @@ export default {
     changeInputType() {
       this.eyeClicked = !this.eyeClicked
       this.inputType = this.eyeClicked ? 'text' : 'password'
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       debouncedSavePageEditing: debounce(this.savePageEditing, 500),
-      updatedPageName: '',
+      updatedPageName: ''
     }
   },
   computed: {
@@ -57,7 +57,7 @@ export default {
       return this.$route.params.pageID
     },
     ...mapState('notes', ['currentNotes']),
-    ...mapState('pages', ['currentPage']),
+    ...mapState('pages', ['currentPage'])
   },
   watch: {
     currentPage() {
@@ -65,7 +65,7 @@ export default {
         this.updatedPageName = this.currentPage.name
         this.$refs.pageNameInput.updateText(this.updatedPageName)
       }
-    },
+    }
   },
   mounted() {
     if (!localStorage.getItem('auth')) {
@@ -90,7 +90,7 @@ export default {
         root: this.currentPage.root,
         nestedPages: this.currentPage.nestedPages,
         parent: this.currentPage.parent,
-        position: this.currentPage.position,
+        position: this.currentPage.position
       }
 
       this.$store.commit('pages/editPage', updatedData)
@@ -104,8 +104,8 @@ export default {
       if (noteBeforeRemovedNote?.noteId) {
         this.$refs[noteBeforeRemovedNote.noteId][0].focus()
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

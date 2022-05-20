@@ -9,7 +9,7 @@
         <v-icon
           :class="{
             'page-item-triangle': true,
-            'page-item-triangle-clicked': arrowClicked,
+            'page-item-triangle-clicked': arrowClicked
           }"
           color="var(--light-gray3)"
           size="12px"
@@ -53,33 +53,33 @@ export default {
   props: {
     name: {
       type: String,
-      required: true,
+      required: true
     },
     nestedPages: {
       type: Array,
-      required: true,
+      required: true
     },
     position: {
       type: Number,
-      required: true,
+      required: true
     },
     pageId: {
       type: String,
-      required: true,
+      required: true
     },
     parent: {
       type: String,
       required: false,
-      default: '',
+      default: ''
     },
     root: {
       type: Boolean,
-      required: true,
-    },
+      required: true
+    }
   },
   data: () => ({
     arrowClicked: false,
-    paddingLeft: 15,
+    paddingLeft: 15
   }),
   computed: {
     nested() {
@@ -91,13 +91,13 @@ export default {
       return this.pageId === this.currentPage._id
     },
     ...mapGetters('pages', ['notRootPages']),
-    ...mapState('pages', ['currentPage']),
+    ...mapState('pages', ['currentPage'])
   },
   created() {
     if (!this.root && this.$parent?.paddingLeft) {
       this.paddingLeft = this.$parent?.paddingLeft + 15
     }
-  },
+  }
 }
 </script>
 

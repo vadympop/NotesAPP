@@ -57,7 +57,7 @@ export default {
   mounted() {
     this.checkLoggedIn()
   },
-  methods: mapActions('auth', ['logout', 'checkLoggedIn']),
+  methods: mapActions('auth', ['logout', 'checkLoggedIn'])
 }
 </script>
 

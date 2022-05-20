@@ -38,14 +38,14 @@ export default {
         success: 'mdi-check-circle-outline',
         warning: 'mdi-alert-circle-outline',
         error: 'mdi-close',
-        info: 'mdi-information-outline',
+        info: 'mdi-information-outline'
       },
       snackbarTypeToTitle: {
         success: 'Успех',
         warning: 'Предупреждение',
         error: 'Ошибка',
-        info: 'Информация',
-      },
+        info: 'Информация'
+      }
     }
   },
   computed: {
@@ -61,10 +61,10 @@ export default {
       },
       set(state) {
         this.$store.commit('updateSnackbar', { state })
-      },
+      }
     },
-    ...mapState(['snackbar']),
-  },
+    ...mapState(['snackbar'])
+  }
 }
 </script>
 

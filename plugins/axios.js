@@ -13,10 +13,16 @@ export default function ({ $axios, store, redirect }) {
     })
 
     const originalRequest = error.config
-    if (error.response.status === 401 && error.config && !error.config._isRetry) {
+    if (
+      error.response.status === 401 &&
+      error.config &&
+      !error.config._isRetry
+    ) {
       originalRequest._isRetry = true
       try {
-        const { data: newToken } = await axiosLib.get(`${API_URL}refresh`, { withCredentials: true })
+        const { data: newToken } = await axiosLib.get(`${API_URL}refresh`, {
+          withCredentials: true
+        })
         localStorage.setItem('auth', JSON.stringify(newToken.tokens))
         store.commit('auth/updateAuth', newToken.tokens)
         store.commit('auth/setLoggedIn', true)
@@ -33,14 +39,16 @@ export default function ({ $axios, store, redirect }) {
         redirect('/')
       }
     }
-    throw error;
+    throw error
   })
 
-  $axios.onRequest(config => {
-    if(localStorage.auth) {
+  $axios.onRequest((config) => {
+    if (localStorage.auth) {
       const accessToken = JSON.parse(localStorage.auth).accessToken
-      if(!config.headers.authorization && accessToken) {
-        config.headers.authorization = `Bearer ${JSON.parse(localStorage.auth).accessToken}`
+      if (!config.headers.authorization && accessToken) {
+        config.headers.authorization = `Bearer ${
+          JSON.parse(localStorage.auth).accessToken
+        }`
       }
     }
 

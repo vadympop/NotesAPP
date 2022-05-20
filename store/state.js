@@ -6,6 +6,6 @@ export default () => ({
     data: {},
     apiError: false,
     code: 0,
-    timeout: 4000,
-  },
+    timeout: 4000
+  }
 })

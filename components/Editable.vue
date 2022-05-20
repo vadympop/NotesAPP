@@ -13,13 +13,13 @@ export default {
   props: {
     value: {
       type: String,
-      default: '',
-    },
+      default: ''
+    }
   },
   computed: {
     listeners() {
       return { ...this.$listeners, input: this.onInput }
-    },
+    }
   },
   mounted() {
     this.$refs.editable.innerText = this.value
@@ -42,7 +42,7 @@ export default {
     },
     updateText(v) {
       this.$refs.editable.innerText = v
-    },
-  },
+    }
+  }
 }
 </script>

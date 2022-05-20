@@ -12,10 +12,7 @@ export default {
     commit('removePage', pageId)
   },
   async createPage({ commit, state }, name) {
-    const newPageResponse = await this.$axios.post(
-      'pages',
-      { name }
-    )
+    const newPageResponse = await this.$axios.post('pages', { name })
     const pageId = newPageResponse.data._id
     const position = newPageResponse.data.position
     commit('addPage', { pageId, name, position })
@@ -27,5 +24,5 @@ export default {
 
     const pagesResponse = await this.$axios.get('pages')
     commit('addPages', pagesResponse.data)
-  },
+  }
 }

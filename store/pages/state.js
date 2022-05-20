@@ -1,5 +1,5 @@
 export default () => ({
   changedPages: [],
   pages: [],
-  currentPage: {},
+  currentPage: {}
 })
