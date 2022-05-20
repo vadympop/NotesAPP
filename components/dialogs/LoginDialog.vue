@@ -58,7 +58,7 @@ export default {
       if (!this.email || !this.password) {
         this.$store.commit('updateSnackbar', {
           state: true,
-          message: `Вы не указали ${!this.email ? 'email' : 'пароль'}`,
+          message: `You don't provide ${!this.email ? 'email' : 'password'}`,
           type: 'error',
           apiError: false,
         })
@@ -75,7 +75,7 @@ export default {
       if (!this.username) {
         this.$store.commit('updateSnackbar', {
           state: true,
-          message: 'Вы не указали ник',
+          message: "You don't provide username",
           type: 'error',
           apiError: false,
         })
@@ -85,7 +85,7 @@ export default {
       if (!this.email || !this.password) {
         this.$store.commit('updateSnackbar', {
           state: true,
-          message: `Вы не указали ${!this.email ? 'email' : 'пароль'}`,
+          message: `You don't provide ${!this.email ? 'email' : 'password'}`,
           type: 'error',
           apiError: false,
         })

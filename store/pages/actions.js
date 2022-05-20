@@ -8,22 +8,13 @@ export default {
     commit('setCurrentPage', pageId)
   },
   async removePage({ commit }, pageId) {
-    await this.$axios.delete(`pages/${pageId}`, {
-      headers: {
-        authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`,
-      },
-    })
+    await this.$axios.delete(`pages/${pageId}`)
     commit('removePage', pageId)
   },
   async createPage({ commit, state }, name) {
     const newPageResponse = await this.$axios.post(
       'pages',
-      { name },
-      {
-        headers: {
-          authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`,
-        },
-      }
+      { name }
     )
     const pageId = newPageResponse.data._id
     const position = newPageResponse.data.position
@@ -34,11 +25,7 @@ export default {
       return
     }
 
-    const pagesResponse = await this.$axios.get('pages', {
-      headers: {
-        authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`,
-      },
-    })
+    const pagesResponse = await this.$axios.get('pages')
     commit('addPages', pagesResponse.data)
   },
 }

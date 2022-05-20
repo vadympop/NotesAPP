@@ -12,11 +12,7 @@ export default {
   },
   async getNotes({ rootState, state, commit }, pageId) {
     if ((state.notes[pageId]?.length || 0) <= 0) {
-      const notesResponse = await this.$axios.get(`notes/${pageId}`, {
-        headers: {
-          authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`,
-        },
-      })
+      const notesResponse = await this.$axios.get(`notes/${pageId}`)
       commit('setNotes', { pageId, notes: notesResponse.data })
     }
     commit('setCurrentNotes', pageId)

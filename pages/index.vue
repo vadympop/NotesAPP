@@ -91,7 +91,6 @@ export default {
   },
   mounted() {
     document.documentElement.style.overflow = 'auto'
-    this.$store.dispatch('pages/getUserPages')
   },
 }
 </script>

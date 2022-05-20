@@ -1,94 +1,52 @@
 export default {
-  async getCurrentUser({ commit }) {
-    const { data: currentUser } = await this.$axios.get('users/@me', {
-      headers: {
-        authorization: `Bearer ${JSON.parse(localStorage.auth).accessToken}`,
-      },
-    })
-    commit('setCurrentUser', currentUser)
-  },
-  async checkLoggedIn({ commit, dispatch, state }) {
-    if (!state.isLoggedIn) {
-      let auth = state.auth
-      if (!auth) {
-        const localAuth = localStorage.getItem('auth')
-        if (localAuth) {
-          commit('updateAuth', JSON.parse(localAuth))
-          auth = JSON.parse(localAuth)
-        }
-      }
-
-      if (auth) {
-        if (auth.expiresIn <= new Date().getTime()) {
-          await dispatch('refreshToken')
-        }
-
-        commit('setLoggedIn', true)
-        await dispatch('getCurrentUser')
-      }
-    }
-  },
   async authorize({ commit, dispatch }, { email, password }) {
-    const { data: returnedToken } = await this.$axios.post('login', {
+    const { data: newToken } = await this.$axios.post('login', {
       email,
       password,
     })
-    localStorage.setItem('auth', JSON.stringify(returnedToken))
-    commit('updateAuth', returnedToken)
+    localStorage.setItem('auth', JSON.stringify(newToken.tokens))
+    commit('updateAuth', newToken.tokens)
     commit('setLoggedIn', true)
-    await dispatch('getCurrentUser')
+    commit('setCurrentUser', newToken.user)
   },
   async register({ commit, dispatch }, { username, email, password }) {
-    const { data: returnedToken } = await this.$axios.post('register', {
+    const { data: newToken } = await this.$axios.post('register', {
       username,
       email,
       password,
     })
-    localStorage.setItem('auth', JSON.stringify(returnedToken))
-    commit('updateAuth', returnedToken)
+    localStorage.setItem('auth', JSON.stringify(newToken.tokens))
+    commit('updateAuth', newToken.tokens)
     commit('setLoggedIn', true)
-    await dispatch('getCurrentUser')
+    commit('setCurrentUser', newToken.user)
   },
-  async refreshToken({ commit, dispatch }) {
+  async checkLoggedIn({ state, commit }) {
+    if(!localStorage.auth || state.isLoggedIn) {
+      return
+    }
+
     try {
-      const { data: newToken } = await this.$axios.post(
-        'refresh',
-        {},
-        {
-          headers: {
-            authorization: `Bearer ${
-              JSON.parse(localStorage.getItem('auth')).refreshToken
-            }`,
-          },
-        }
-      )
-      localStorage.setItem('auth', JSON.stringify(newToken))
-      commit('updateAuth', newToken)
+      const { data: newToken } = await this.$axios.get('refresh')
+      localStorage.setItem('auth', JSON.stringify(newToken.tokens))
+      commit('updateAuth', newToken.tokens)
       commit('setLoggedIn', true)
-      await dispatch('getCurrentUser')
+      commit('setCurrentUser', newToken.user)
     } catch (error) {
-      await dispatch('logout')
+      commit('updateSnackbar', {
+        state: true,
+        message: 'You should log in again',
+        type: 'info',
+        apiError: false
+      })
     }
   },
-  async logout({ commit, dispatch, state }) {
+  async logout({ commit, state }) {
     if (state.isLoggedIn) {
-      await dispatch('revokeToken')
+      await this.$axios.post('revoke')
       commit('setLoggedIn', false)
       commit('setCurrentUser', {})
-      commit('updateAuth', null)
+      commit('updateAuth', {})
       localStorage.removeItem('auth')
     }
-  },
-  async revokeToken() {
-    const localAuth = JSON.parse(localStorage.getItem('auth'))
-    await this.$axios.post(
-      'revoke',
-      {},
-      {
-        headers: {
-          authorization: `Bearer ${localAuth.accessToken} ${localAuth.userId}`,
-        },
-      }
-    )
-  },
+  }
 }
