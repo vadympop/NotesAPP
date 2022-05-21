@@ -1,5 +1,7 @@
 <template>
-  <div class="blank">Your account isn't activated! View activation mail in your email</div>
+  <div class="blank">
+    Your account isn't activated! View activation mail in your email
+  </div>
 </template>
 
 <script>
