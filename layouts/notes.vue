@@ -90,7 +90,7 @@ export default {
       e.preventDefault()
       console.log('unload')
       this.saveAll()
-    })
+    }, { capture: true })
   },
   methods: {
     ...mapMutations('notes', ['clearChangedNotes', 'clearRemovedNotes']),

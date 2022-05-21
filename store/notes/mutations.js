@@ -24,7 +24,7 @@ export default {
     state.changedNotes = []
   },
   setCurrentNotes(state, pageId) {
-    state.currentNotes = state.notes[pageId]
+    state.currentNotes = state.notes[pageId] || []
   },
   editNote(
     state,
