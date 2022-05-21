@@ -1,6 +1,7 @@
 <template>
   <v-app dark style="overflow: hidden; height: 100vh">
     <v-main>
+      <user-not-activated-blank v-if="!currentUser.isActivated"/>
       <div class="notes-layout">
         <div class="pages-list">
           <nuxt-link to="/" class="additional-page-item">
