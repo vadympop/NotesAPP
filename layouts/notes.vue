@@ -86,11 +86,15 @@ export default {
   mounted() {
     this.$store.dispatch('auth/checkLoggedIn')
     document.documentElement.style.overflow = 'hidden'
-    window.addEventListener('beforeunload', (e) => {
-      e.preventDefault()
-      console.log('unload')
-      this.saveAll()
-    }, { capture: true })
+    window.addEventListener(
+      'beforeunload',
+      (e) => {
+        e.preventDefault()
+        console.log('unload')
+        this.saveAll()
+      },
+      { capture: true }
+    )
   },
   methods: {
     ...mapMutations('notes', ['clearChangedNotes', 'clearRemovedNotes']),
