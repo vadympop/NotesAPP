@@ -1,7 +1,9 @@
 <template>
   <v-app dark>
     <v-main>
-      <user-not-activated-blank v-if="!currentUser.isActivated && isLoggedIn && !authIsLoading" />
+      <user-not-activated-blank
+        v-if="!currentUser.isActivated && isLoggedIn && !authIsLoading"
+      />
       <div class="header">
         <v-toolbar-title class="logo">
           <v-avatar><img src="" alt="" width="32px" /></v-avatar>
