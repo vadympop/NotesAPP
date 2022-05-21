@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <v-main>
-      <user-not-activated-blank v-if="!currentUser.isActivated" />
+      <user-not-activated-blank v-if="!currentUser.isActivated && isLoggedIn && !authIsLoading" />
       <div class="header">
         <v-toolbar-title class="logo">
           <v-avatar><img src="" alt="" width="32px" /></v-avatar>
@@ -54,7 +54,7 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'DefaultLayout',
-  computed: mapState('auth', ['isLoggedIn', 'currentUser']),
+  computed: mapState('auth', ['isLoggedIn', 'currentUser', 'authIsLoading']),
   mounted() {
     this.checkLoggedIn()
   },

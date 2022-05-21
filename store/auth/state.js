@@ -1,5 +1,6 @@
 export default () => ({
   auth: {},
   isLoggedIn: false,
-  currentUser: {}
+  currentUser: {},
+  authIsLoading: false
 })

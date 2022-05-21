@@ -7,5 +7,8 @@ export default {
   },
   setLoggedIn(state, data) {
     state.isLoggedIn = data
+  },
+  setAuthIsLoading(state, isLoading) {
+    state.authIsLoading = isLoading
   }
 }

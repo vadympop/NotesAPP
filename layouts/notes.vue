@@ -1,7 +1,7 @@
 <template>
   <v-app dark style="overflow: hidden; height: 100vh">
     <v-main>
-      <user-not-activated-blank v-if="!currentUser.isActivated" />
+      <user-not-activated-blank v-if="!currentUser.isActivated && isLoggedIn && !authIsLoading" />
       <div class="notes-layout">
         <div class="pages-list">
           <nuxt-link to="/" class="additional-page-item">
@@ -69,7 +69,7 @@ export default {
       'currentNotes',
       'newNotes'
     ]),
-    ...mapState('auth', ['currentUser']),
+    ...mapState('auth', ['currentUser', 'isLoggedIn', 'authIsLoading']),
     ...mapGetters('pages', ['rootPages'])
   },
   watch: {

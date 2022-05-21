@@ -25,6 +25,7 @@ export default {
       return
     }
 
+    commit('setAuthIsLoading', true)
     try {
       const { data: newToken } = await this.$axios.get('refresh')
       localStorage.setItem('auth', JSON.stringify(newToken.tokens))
@@ -38,6 +39,8 @@ export default {
         type: 'info',
         apiError: false
       })
+    } finally {
+      commit('setAuthIsLoading', false)
     }
   },
   async logout({ commit, state }) {
