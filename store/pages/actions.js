@@ -24,5 +24,9 @@ export default {
 
     const pagesResponse = await this.$axios.get('pages')
     commit('addPages', pagesResponse.data)
+  },
+  async editPage({ commit }, { pageId, updated }) {
+    await this.$axios.put(`pages/${pageId}`, { newPage: updated })
+    commit('editPage', { pageId, updated })
   }
 }

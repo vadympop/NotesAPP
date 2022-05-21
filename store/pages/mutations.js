@@ -45,16 +45,13 @@ export default {
       })
     }
   },
-  editPage(state, { pageId, root, nestedPages, parent, position, name }) {
-    const foundPage = state.pages.find((page) => page._id === pageId)
-    state.pages[state.pages.indexOf(foundPage)] = {
-      _id: pageId,
-      root,
-      nestedPages,
-      parent,
-      position,
-      name
+  editPage(state, { pageId, updated }) {
+    if(state.currentPage._id === pageId) {
+      state.currentPage = {...state.currentPage, ...updated}
     }
+
+    const foundPage = state.pages.find((page) => page._id === pageId)
+    state.pages[state.pages.indexOf(foundPage)] = {...foundPage, ...updated}
 
     if (!state.changedPages.includes(pageId)) {
       state.changedPages.push(pageId)

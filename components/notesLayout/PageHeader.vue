@@ -17,9 +17,10 @@
     <div class="additional-buttons">
       <v-icon
         class="additional-button hoverable-icon"
-        color="var(--light-gray3)"
+        :color="currentPage.favourite ? 'var(--yellow)' : 'var(--light-gray3)'"
+        @click="setCurrentPageFavourite"
       >
-        mdi-star-outline
+        {{ currentPage.favourite ? 'mdi-star' : 'mdi-star-outline'  }}
       </v-icon>
       <!-- Add to favourites -->
       <page-delete-dialog class="additional-button" :page-id="pageId" />
@@ -46,6 +47,15 @@ export default {
       return this.$route.params.pageID
     },
     ...mapState('pages', ['currentPage'])
+  },
+  methods: {
+    setCurrentPageFavourite () {
+      console.log('+')
+      this.$store.dispatch('pages/editPage', {
+        pageId: this.pageId,
+        updated: { favourite: !this.currentPage.favourite }
+      })
+    }
   }
 }
 </script>

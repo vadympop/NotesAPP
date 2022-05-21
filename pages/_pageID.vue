@@ -85,7 +85,6 @@ export default {
     },
     savePageEditing() {
       const updatedData = {
-        pageId: this.pageId,
         name: this.updatedPageName,
         root: this.currentPage.root,
         nestedPages: this.currentPage.nestedPages,
@@ -93,7 +92,7 @@ export default {
         position: this.currentPage.position
       }
 
-      this.$store.commit('pages/editPage', updatedData)
+      this.$store.commit('pages/editPage', { pageId: this.pageId, updated: updatedData })
     },
     onRemoveNote({ noteId }) {
       const removedNote = this.sortedNotes.find(
