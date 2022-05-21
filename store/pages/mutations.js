@@ -46,12 +46,12 @@ export default {
     }
   },
   editPage(state, { pageId, updated }) {
-    if(state.currentPage._id === pageId) {
-      state.currentPage = {...state.currentPage, ...updated}
+    if (state.currentPage._id === pageId) {
+      state.currentPage = { ...state.currentPage, ...updated }
     }
 
     const foundPage = state.pages.find((page) => page._id === pageId)
-    state.pages[state.pages.indexOf(foundPage)] = {...foundPage, ...updated}
+    state.pages[state.pages.indexOf(foundPage)] = { ...foundPage, ...updated }
 
     if (!state.changedPages.includes(pageId)) {
       state.changedPages.push(pageId)

@@ -20,7 +20,7 @@
         :color="currentPage.favourite ? 'var(--yellow)' : 'var(--light-gray3)'"
         @click="setCurrentPageFavourite"
       >
-        {{ currentPage.favourite ? 'mdi-star' : 'mdi-star-outline'  }}
+        {{ currentPage.favourite ? 'mdi-star' : 'mdi-star-outline' }}
       </v-icon>
       <!-- Add to favourites -->
       <page-delete-dialog class="additional-button" :page-id="pageId" />
@@ -49,7 +49,7 @@ export default {
     ...mapState('pages', ['currentPage'])
   },
   methods: {
-    setCurrentPageFavourite () {
+    setCurrentPageFavourite() {
       console.log('+')
       this.$store.dispatch('pages/editPage', {
         pageId: this.pageId,

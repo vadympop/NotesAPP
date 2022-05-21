@@ -92,7 +92,10 @@ export default {
         position: this.currentPage.position
       }
 
-      this.$store.commit('pages/editPage', { pageId: this.pageId, updated: updatedData })
+      this.$store.commit('pages/editPage', {
+        pageId: this.pageId,
+        updated: updatedData
+      })
     },
     onRemoveNote({ noteId }) {
       const removedNote = this.sortedNotes.find(
