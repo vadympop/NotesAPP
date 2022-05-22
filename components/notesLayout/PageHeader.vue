@@ -16,18 +16,18 @@
     <v-spacer></v-spacer>
     <div class="additional-buttons">
       <v-icon
-        class="additional-button hoverable-icon"
+        class="hoverable-icon"
         :color="currentPage.favourite ? 'var(--yellow)' : 'var(--light-gray3)'"
         @click="setCurrentPageFavourite"
       >
         {{ currentPage.favourite ? 'mdi-star' : 'mdi-star-outline' }}
       </v-icon>
       <!-- Add to favourites -->
-      <page-delete-dialog class="additional-button" :page-id="pageId" />
-      <page-comments-dialog class="additional-button" />
-      <page-updates-dialog class="additional-button" />
+      <page-delete-dialog :page-id="pageId" />
+      <page-comments-dialog />
+      <page-updates-dialog />
       <v-icon
-        class="additional-button hoverable-icon"
+        class="hoverable-icon"
         color="var(--light-gray3)"
       >
         mdi-dots-horizontal
@@ -72,9 +72,5 @@ export default {
 
 .pages-navigation {
   margin-right: 10px;
-}
-
-.additional-button {
-  margin-right: 4px;
 }
 </style>

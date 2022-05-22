@@ -16,9 +16,7 @@
           >mdi-triangle</v-icon
         >
       </span>
-      <v-icon class="page-item-icon" color="var(--light-gray3)" size="24px"
-        >mdi-file-document-outline</v-icon
-      >
+      <v-icon class="page-item-icon" color="var(--light-gray3)" size="24px">mdi-file-document-outline</v-icon>
       <span class="page-item-text">{{ name }}</span>
     </nuxt-link>
     <div v-if="arrowClicked">

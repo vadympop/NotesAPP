@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import { debounce } from '@/utils'
 
 export default {
@@ -57,7 +57,8 @@ export default {
       return this.$route.params.pageID
     },
     ...mapState('notes', ['currentNotes']),
-    ...mapState('pages', ['currentPage'])
+    ...mapState('pages', ['currentPage']),
+    ...mapGetters('pages', ['rootPages'])
   },
   watch: {
     currentPage() {
@@ -65,16 +66,31 @@ export default {
         this.updatedPageName = this.currentPage.name
         this.$refs.pageNameInput.updateText(this.updatedPageName)
       }
+    },
+    rootPages(v) {
+      if(v.length <= 0) {
+        this.$router.push({ path: '/' })
+      }
+      
+      this.$store.commit('updateSnackbar', {
+        state: true,
+        message: "You should create new page",
+        type: 'warning',
+        apiError: false
+      })
     }
   },
   mounted() {
     if (!localStorage.getItem('auth')) {
       this.$router.push({ path: '/' })
     }
-    this.$store.dispatch('pages/setCurrentPage', this.pageId)
-    this.$store.dispatch('notes/getNotes', this.pageId)
+
+    this.setCurrentPage(this.pageId)
+    this.getNotes(this.pageId)
   },
   methods: {
+    ...mapActions('pages', ['setCurrentPage', 'editPage']),
+    ...mapActions('notes', ['getNotes']),
     addNote() {
       this.$store.commit('notes/addNote', this.pageId)
       setTimeout(() => {
@@ -92,7 +108,7 @@ export default {
         position: this.currentPage.position
       }
 
-      this.$store.commit('pages/editPage', {
+      this.editPage({
         pageId: this.pageId,
         updated: updatedData
       })

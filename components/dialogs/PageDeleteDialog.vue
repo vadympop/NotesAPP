@@ -32,7 +32,7 @@
       </div>
       <div class="dialog-footer">
         <v-spacer></v-spacer>
-        <v-btn plain color="red" @click="removePage">Delete</v-btn>
+        <v-btn plain color="red" @click="movePageToTrash">Delete</v-btn>
         <v-btn plain @click="dialog = false">Cancel</v-btn>
       </div>
     </div>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'PageDeleteDialog',
@@ -58,13 +58,14 @@ export default {
       const foundPage = this.pages.find((page) => page._id === this.pageId)
       return foundPage ? foundPage.name : 'Unknown'
     },
-    ...mapState('pages', ['pages'])
+    ...mapState('pages', ['pages']),
+    ...mapGetters('pages', ['rootPages'])
   },
   methods: {
-    removePage() {
-      this.$store.dispatch('pages/removePage', this.pageId)
+    movePageToTrash() {
+      this.$store.dispatch('pages/movePageToTrash', this.pageId)
       this.dialog = false
-      this.$router.push({ path: `/${this.pages[0]._id}` })
+      this.$router.push({ path: `/${this.rootPages[0]._id}` })
     }
   }
 }

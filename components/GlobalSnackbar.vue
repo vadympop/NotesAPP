@@ -41,10 +41,10 @@ export default {
         info: 'mdi-information-outline'
       },
       snackbarTypeToTitle: {
-        success: 'Успех',
-        warning: 'Предупреждение',
-        error: 'Ошибка',
-        info: 'Информация'
+        success: 'Success',
+        warning: 'Warning',
+        error: 'Error',
+        info: 'Information'
       }
     }
   },

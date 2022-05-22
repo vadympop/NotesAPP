@@ -20,16 +20,19 @@
           <v-divider></v-divider>
 
           <div class="mt-10">
-            <page-item
-              v-for="page of rootPages"
-              :key="page._id"
-              :page-id="page._id"
-              :name="page.name"
-              :position="page.position"
-              :nested-pages="page.nestedPages"
-              :parent="page.parent"
-              :root="page.root"
-            />
+            <div v-if="rootPages.length > 0">
+              <page-item
+                v-for="page of rootPages"
+                :key="page._id"
+                :page-id="page._id"
+                :name="page.name"
+                :position="page.position"
+                :nested-pages="page.nestedPages"
+                :parent="page.parent"
+                :root="page.root"
+              />
+            </div>
+            <nothing-to-show v-else/>
           </div>
 
           <v-spacer></v-spacer>
@@ -87,6 +90,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('auth/checkLoggedIn')
+    this.$store.dispatch('pages/getTrash')
     document.documentElement.style.overflow = 'hidden'
     window.addEventListener(
       'beforeunload',
@@ -94,6 +98,7 @@ export default {
         e.preventDefault()
         console.log('unload')
         this.saveAll()
+        e.returnValue = 'a'
       },
       { capture: true }
     )

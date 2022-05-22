@@ -18,12 +18,24 @@ export default {
     })
   },
   removePage(state, pageId) {
+    const pageInTrash = state.trash.find(page => page._id === pageId)
+    if(!pageInTrash) {
+      return
+    }
+
+    state.trash.splice(state.trash.indexOf(pageInTrash), 1)
+  },
+  movePageToTrash(state, pageId) {
     const foundPage = state.pages.find((page) => page._id === pageId)
     if (foundPage.nestedPages.length === 0) {
       state.pages.splice(state.pages.indexOf(foundPage), 1)
 
       if (state.changedPages.includes(pageId)) {
         state.changedPages.splice(state.changedPages.indexOf(pageId), 1)
+      }
+
+      if (!state.trash.find(page => page._id === pageId)) {
+        state.trash.push(foundPage)
       }
     } else {
       const deletePagesNestedPagesIds = findAllNestedPages(
@@ -32,18 +44,33 @@ export default {
       )
       deletePagesNestedPagesIds.push(pageId)
       deletePagesNestedPagesIds.forEach((nestedPageId) => {
-        state.pages.splice(
-          state.pages.indexOf(
-            state.pages.find((page) => page._id === nestedPageId)
-          ),
-          1
-        )
+        const nestedPage = state.pages.find((page) => page._id === nestedPageId)
+        state.pages.splice(state.pages.indexOf(nestedPage), 1)
 
         if (state.changedPages.includes(nestedPageId)) {
           state.changedPages.splice(state.changedPages.indexOf(nestedPageId), 1)
         }
+
+        if (!state.trash.find(page => page._id === nestedPageId)) {
+          state.trash.push(nestedPage)
+        }
       })
     }
+  },
+  restorePageFromTrash(state, pageId) {
+    const pageInTrash = state.trash.find(page => page._id === pageId)
+    if(!pageInTrash) {
+      return
+    }
+
+    state.trash.splice(state.trash.indexOf(pageInTrash), 1)
+    state.pages.push({ ...pageInTrash, deleted: false })
+  },
+  clearTrash(state) {
+    state.trash = []
+  },
+  setTrash(state, trash) {
+    state.trash = trash
   },
   editPage(state, { pageId, updated }) {
     if (state.currentPage._id === pageId) {

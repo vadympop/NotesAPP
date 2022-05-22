@@ -7,9 +7,37 @@ export default {
     await dispatch('getUserPages')
     commit('setCurrentPage', pageId)
   },
-  async removePage({ commit }, pageId) {
+  async removePage({ state, commit }, pageId) {
+    if(!state.trash.find(page => page._id === pageId)) {
+      return
+    }
+
     await this.$axios.delete(`pages/${pageId}`)
     commit('removePage', pageId)
+  },
+  async restorePageFromTrash({ state, commit }, pageId) {
+    if(!state.trash.find(page => page._id === pageId)) {
+      return
+    }
+
+    await this.$axios.post(`pages/trash/${pageId}/restore`)
+    commit('restorePageFromTrash', pageId)
+  },
+  async clearTrash({ state, commit }) {
+    if(state.trash.length <= 0) {
+      return
+    }
+
+    await this.$axios.delete('pages/trash')
+    commit('clearTrash')
+  },
+  async movePageToTrash({ commit }, pageId) {
+    await this.$axios.post(`pages/trash/${pageId}`)
+    commit('movePageToTrash', pageId)
+  },
+  async getTrash({ commit }) {
+    const { data: trash } = await this.$axios.get('pages/trash')
+    commit('setTrash', trash)
   },
   async createPage({ commit, state }, name) {
     const newPageResponse = await this.$axios.post('pages', { name })

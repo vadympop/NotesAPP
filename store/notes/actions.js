@@ -11,6 +11,7 @@ export default {
       })
   },
   async getNotes({ rootState, state, commit }, pageId) {
+    commit('setCurrentNotes', null)
     if ((state.notes[pageId]?.length || 0) <= 0) {
       const notesResponse = await this.$axios.get(`notes/${pageId}`)
       commit('setNotes', { pageId, notes: notesResponse.data })
