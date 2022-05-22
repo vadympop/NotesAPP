@@ -13,7 +13,8 @@
         'password-input-eye-clicked': eyeClicked
       }"
       @click="changeInputType"
-    >mdi-eye</v-icon>
+      >mdi-eye</v-icon
+    >
   </div>
 </template>
 

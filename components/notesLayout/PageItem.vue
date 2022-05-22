@@ -13,7 +13,8 @@
           }"
           color="var(--light-gray3)"
           size="12px"
-        >mdi-triangle</v-icon>
+          >mdi-triangle</v-icon
+        >
       </span>
       <v-icon class="page-item-icon" color="var(--light-gray3)">
         mdi-file-document-outline

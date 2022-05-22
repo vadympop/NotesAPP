@@ -1,18 +1,12 @@
 <template>
   <div class="page-header">
     <div class="pages-navigation">
-      <button-icon
-        icon="mdi-arrow-left"
-        tooltip="Go back"
-      />
-      <button-icon
-        icon="mdi-arrow-right"
-        tooltip="Go forward"
-      />
+      <button-icon icon="mdi-arrow-left" tooltip="Go back" />
+      <button-icon icon="mdi-arrow-right" tooltip="Go forward" />
     </div>
     <span class="page-header-name">{{ currentPage.name }}</span>
     <v-spacer></v-spacer>
-    <div class="d-flex ">
+    <div class="d-flex">
       <button-icon
         :icon="currentPage.favourite ? 'mdi-star' : 'mdi-star-outline'"
         tooltip="Pin the page on the sidebar"
