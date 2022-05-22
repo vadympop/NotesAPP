@@ -26,10 +26,7 @@
       <page-delete-dialog :page-id="pageId" />
       <page-comments-dialog />
       <page-updates-dialog />
-      <v-icon
-        class="hoverable-icon"
-        color="var(--light-gray3)"
-      >
+      <v-icon class="hoverable-icon" color="var(--light-gray3)">
         mdi-dots-horizontal
       </v-icon>
       <!-- Settigns -->

@@ -8,7 +8,7 @@ export default {
     commit('setCurrentPage', pageId)
   },
   async removePage({ state, commit }, pageId) {
-    if(!state.trash.find(page => page._id === pageId)) {
+    if (!state.trash.find((page) => page._id === pageId)) {
       return
     }
 
@@ -16,7 +16,7 @@ export default {
     commit('removePage', pageId)
   },
   async restorePageFromTrash({ state, commit }, pageId) {
-    if(!state.trash.find(page => page._id === pageId)) {
+    if (!state.trash.find((page) => page._id === pageId)) {
       return
     }
 
@@ -24,7 +24,7 @@ export default {
     commit('restorePageFromTrash', pageId)
   },
   async clearTrash({ state, commit }) {
-    if(state.trash.length <= 0) {
+    if (state.trash.length <= 0) {
       return
     }
 

@@ -18,8 +18,8 @@ export default {
     })
   },
   removePage(state, pageId) {
-    const pageInTrash = state.trash.find(page => page._id === pageId)
-    if(!pageInTrash) {
+    const pageInTrash = state.trash.find((page) => page._id === pageId)
+    if (!pageInTrash) {
       return
     }
 
@@ -34,7 +34,7 @@ export default {
         state.changedPages.splice(state.changedPages.indexOf(pageId), 1)
       }
 
-      if (!state.trash.find(page => page._id === pageId)) {
+      if (!state.trash.find((page) => page._id === pageId)) {
         state.trash.push(foundPage)
       }
     } else {
@@ -51,15 +51,15 @@ export default {
           state.changedPages.splice(state.changedPages.indexOf(nestedPageId), 1)
         }
 
-        if (!state.trash.find(page => page._id === nestedPageId)) {
+        if (!state.trash.find((page) => page._id === nestedPageId)) {
           state.trash.push(nestedPage)
         }
       })
     }
   },
   restorePageFromTrash(state, pageId) {
-    const pageInTrash = state.trash.find(page => page._id === pageId)
-    if(!pageInTrash) {
+    const pageInTrash = state.trash.find((page) => page._id === pageId)
+    if (!pageInTrash) {
       return
     }
 

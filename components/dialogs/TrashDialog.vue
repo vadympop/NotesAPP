@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="dialog" transition="dialog-bottom-transition" hide-overlay max-width="500">
+  <v-dialog
+    v-model="dialog"
+    transition="dialog-bottom-transition"
+    hide-overlay
+    max-width="500"
+  >
     <template #activator="{ on, attrs }">
       <div class="activator" v-bind="attrs" v-on="on">
         <v-icon class="activator-icon" color="var(--light-gray3)" size="24px"
@@ -19,15 +24,23 @@
             </v-icon>
             <span class="ml-2">{{ page.name }}</span>
             <v-spacer></v-spacer>
-            <v-icon class="hoverable-icon" color="var(--light-gray3)" @click="restorePageFromTrash(page._id)">
+            <v-icon
+              class="hoverable-icon"
+              color="var(--light-gray3)"
+              @click="restorePageFromTrash(page._id)"
+            >
               mdi-undo
             </v-icon>
-            <v-icon class="hoverable-icon" color="var(--light-gray3)" @click="removePage(page._id)">
+            <v-icon
+              class="hoverable-icon"
+              color="var(--light-gray3)"
+              @click="removePage(page._id)"
+            >
               mdi-trash-can
             </v-icon>
           </div>
         </div>
-        <nothing-to-show v-else/>
+        <nothing-to-show v-else />
       </div>
       <div class="dialog-footer" style="margin-top: auto">
         <v-btn text color="red" @click="dialog = false">Close</v-btn>
@@ -47,8 +60,8 @@ export default {
   }),
   computed: {
     ...mapState('pages', ['trash']),
-    filteredTrash () {
-      return this.trash.filter(page => page.name.includes(this.pageName))
+    filteredTrash() {
+      return this.trash.filter((page) => page.name.includes(this.pageName))
     }
   },
   methods: mapActions('pages', ['restorePageFromTrash', 'removePage'])

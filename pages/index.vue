@@ -61,7 +61,7 @@
               <span class="pages-list-items-text">{{ page.name }}</span>
             </nuxt-link>
           </div>
-          <nothing-to-show v-else/>
+          <nothing-to-show v-else />
         </div>
       </v-col>
     </v-row>

@@ -32,7 +32,7 @@
                 :root="page.root"
               />
             </div>
-            <nothing-to-show v-else/>
+            <nothing-to-show v-else />
           </div>
 
           <v-spacer></v-spacer>
