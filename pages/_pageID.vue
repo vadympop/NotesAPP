@@ -70,14 +70,14 @@ export default {
     rootPages(v) {
       if (v.length <= 0) {
         this.$router.push({ path: '/' })
-      }
 
-      this.$store.commit('updateSnackbar', {
-        state: true,
-        message: 'You should create new page',
-        type: 'warning',
-        apiError: false
-      })
+        this.$store.commit('updateSnackbar', {
+          state: true,
+          message: 'You should create new page',
+          type: 'warning',
+          apiError: false
+        })
+      }
     }
   },
   mounted() {
