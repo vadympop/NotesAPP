@@ -22,14 +22,7 @@
       >
         {{ currentPage.favourite ? 'mdi-star' : 'mdi-star-outline' }}
       </v-icon>
-      <!-- Add to favourites -->
       <page-delete-dialog :page-id="pageId" />
-      <page-comments-dialog />
-      <page-updates-dialog />
-      <v-icon class="hoverable-icon" color="var(--light-gray3)">
-        mdi-dots-horizontal
-      </v-icon>
-      <!-- Settigns -->
     </div>
   </div>
 </template>
@@ -47,7 +40,6 @@ export default {
   },
   methods: {
     setCurrentPageFavourite() {
-      console.log('+')
       this.$store.dispatch('pages/editPage', {
         pageId: this.pageId,
         updated: { favourite: !this.currentPage.favourite }
