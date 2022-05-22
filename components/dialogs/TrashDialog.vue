@@ -24,20 +24,16 @@
             </v-icon>
             <span class="ml-2">{{ page.name }}</span>
             <v-spacer></v-spacer>
-            <v-icon
-              class="hoverable-icon"
-              color="var(--light-gray3)"
+            <button-icon
+              icon="mdi-undo"
+              tooltip="Restore page"
               @click="restorePageFromTrash(page._id)"
-            >
-              mdi-undo
-            </v-icon>
-            <v-icon
-              class="hoverable-icon"
-              color="var(--light-gray3)"
+            />
+            <button-icon
+              icon="mdi-trash-can"
+              tooltip="Delete page permanently"
               @click="removePage(page._id)"
-            >
-              mdi-trash-can
-            </v-icon>
+            />
           </div>
         </div>
         <nothing-to-show v-else />

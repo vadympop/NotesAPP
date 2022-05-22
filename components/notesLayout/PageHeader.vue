@@ -1,27 +1,24 @@
 <template>
   <div class="page-header">
     <div class="pages-navigation">
-      <v-icon
-        class="pages-navigation-icon hoverable-icon"
-        color="var(--light-gray3)"
-        >mdi-arrow-left</v-icon
-      >
-      <v-icon
-        class="pages-navigation-icon hoverable-icon"
-        color="var(--light-gray3)"
-        >mdi-arrow-right</v-icon
-      >
+      <button-icon
+        icon="mdi-arrow-left"
+        tooltip="Go back"
+      />
+      <button-icon
+        icon="mdi-arrow-right"
+        tooltip="Go forward"
+      />
     </div>
     <span class="page-header-name">{{ currentPage.name }}</span>
     <v-spacer></v-spacer>
-    <div class="additional-buttons">
-      <v-icon
-        class="hoverable-icon"
+    <div class="d-flex ">
+      <button-icon
+        :icon="currentPage.favourite ? 'mdi-star' : 'mdi-star-outline'"
+        tooltip="Pin the page on the sidebar"
         :color="currentPage.favourite ? 'var(--yellow)' : 'var(--light-gray3)'"
         @click="setCurrentPageFavourite"
-      >
-        {{ currentPage.favourite ? 'mdi-star' : 'mdi-star-outline' }}
-      </v-icon>
+      />
       <page-delete-dialog :page-id="pageId" />
     </div>
   </div>
@@ -40,6 +37,7 @@ export default {
   },
   methods: {
     setCurrentPageFavourite() {
+      console.log(1)
       this.$store.dispatch('pages/editPage', {
         pageId: this.pageId,
         updated: { favourite: !this.currentPage.favourite }
@@ -61,5 +59,6 @@ export default {
 
 .pages-navigation {
   margin-right: 10px;
+  display: flex;
 }
 </style>

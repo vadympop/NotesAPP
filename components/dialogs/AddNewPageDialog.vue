@@ -12,8 +12,7 @@
           class="additional-page-item-icon"
           color="var(--light-gray3)"
           size="24px"
-          >mdi-plus</v-icon
-        >
+        >mdi-plus</v-icon>
         <span class="additional-page-item-text">New page</span>
       </div>
     </template>

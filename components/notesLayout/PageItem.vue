@@ -5,7 +5,7 @@
       :class="{ 'page-item': true, 'page-item-active': isActive }"
       :style="`padding-left: ${paddingLeft}px`"
     >
-      <span class="d-flex" @click="arrowClicked = !arrowClicked">
+      <span @click="arrowClicked = !arrowClicked">
         <v-icon
           :class="{
             'page-item-triangle': true,
@@ -13,12 +13,11 @@
           }"
           color="var(--light-gray3)"
           size="12px"
-          >mdi-triangle</v-icon
-        >
+        >mdi-triangle</v-icon>
       </span>
-      <v-icon class="page-item-icon" color="var(--light-gray3)" size="24px"
-        >mdi-file-document-outline</v-icon
-      >
+      <v-icon class="page-item-icon" color="var(--light-gray3)">
+        mdi-file-document-outline
+      </v-icon>
       <span class="page-item-text">{{ name }}</span>
     </nuxt-link>
     <div v-if="arrowClicked">
@@ -38,8 +37,9 @@
         <span
           class="no-nested-pages-text"
           :style="`padding-left: ${paddingLeft + 30}px`"
-          >No pages inside</span
         >
+          No pages inside
+        </span>
       </div>
     </div>
   </div>

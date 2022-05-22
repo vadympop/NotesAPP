@@ -6,14 +6,12 @@
     max-width="500"
   >
     <template #activator="{ on, attrs }">
-      <v-icon
-        class="hoverable-icon"
-        color="var(--light-gray3)"
+      <button-icon
+        icon="mdi-delete-outline"
+        tooltip="Delete page"
         v-bind="attrs"
         v-on="on"
-      >
-        mdi-delete-outline
-      </v-icon>
+      />
     </template>
 
     <div class="dialog">
