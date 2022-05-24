@@ -1,12 +1,7 @@
 <template>
   <div class="page-content">
     <div class="page-notes">
-      <editable
-        ref="pageNameInput"
-        v-model="updatedPageName"
-        class="page-title"
-        @input="debouncedSavePageEditing"
-      />
+      <span class="page-title">{{ currentPage.name }}</span>
       <div v-if="sortedNotes.length > 0">
         <div v-for="note of sortedNotes" :key="note.noteId">
           <note
@@ -22,7 +17,7 @@
           />
         </div>
       </div>
-      <div v-else>
+      <div v-else style="position: relative">
         <span class="no-notes-text">Click here to create new note</span>
       </div>
     </div>
@@ -32,17 +27,10 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
-import { debounce } from '@/utils'
 
 export default {
   name: 'NotesPage',
   layout: 'notes',
-  data() {
-    return {
-      debouncedSavePageEditing: debounce(this.savePageEditing, 500),
-      updatedPageName: ''
-    }
-  },
   computed: {
     sortedNotes() {
       if (!this.currentNotes) {
@@ -61,12 +49,6 @@ export default {
     ...mapGetters('pages', ['rootPages'])
   },
   watch: {
-    currentPage() {
-      if (!this.updatedPageName) {
-        this.updatedPageName = this.currentPage.name
-        this.$refs.pageNameInput.updateText(this.updatedPageName)
-      }
-    },
     rootPages(v) {
       if (v.length <= 0) {
         this.$router.push({ path: '/' })
@@ -98,20 +80,6 @@ export default {
           this.currentNotes[this.currentNotes.length - 1]?.noteId
         ][0]?.focus()
       }, 100)
-    },
-    savePageEditing() {
-      const updatedData = {
-        name: this.updatedPageName,
-        root: this.currentPage.root,
-        nestedPages: this.currentPage.nestedPages,
-        parent: this.currentPage.parent,
-        position: this.currentPage.position
-      }
-
-      this.editPage({
-        pageId: this.pageId,
-        updated: updatedData
-      })
     },
     onRemoveNote({ noteId }) {
       const removedNote = this.sortedNotes.find(
@@ -163,10 +131,12 @@ export default {
 }
 
 .no-notes-text {
-  margin-top: 2em;
   color: var(--light-gray2);
   font-size: 1.5em;
   font-weight: 300;
   pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 </style>

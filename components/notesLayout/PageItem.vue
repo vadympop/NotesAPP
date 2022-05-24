@@ -1,10 +1,10 @@
 <template>
   <div>
-    <nuxt-link
-      :to="`/${pageId}`"
+    <div
       :class="{ 'page-item': true, 'page-item-active': isActive }"
       :style="`padding-left: ${paddingLeft}px`"
     >
+      <nuxt-link :to="`/${pageId}`" class="page-item-link"></nuxt-link>
       <span @click="arrowClicked = !arrowClicked">
         <v-icon
           :class="{
@@ -13,14 +13,34 @@
           }"
           color="var(--light-gray3)"
           size="12px"
-          >mdi-triangle</v-icon
-        >
+        >mdi-triangle</v-icon>
       </span>
       <v-icon class="page-item-icon" color="var(--light-gray3)">
         mdi-file-document-outline
       </v-icon>
-      <span class="page-item-text">{{ name }}</span>
-    </nuxt-link>
+      <span class="page-item-text">{{ pageName }}</span>
+      <v-spacer></v-spacer>
+      <v-menu offset-y :close-on-content-click="false">
+        <template #activator="{ on, attrs }">
+          <button-icon
+            icon="mdi-dots-horizontal"
+            tooltip="Page settings"
+            v-bind="attrs"
+            v-on="on"
+          />
+        </template>
+        <div class="page-menu">
+          <page-rename-input :page-id="pageId" top="-15%" left="105%">
+            <template #activator>
+              <div class="page-menu-item">
+                <v-icon size="22px" color="var(--light-gray3)">mdi-rename-box</v-icon>
+                <span class="ml-2">Rename</span>
+              </div>
+            </template>
+          </page-rename-input>
+        </div>
+      </v-menu>
+    </div>
     <div v-if="arrowClicked">
       <div v-if="nested.length > 0">
         <page-item
@@ -80,7 +100,8 @@ export default {
   },
   data: () => ({
     arrowClicked: false,
-    paddingLeft: 15
+    paddingLeft: 15,
+    pageName: ''
   }),
   computed: {
     nested() {
@@ -92,11 +113,22 @@ export default {
       return this.pageId === this.currentPage._id
     },
     ...mapGetters('pages', ['notRootPages']),
-    ...mapState('pages', ['currentPage'])
+    ...mapState('pages', ['currentPage', 'pages'])
+  },
+  watch: {
+    name (v) {
+      console.log(v)
+    }
   },
   created() {
+    this.pageName = this.name
     if (!this.root && this.$parent?.paddingLeft) {
       this.paddingLeft = this.$parent?.paddingLeft + 15
+    }
+  },
+  methods: {
+    setPageName (name) {
+      this.pageName = name
     }
   }
 }
@@ -112,6 +144,15 @@ export default {
   cursor: pointer;
   color: var(--light-gray3);
   text-decoration: none;
+  position: relative;
+}
+
+.page-item-link {
+  position:absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0
 }
 
 .page-item:hover,
@@ -126,6 +167,7 @@ export default {
 .page-item-text {
   font-size: 0.95em;
   font-weight: 550;
+  text-overflow: ellipsis;
 }
 
 .page-item-triangle {
@@ -152,5 +194,27 @@ export default {
   padding: 5px 15px;
   width: 100%;
   display: flex;
+}
+
+.page-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  width: 100%;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.page-menu {
+  min-width: 200px;
+  background-color: var(--dark-gray);
+  border-radius: var(--small-border-radius);
+  padding: 5px;
+  position: relative;
+}
+
+.page-menu-item:hover {
+  background-color: var(--gray);
 }
 </style>

@@ -14,8 +14,23 @@
   --border-radius: 5px;
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 .h-100 {
   height: 100% !important;
+}
+
+.v-menu__content {
+  overflow: visible !important;
+  contain: none !important;
 }
 
 .input {
@@ -30,6 +45,11 @@
 
 .input:focus-visible {
   outline: none;
+}
+
+::selection {
+  background-color: var(--dark-blue2);
+  position: relative;
 }
 
 .v-icon.v-icon::after {
@@ -48,7 +68,7 @@
 }
 
 .hoverable-icon:hover {
-  background-color: var(--light-gray);
+  background-color: var(--light-gray2);
   color: #fff !important;
 }
 

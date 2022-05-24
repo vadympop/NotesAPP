@@ -123,11 +123,6 @@ export default {
   overflow: visible !important;
 }
 
-.note ::selection {
-  background-color: var(--dark-blue2);
-  position: relative;
-}
-
 .note-selected {
   background-color: var(--dark-blue);
 }

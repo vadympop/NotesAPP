@@ -94,6 +94,7 @@ export default {
   width: 100%;
   border-radius: var(--border-radius);
   cursor: pointer;
+  transition: 0.2s;
 }
 
 .trash-page:hover {
