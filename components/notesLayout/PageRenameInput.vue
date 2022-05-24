@@ -1,5 +1,5 @@
 <template>
-  <div style="position:relative;">
+  <div style="position: relative">
     <div :ref="`page-rename-activator-${pageId}`" @click="clicked = !clicked">
       <slot name="activator"></slot>
     </div>
@@ -14,7 +14,7 @@
             v-model="updatedPageName"
             class="page-rename-input"
             type="text"
-          >
+          />
         </div>
       </div>
     </transition>
@@ -49,7 +49,7 @@ export default {
       default: ''
     }
   },
-  data () {
+  data() {
     return {
       clicked: false,
       updatedPageName: '',
@@ -58,18 +58,18 @@ export default {
   },
   computed: {
     ...mapState('pages', ['pages']),
-    foundPage () {
-      return this.pages.find(page => page._id === this.pageId)
+    foundPage() {
+      return this.pages.find((page) => page._id === this.pageId)
     }
   },
   watch: {
-    updatedPageName (v) {
-      if(v.trim() !== this.foundPage.name) {
+    updatedPageName(v) {
+      if (v.trim() !== this.foundPage.name) {
         this.debouncedChangePageName()
       }
     },
-    foundPage (page) {
-      if(page) {
+    foundPage(page) {
+      if (page) {
         this.updatedPageName = page.name
       }
     }
@@ -79,7 +79,12 @@ export default {
     this.outsideClickEvent = (e) => {
       const renameInput = this.$refs[`page-rename-${this.pageId}`]
       const activator = this.$refs[`page-rename-activator-${this.pageId}`]
-      if(renameInput && activator && !renameInput.contains(e.target) && !activator.contains(e.target)) {
+      if (
+        renameInput &&
+        activator &&
+        !renameInput.contains(e.target) &&
+        !activator.contains(e.target)
+      ) {
         this.clicked = false
       }
     }
@@ -89,7 +94,7 @@ export default {
     window.removeEventListener('click', this.outsideClickEvent)
   },
   methods: {
-    changePageName () {
+    changePageName() {
       this.$store.dispatch('pages/editPage', {
         pageId: this.pageId,
         updated: { name: this.updatedPageName.trim() }
@@ -115,7 +120,7 @@ export default {
   border-radius: var(--border-radius);
 }
 
-.page-rename-input:focus-visible{
+.page-rename-input:focus-visible {
   outline: none;
 }
 </style>

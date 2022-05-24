@@ -13,7 +13,8 @@
           }"
           color="var(--light-gray3)"
           size="12px"
-        >mdi-triangle</v-icon>
+          >mdi-triangle</v-icon
+        >
       </span>
       <v-icon class="page-item-icon" color="var(--light-gray3)">
         mdi-file-document-outline
@@ -33,7 +34,9 @@
           <page-rename-input :page-id="pageId" top="-15%" left="105%">
             <template #activator>
               <div class="page-menu-item">
-                <v-icon size="22px" color="var(--light-gray3)">mdi-rename-box</v-icon>
+                <v-icon size="22px" color="var(--light-gray3)"
+                  >mdi-rename-box</v-icon
+                >
                 <span class="ml-2">Rename</span>
               </div>
             </template>
@@ -116,7 +119,7 @@ export default {
     ...mapState('pages', ['currentPage', 'pages'])
   },
   watch: {
-    name (v) {
+    name(v) {
       console.log(v)
     }
   },
@@ -127,7 +130,7 @@ export default {
     }
   },
   methods: {
-    setPageName (name) {
+    setPageName(name) {
       this.pageName = name
     }
   }
@@ -148,11 +151,11 @@ export default {
 }
 
 .page-item-link {
-  position:absolute;
+  position: absolute;
   width: 100%;
   height: 100%;
   top: 0;
-  left: 0
+  left: 0;
 }
 
 .page-item:hover,
