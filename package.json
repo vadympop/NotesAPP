@@ -19,9 +19,9 @@
     "core-js": "^3.23.2",
     "nuxt": "^2.15.8",
     "uuid": "^8.3.2",
-    "vue": "^2.6.14",
+    "vue": "^2.7.1",
     "vue-server-renderer": "^2.6.14",
-    "vue-template-compiler": "^2.6.14",
+    "vue-template-compiler": "^2.7.1",
     "vuetify": "^2.6.6",
     "webpack": "^4.46.0"
   },
