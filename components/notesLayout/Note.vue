@@ -39,10 +39,6 @@ export default {
       type: String,
       required: true
     },
-    page: {
-      type: String,
-      required: true
-    },
     content: {
       type: String,
       default: ''
@@ -58,11 +54,6 @@ export default {
     author: {
       type: String,
       required: true
-    },
-    newNote: {
-      type: Boolean,
-      required: false,
-      default: false
     }
   },
   data() {
@@ -103,7 +94,7 @@ export default {
     },
     save() {
       this.$store.commit('notes/editNote', {
-        page: this.page,
+        page: this.pageId,
         noteId: this.noteId,
         author: this.author,
         updated: {

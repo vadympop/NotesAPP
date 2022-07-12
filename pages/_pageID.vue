@@ -10,8 +10,6 @@
             :position="note.position"
             :styles="note.styles"
             :author="note.author"
-            :new-note="note.newNote"
-            :page="note.page"
             :note-id="note.noteId"
             @remove-note="onRemoveNote"
           />
