@@ -104,7 +104,7 @@ export default {
     )
   },
   methods: {
-    ...mapMutations('notes', ['clearChangedNotes', 'clearRemovedNotes']),
+    ...mapMutations('notes', ['clearChangedNotes', 'clearRemovedNotes', 'removeFromChangedNotes']),
     ...mapActions('notes', ['clearNewNotes']),
     saveAll() {
       this.saveNewNotes()
@@ -156,9 +156,17 @@ export default {
         return
       }
 
-      const changedNotes = this.currentNotes.filter((note) =>
-        this.changedNotes.includes(note.noteId)
-      )
+      let changedNotes = this.currentNotes.filter((note) => this.changedNotes.includes(note.noteId))
+      const newNotesInChangedNotes = changedNotes.filter(note => note.newNote)
+      if(newNotesInChangedNotes.length > 0) {
+        this.saveNewNotes()
+        this.removeFromChangedNotes(...newNotesInChangedNotes.map(note => note.noteId))
+        changedNotes = changedNotes.filter(note => !note.newNote)
+      }
+      if(changedNotes.length <= 0) {
+        return
+      }
+
       console.log('Change notes', changedNotes)
       this.$axios.post(
         'notes/update',

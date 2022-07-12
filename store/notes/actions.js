@@ -4,9 +4,10 @@ export default {
       .filter((note) => note.newNote)
       .forEach((note) => {
         commit('editNote', {
-          ...note,
-          newNote: false,
-          preventApiReq: true
+          page: note.page,
+          author: note.author,
+          noteId: note.noteId,
+          updated: { newNote: false }
         })
       })
   },

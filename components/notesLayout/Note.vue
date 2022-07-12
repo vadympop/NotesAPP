@@ -77,7 +77,8 @@ export default {
     pageId() {
       return this.$route.params.pageID
     },
-    ...mapState('notes', ['currentNotes'])
+    ...mapState('notes', ['currentNotes']),
+    ...mapState('auth', ['currentUser'])
   },
   methods: {
     focus() {
@@ -93,7 +94,7 @@ export default {
       }
     },
     addNote() {
-      this.$store.commit('notes/addNote', this.pageId)
+      this.$store.commit('notes/addNote', { pageId: this.pageId, author: this.currentUser.userId })
       setTimeout(() => {
         this.$parent.$refs[
           this.currentNotes[this.currentNotes.length - 1]?.noteId
@@ -101,16 +102,16 @@ export default {
       }, 100)
     },
     save() {
-      const updatedData = {
-        content: this.updatedContent,
+      this.$store.commit('notes/editNote', {
         page: this.page,
         noteId: this.noteId,
-        styles: this.styles,
         author: this.author,
-        position: this.position,
-        newNote: this.newNote
-      }
-      this.$store.commit('notes/editNote', updatedData)
+        updated: {
+          content: this.updatedContent,
+          styles: this.styles,
+          position: this.position,
+        }
+      })
     }
   }
 }

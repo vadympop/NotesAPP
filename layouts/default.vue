@@ -7,7 +7,7 @@
       <div class="header">
         <v-toolbar-title class="logo">
           <v-avatar><img src="" alt="" width="32px" /></v-avatar>
-          <span class="logo-text">NotesAPP</span>
+          <nuxt-link to="/" class="logo-text">NotesAPP</nuxt-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items class="d-flex align-center">
@@ -79,6 +79,8 @@ export default {
 
 .logo-text {
   margin-left: 5px;
+  color: inherit;
+  text-decoration: none;
 }
 
 .profile-card-nickname {

@@ -46,6 +46,7 @@ export default {
     },
     ...mapState('notes', ['currentNotes']),
     ...mapState('pages', ['currentPage']),
+    ...mapState('auth', ['currentUser']),
     ...mapGetters('pages', ['rootPages'])
   },
   watch: {
@@ -74,7 +75,7 @@ export default {
     ...mapActions('pages', ['setCurrentPage', 'editPage']),
     ...mapActions('notes', ['getNotes']),
     addNote() {
-      this.$store.commit('notes/addNote', this.pageId)
+      this.$store.commit('notes/addNote', { pageId: this.pageId, author: this.currentUser.userId })
       setTimeout(() => {
         this.$refs[
           this.currentNotes[this.currentNotes.length - 1]?.noteId

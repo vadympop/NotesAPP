@@ -1,7 +1,7 @@
 import { v4 as uuid4 } from 'uuid'
 
 export default {
-  addNote(state, pageId) {
+  addNote(state, { pageId, author }) {
     const noteId = uuid4()
     state.newNotes.push(noteId)
     state.notes[pageId].push({
@@ -10,7 +10,7 @@ export default {
       position: state.notes[pageId].length,
       content: null,
       styles: { someV: 'someV' },
-      author: 'a',
+      author,
       newNote: true
     })
   },
@@ -23,29 +23,25 @@ export default {
   clearChangedNotes(state) {
     state.changedNotes = []
   },
+  removeFromChangedNotes(state, ...notesIds) {
+    notesIds.forEach(noteId => {
+      state.changedNotes.splice(state.changedNotes.indexOf(noteId), 1)
+    })
+  },
   setCurrentNotes(state, pageId) {
     state.currentNotes = state.notes[pageId] || []
   },
-  editNote(
-    state,
-    { page, noteId, styles, author, content, position, newNote, preventApiReq }
-  ) {
+  editNote(state, { page, noteId, author, updated }) {
+    console.log(page, noteId, author, updated, 'editNote')
     if (state.removedNotes.includes(noteId)) {
       return
     }
 
     const foundNote = state.notes[page].find((note) => note.noteId === noteId)
-    state.notes[page][state.notes[page].indexOf(foundNote)] = {
-      noteId,
-      page,
-      styles,
-      author,
-      content,
-      position,
-      newNote
-    }
+    const foundNoteIndex = state.notes[page].indexOf(foundNote)
+    state.notes[page][foundNoteIndex] = { ...foundNote, ...updated, page, noteId, author }
 
-    if (!state.changedNotes.includes(noteId) && !preventApiReq) {
+    if (!state.changedNotes.includes(noteId)) {
       state.changedNotes.push(noteId)
     }
   },
