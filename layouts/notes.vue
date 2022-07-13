@@ -17,8 +17,24 @@
               currentUser.username
             }}</span>
           </nuxt-link>
+
           <v-divider></v-divider>
 
+          <div v-if="favouritePages.length > 0" class="mt-10">
+            <span class="favourite-pages-title">Favourite pages</span>
+            <page-item
+              v-for="page of favouritePages"
+              :key="page._id"
+              :page-id="page._id"
+              :name="page.name"
+              :position="page.position"
+              :nested-pages="page.nestedPages"
+              :parent="page.parent"
+              :root="page.root"
+            />
+            <v-divider class="mt-10"></v-divider>
+          </div>
+          
           <div class="mt-10">
             <div v-if="rootPages.length > 0">
               <page-item
@@ -67,6 +83,9 @@ export default {
   computed: {
     pageId() {
       return this.$route.params.pageID
+    },
+    favouritePages () {
+      return this.rootPages.filter(page => page.favourite)
     },
     ...mapState('notes', [
       'removedNotes',
@@ -215,5 +234,10 @@ export default {
 .main-page-item-image {
   border-radius: var(--border-radius);
   margin: 0 5px 0 10px;
+}
+
+.favourite-pages-title {
+  padding: 0 25px;
+  text-transform: uppercase;
 }
 </style>
