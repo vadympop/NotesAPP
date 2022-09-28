@@ -24,7 +24,7 @@ export default {
     state.changedNotes = []
   },
   removeFromChangedNotes(state, ...notesIds) {
-    notesIds.forEach(noteId => {
+    notesIds.forEach((noteId) => {
       state.changedNotes.splice(state.changedNotes.indexOf(noteId), 1)
     })
   },
@@ -39,7 +39,13 @@ export default {
 
     const foundNote = state.notes[page].find((note) => note.noteId === noteId)
     const foundNoteIndex = state.notes[page].indexOf(foundNote)
-    state.notes[page][foundNoteIndex] = { ...foundNote, ...updated, page, noteId, author }
+    state.notes[page][foundNoteIndex] = {
+      ...foundNote,
+      ...updated,
+      page,
+      noteId,
+      author
+    }
 
     if (!state.changedNotes.includes(noteId)) {
       state.changedNotes.push(noteId)

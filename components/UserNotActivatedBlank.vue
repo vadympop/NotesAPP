@@ -1,7 +1,15 @@
 <template>
   <div class="blank">
-    <span>Your account isn't activated! View activation mail in your email</span>
-    <v-btn depressed small color="teal darken-2" class="ml-10" @click="sendActivationMail">
+    <span
+      >Your account isn't activated! View activation mail in your email</span
+    >
+    <v-btn
+      depressed
+      small
+      color="teal darken-2"
+      class="ml-10"
+      @click="sendActivationMail"
+    >
       Send activation mail AGAIN
     </v-btn>
   </div>
@@ -11,11 +19,11 @@
 export default {
   name: 'UserNotActivatedBlank',
   methods: {
-    async sendActivationMail () {
+    async sendActivationMail() {
       await this.$axios.post('users/activate/send')
       this.$store.commit('updateSnackbar', {
         state: true,
-        message: "Activation mail sent successfully",
+        message: 'Activation mail sent successfully',
         type: 'success',
         apiError: false
       })

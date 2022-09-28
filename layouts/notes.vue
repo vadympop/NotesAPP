@@ -34,7 +34,7 @@
             />
             <v-divider class="mt-10"></v-divider>
           </div>
-          
+
           <div class="mt-10">
             <div v-if="rootPages.length > 0">
               <page-item
@@ -84,8 +84,8 @@ export default {
     pageId() {
       return this.$route.params.pageID
     },
-    favouritePages () {
-      return this.rootPages.filter(page => page.favourite)
+    favouritePages() {
+      return this.rootPages.filter((page) => page.favourite)
     },
     ...mapState('notes', [
       'removedNotes',
@@ -123,7 +123,11 @@ export default {
     )
   },
   methods: {
-    ...mapMutations('notes', ['clearChangedNotes', 'clearRemovedNotes', 'removeFromChangedNotes']),
+    ...mapMutations('notes', [
+      'clearChangedNotes',
+      'clearRemovedNotes',
+      'removeFromChangedNotes'
+    ]),
     ...mapActions('notes', ['clearNewNotes']),
     saveAll() {
       this.saveNewNotes()
@@ -175,14 +179,18 @@ export default {
         return
       }
 
-      let changedNotes = this.currentNotes.filter((note) => this.changedNotes.includes(note.noteId))
-      const newNotesInChangedNotes = changedNotes.filter(note => note.newNote)
-      if(newNotesInChangedNotes.length > 0) {
+      let changedNotes = this.currentNotes.filter((note) =>
+        this.changedNotes.includes(note.noteId)
+      )
+      const newNotesInChangedNotes = changedNotes.filter((note) => note.newNote)
+      if (newNotesInChangedNotes.length > 0) {
         this.saveNewNotes()
-        this.removeFromChangedNotes(...newNotesInChangedNotes.map(note => note.noteId))
-        changedNotes = changedNotes.filter(note => !note.newNote)
+        this.removeFromChangedNotes(
+          ...newNotesInChangedNotes.map((note) => note.noteId)
+        )
+        changedNotes = changedNotes.filter((note) => !note.newNote)
       }
-      if(changedNotes.length <= 0) {
+      if (changedNotes.length <= 0) {
         return
       }
 
