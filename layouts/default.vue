@@ -74,7 +74,6 @@ export default {
 .header {
   display: flex;
   padding: 0 20px;
-  border-bottom: 1px solid var(--light-gray2);
   background-color: var(--gray);
 }
 
