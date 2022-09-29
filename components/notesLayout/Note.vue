@@ -85,7 +85,10 @@ export default {
       }
     },
     addNote() {
-      this.$store.commit('notes/addNote', { pageId: this.pageId, author: this.currentUser.userId })
+      this.$store.commit('notes/addNote', {
+        pageId: this.pageId,
+        author: this.currentUser.userId
+      })
       setTimeout(() => {
         this.$parent.$refs[
           this.currentNotes[this.currentNotes.length - 1]?.noteId
@@ -100,7 +103,7 @@ export default {
         updated: {
           content: this.updatedContent,
           styles: this.styles,
-          position: this.position,
+          position: this.position
         }
       })
     }

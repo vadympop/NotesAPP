@@ -73,7 +73,10 @@ export default {
     ...mapActions('pages', ['setCurrentPage', 'editPage']),
     ...mapActions('notes', ['getNotes']),
     addNote() {
-      this.$store.commit('notes/addNote', { pageId: this.pageId, author: this.currentUser.userId })
+      this.$store.commit('notes/addNote', {
+        pageId: this.pageId,
+        author: this.currentUser.userId
+      })
       setTimeout(() => {
         this.$refs[
           this.currentNotes[this.currentNotes.length - 1]?.noteId
