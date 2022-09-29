@@ -61,7 +61,7 @@ export default {
     this.checkLoggedIn()
   },
   methods: {
-    logout () {
+    logout() {
       this.$store.commit('pages/clearPages')
       this.$store.dispatch('auth/logout')
     },
