@@ -60,7 +60,13 @@ export default {
   mounted() {
     this.checkLoggedIn()
   },
-  methods: mapActions('auth', ['logout', 'checkLoggedIn'])
+  methods: {
+    logout () {
+      this.$store.commit('pages/clearPages')
+      this.$store.dispatch('auth/logout')
+    },
+    ...mapActions('auth', ['checkLoggedIn'])
+  }
 }
 </script>
 
